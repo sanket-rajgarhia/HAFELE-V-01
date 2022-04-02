@@ -8,15 +8,6 @@
  * */
 
 /*****************************************************************************/
-/* GLOBAL CONSTANTS                                                          */
-/*****************************************************************************/
-
-// A constant value to be used as a css class name for determining if an input 
-// control received an invalid input which it is holding in its placeholder 
-// property
-const SWAP_VALUE = "swapValue";
-
-/*****************************************************************************/
 /* GLOBAL VARIABLES                                                          */
 /*****************************************************************************/
 
@@ -75,34 +66,18 @@ let customerAddress3PrependDiv = customerAddress3Div
 let customerAddress3InputGroupTextDiv = customerAddress3Div
     .getElementsByClassName("input-group-text")[0];
 
-// Global variables - associated with the - Customer Information input control
+// Global variables - associated with the - Customer Information text area control
 let customerInformationTextAreaPlaceholder = "";
-let customerInformationDiv = document.getElementById("customer-info-div");
-let customerInformationTextArea = document.getElementById("input-customer-info");
+let customerInformationDiv = document.getElementById(
+    "customer-info-div");
+let customerInformationTextArea = document.getElementById(
+    "input-customer-info");
 let customerInformationInvalidFeedback = customerInformationDiv
     .getElementsByClassName("invalid-feedback")[0];
 let customerInformationPrependDiv = customerInformationDiv
     .getElementsByClassName("input-group-prepend")[0];
 let customerInformationTextAreaGroupTextDiv = customerInformationDiv
     .getElementsByClassName("input-group-text")[0];
-
-// Global variables - associated with the - Next button control
-let customerCardNextButton = document.getElementById("customer-next");
-
-/*****************************************************************************/
-/* WINDOWS ONLOAD                                                            */
-/*****************************************************************************/
-
-/* Anonymous function fired on window load. 
- * @param    
- * @return   
- * */
-window.onload = function() {
-
-    // Disable the Next button in Customer Card
-    customerCardNextButton.disabled = true;
-
-};
 
 /*****************************************************************************/
 /* EVENT LISTENER - CALLBACKS                                                */
@@ -202,7 +177,7 @@ const validateCustomerNameInputOnBlur = () => {
     customerNameDiv.classList.add("was-validated");
 
     // Enable/Disable the navigation button(s)
-    if (allInputsAreValidated() === true) {
+    if (allInputsAreValidated("customer-information-capture") === true) {
         customerCardNextButton.disabled = false;
     } else {
         customerCardNextButton.disabled = true;
@@ -309,7 +284,7 @@ const validateCustomerMobileInputOnBlur = () => {
     customerMobileDiv.classList.add("was-validated");
 
     // Enable/Disable the navigation button(s)
-    if (allInputsAreValidated() === true) {
+    if (allInputsAreValidated("customer-information-capture") === true) {
         customerCardNextButton.disabled = false;
     } else {
         customerCardNextButton.disabled = true;
@@ -412,7 +387,7 @@ const validateCustomerAddress1InputOnBlur = () => {
     customerAddress1Div.classList.add("was-validated");
 
     // Enable/Disable the navigation button(s)
-    if (allInputsAreValidated() === true) {
+    if (allInputsAreValidated("customer-information-capture") === true) {
         customerCardNextButton.disabled = false;
     } else {
         customerCardNextButton.disabled = true;
@@ -521,7 +496,7 @@ const validateCustomerAddress2InputOnBlur = () => {
     customerAddress2Div.classList.add("was-validated");
 
     // Enable/Disable the navigation button(s)
-    if (allInputsAreValidated() === true) {
+    if (allInputsAreValidated("customer-information-capture") === true) {
         customerCardNextButton.disabled = false;
     } else {
         customerCardNextButton.disabled = true;
@@ -630,7 +605,7 @@ const validateCustomerAddress3InputOnBlur = () => {
     customerAddress3Div.classList.add("was-validated");
 
     // Enable/Disable the navigation button(s)
-    if (allInputsAreValidated() === true) {
+    if (allInputsAreValidated("customer-information-capture") === true) {
         customerCardNextButton.disabled = false;
     } else {
         customerCardNextButton.disabled = true;
@@ -657,7 +632,7 @@ const resetCustomerInformationTextAreaOnGetFocus = () => {
             .placeholder;
     }
 
-    // If the customer Information TextArea control has the class SWAP_VALUE 
+    // If the customer Information textarea control has the class SWAP_VALUE 
     // attached - it means that an incorrect value was entered in the field
     // the last time the control had focus.
     if (customerInformationTextArea.classList.contains(SWAP_VALUE) === true) {
@@ -692,7 +667,7 @@ const resetCustomerInformationTextAreaOnGetFocus = () => {
 }
 
 /* The callback function fired on 'blur' - for customer Information 
- * TextArea control.
+ * textarea control.
  * @param    
  * @return   
  * */
@@ -742,132 +717,11 @@ const validateCustomerInformationTextAreaOnBlur = () => {
     customerInformationDiv.classList.add("was-validated");
 
     // Enable/Disable the navigation button(s)
-    console.log(allInputsAreValidated());
-    if (allInputsAreValidated() === true) {
+    if (allInputsAreValidated("customer-information-capture") === true) {
         customerCardNextButton.disabled = false;
     } else {
         customerCardNextButton.disabled = true;
     }
-
-}
-
-/*****************************************************************************/
-/* HELPER FUNCTIONS                                                          */
-/*****************************************************************************/
-
-/* Helper function to provide the invalidate style for the input control. 
- * @param   {HTMLElement}   prependDiv   <div class="input-group-prepend">
- * @param   {HTMLElement}   inputGroupTextDiv  <span class="input-group-text">
- * @return   
- * */
-const invalidateInputControl = (prependDiv, inputGroupTextDiv) => {
-
-    // Add the class - prepend-invalid to the customer name prepend div
-    prependDiv.classList.remove("prepend-valid");
-    prependDiv.classList.add("prepend-invalid");
-
-    // Make the input-group-text <div> transparent
-    inputGroupTextDiv.classList.remove("input-group-text-opaque");
-    inputGroupTextDiv.classList.add("input-group-text-transparent");
-
-}
-
-/* Helper function to provide the validate style for input the control. 
- * @param   {HTMLElement}   prependDiv   <div class="input-group-prepend">
- * @param   {HTMLElement}   inputGroupTextDiv  <span class="input-group-text">
- * @return   
- * */
-const validateInputControl = (prependDiv, inputGroupTextDiv) => {
-
-    // Add the class - prepend-valid to the customer name prepend div
-    prependDiv.classList.remove("prepend-invalid");
-    prependDiv.classList.add("prepend-valid");
-
-    // Make the input-group-text <div> transparent
-    inputGroupTextDiv.classList.remove("input-group-text-opaque");
-    inputGroupTextDiv.classList.add("input-group-text-transparent");
-
-}
-
-/* Helper function to remove the validate and invalidate style for 
- * the input control.
- * @param   {HTMLElement}   prependDiv   <div class="input-group-prepend">
- * @param   {HTMLElement}   inputGroupTextDiv  <span class="input-group-text">
- * @return   
- * */
-const resetValidation = (prependDiv, inputGroupTextDiv) => {
-
-    // Remove the class - prepend-invalid to the customer name prepend div
-    // if present
-    prependDiv.classList.remove("prepend-invalid");
-    // Remove the class - prepend-invalid to the customer name prepend div 
-    // if present 
-    prependDiv.classList.remove("prepend-valid");
-
-    // Make the input-group-text <div> opaque
-    inputGroupTextDiv.classList.remove("input-group-text-transparent");
-    inputGroupTextDiv.classList.add("input-group-text-opaque");
-
-}
-
-/* Helper function to check if all input fields are validated.
- * @param  
- * @return {boolean}    true if all fields are validated - false otherwise  
- * */
-const allInputsAreValidated = () => {
-
-    // Flag to check if all input fields were validated
-    let allFieldsAreValidated = false;
-
-    // Get all the div elements which have the class "input-group"
-    let allInputContainerDivElements = document
-        .getElementsByClassName("input-group");
-
-    // Iterate over all the div elements 
-    for (let containerDiv of allInputContainerDivElements) {
-
-        // Get the div element with the class "input-group-prepend"
-        // inside the container div
-        let prependDiv = containerDiv
-            .getElementsByClassName("input-group-prepend")[0];
-
-        // If the container div contains the class "optional"
-        // check if the input box has any value - if it does not have any
-        // value - consider it to be validated
-        if (containerDiv.classList.contains("optional") === true) {
-
-            // Check if the container div has an input control
-            if (containerDiv.getElementsByTagName("input").length > 0) {
-
-                // If the length of the input value in the input control is 0
-                if (containerDiv.getElementsByTagName("input")[0]
-                    .value.length === 0) {
-                    allFieldsAreValidated = true;
-                }
-
-            } // The container div has a textarea control
-            else {
-
-                // If the length of the textarea value in the textarea control is 0
-                if (containerDiv.getElementsByTagName("textarea")[0]
-                    .value.length === 0) {
-                    allFieldsAreValidated = true;
-                }
-
-            }
-
-        }
-
-        if (prependDiv.classList.contains("prepend-valid")) {
-            allFieldsAreValidated = true;
-        } else {
-            allFieldsAreValidated = false;
-            break;
-        }
-
-    }
-
-    return allFieldsAreValidated;
 
 }
 

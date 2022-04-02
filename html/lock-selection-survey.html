@@ -164,8 +164,8 @@
                       class="fa fa-info"></i></span>
                 </div>
                 <textarea id="input-customer-info" class="form-control"
-                  placeholder="Additional Information" rows="5" cols="50"
-                  ></textarea>
+                  placeholder="Additional Information" rows="5"
+                  cols="50"></textarea>
                 <div class="invalid-feedback">Additional Information cannot
                   contain more
                   than 250 characters.</div>
@@ -193,6 +193,89 @@
         </div>
         <!-- End Capture Customer Details -->
 
+        <!-- Capture Sales Person Details -->
+        <div id="sale-person-information-capture" class="flex-component">
+
+          <!-- Card 1 -->
+          <div id="card-1" class="bg-white rounded-lg shadow">
+
+            <!-- Card Heading -->
+            <div class="card-heading">
+              <h3>Sales Person Information</h3>
+            </div>
+            <!-- End Card Heading -->
+
+            <!-- Card Body -->
+            <div class="card-body">
+
+              <!-- Sales Person ID Field -->
+              <div id="sales-person-id-div" class="input-group form-group">
+
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i
+                      class="fa-solid fa-id-badge"></i></span>
+                </div>
+                <input id="input-sales-person-id" type="text"
+                  class="form-control" placeholder="Sales Person ID" required>
+                <div class="invalid-feedback">Sales Person ID cannot be blank.
+                </div>
+
+              </div>
+              <!-- End Sales Person ID Field -->
+
+              <!-- Sales Person Name Field -->
+              <div id="sales-person-name-div" class="input-group form-group">
+
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i
+                      class="fas fa-user"></i></span>
+                </div>
+                <input id="input-sales-person-name" type="text"
+                  class="form-control" placeholder="Sales Person name" required>
+                <div class="invalid-feedback">Sales Person name cannot be blank.
+                </div>
+
+              </div>
+              <!-- End Sales Person Name Field -->
+
+              <!-- Sales Person Location Information -->
+              <div id="sales-person-location-div"
+                class="input-group form-group optional">
+
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i
+                      class="fa-solid fa-location-dot"></i></span>
+                </div>
+                <textarea id="input-sales-person-info" class="form-control"
+                  placeholder="Location Information" rows="3"
+                  cols="50"></textarea>
+                <div class="invalid-feedback">Location Information cannot
+                  contain more
+                  than 150 characters.</div>
+
+              </div>
+              <!-- End Sales Person Location Information -->
+
+            </div>
+            <!-- Card Body -->
+
+            <!-- Card Footer -->
+            <div class="card-footer text-center">
+
+              <input id="sales-person-previous" class="btn btn-primary"
+                type="button" value="Previous">
+              <input id="sales-person-next" class="btn btn-success"
+                type="button" value="   Next   ">
+
+            </div>
+            <!-- Card Footer -->
+
+          </div>
+          <!-- End Card 1 -->
+
+        </div>
+        <!-- End Capture Sales Person Details -->
+
       </div>
       <!-- End Page Body -->
 
@@ -217,9 +300,11 @@
 
     <!-- Information Capture Javascript -->
     <script src="https://apis.google.com/js/api.js"></script>
+    <script src="./../js/controller/global.js" type="text/javascript"></script>
     <script src="./../js/controller/lock-selection-survey-customer-card.js"
-      type="text/javascript">
-    </script>
+      type="text/javascript"></script>
+    <script src="./../js/controller/lock-selection-survey-sales-person-card.js"
+      type="text/javascript"></script>
 
   </body>
 

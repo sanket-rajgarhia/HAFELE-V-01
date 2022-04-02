@@ -42,7 +42,7 @@ h2 {
 }
 
 h3 {
-    color:rgb(182, 21, 21);
+    color: rgb(182, 21, 21);
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 16px;
     font-weight: 900;
@@ -55,7 +55,8 @@ h3 {
 /* INPUT TAGS - <input>                                                      */
 /*****************************************************************************/
 
-input {
+input,
+textarea {
     font-size: calc(10px + (14 - 10) * ((100vw - 500px) / (1200 - 300))) !important;
 }
 
@@ -121,12 +122,11 @@ input {
 /* INPUT VALIDATION - AND ASSOCIATED CLASSES                                 */
 /*****************************************************************************/
 
-
-.prepend-invalid{
+.prepend-invalid {
     background-color: red;
 }
 
-.prepend-valid{
+.prepend-valid {
     background-color: green;
 }
 
@@ -134,11 +134,11 @@ input {
 /* INPUT PREPEND GROUP TRANSPARENCY CONTROL - AND ASSOCIATED CLASSES         */
 /*****************************************************************************/
 
-.input-group-text-transparent{
+.input-group-text-transparent {
     opacity: 0.5;
 }
 
-.input-group-text-opaque{
+.input-group-text-opaque {
     opacity: 1;
 }
 
