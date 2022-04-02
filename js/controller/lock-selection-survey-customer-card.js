@@ -75,6 +75,17 @@ let customerAddress3PrependDiv = customerAddress3Div
 let customerAddress3InputGroupTextDiv = customerAddress3Div
     .getElementsByClassName("input-group-text")[0];
 
+// Global variables - associated with the - Customer Information input control
+let customerInformationTextAreaPlaceholder = "";
+let customerInformationDiv = document.getElementById("customer-info-div");
+let customerInformationTextArea = document.getElementById("input-customer-info");
+let customerInformationInvalidFeedback = customerInformationDiv
+    .getElementsByClassName("invalid-feedback")[0];
+let customerInformationPrependDiv = customerInformationDiv
+    .getElementsByClassName("input-group-prepend")[0];
+let customerInformationTextAreaGroupTextDiv = customerInformationDiv
+    .getElementsByClassName("input-group-text")[0];
+
 // Global variables - associated with the - Next button control
 let customerCardNextButton = document.getElementById("customer-next");
 
@@ -627,6 +638,119 @@ const validateCustomerAddress3InputOnBlur = () => {
 
 }
 
+/* The callback function fired on 'get focus' - for customer 
+ * Information textarea control.
+ * @param    
+ * @return   
+ * */
+const resetCustomerInformationTextAreaOnGetFocus = () => {
+
+    // Remove the required attribute - if present
+    customerInformationTextArea.removeAttribute("required", "");
+
+    // Preserve the original placeholder text - the first time the control 
+    // gets focus.
+    // The customerInformationTextAreaPlaceholder variable will be empty 
+    // the first time control gets focus
+    if (customerInformationTextAreaPlaceholder.length === 0) {
+        customerInformationTextAreaPlaceholder = customerInformationTextArea
+            .placeholder;
+    }
+
+    // If the customer Information TextArea control has the class SWAP_VALUE 
+    // attached - it means that an incorrect value was entered in the field
+    // the last time the control had focus.
+    if (customerInformationTextArea.classList.contains(SWAP_VALUE) === true) {
+
+        // Remove the class SWAP_VALUE - as the user is preparing to re-enter
+        // a valid value
+        customerInformationTextArea.classList.remove(SWAP_VALUE);
+
+        // Set the value of the textarea control to the placeholder value.
+        // The erroneous/invalid value was preserved in the placeholder 
+        // value - the last time textarea control lost focus.
+        customerInformationTextArea.value = customerInformationTextArea
+            .placeholder;
+
+        // Set the placeholder value of the textarea control to the original
+        // placeholder value of the field.
+        customerInformationTextArea.placeholder =
+            customerInformationTextAreaPlaceholder;
+
+        // Select the value set in the textarea field
+        customerInformationTextArea.select();
+
+    }
+
+    // Reset all validation related classes
+    resetValidation(customerInformationPrependDiv,
+        customerInformationTextAreaGroupTextDiv);
+
+    // Refresh to original state of the container div
+    customerInformationDiv.classList.remove("was-validated");
+
+}
+
+/* The callback function fired on 'blur' - for customer Information 
+ * TextArea control.
+ * @param    
+ * @return   
+ * */
+const validateCustomerInformationTextAreaOnBlur = () => {
+
+    // Check for white spaces
+    if (customerInformationTextArea.value.trim().length === 0) {
+
+        // White spaces are present - reset the value to be empty
+        customerInformationTextArea.value = "";
+
+        // Update the invalid feedback message
+        customerInformationInvalidFeedback.innerHTML = "";
+
+        validateInputControl(customerInformationPrependDiv,
+            customerInformationTextAreaGroupTextDiv);
+
+    } // Check for the length of the info to be not more than 250 characters
+    else if (customerInformationTextArea.value.trim().length > 250) {
+
+        // Set the required attribute
+        customerInformationTextArea.setAttribute("required", "");
+
+        // Update the placeholder to display the erroneous/invalid
+        // entered value and reset the textarea value to blank to invalidate the
+        // textarea control
+        customerInformationTextArea.placeholder = customerInformationTextArea.value;
+        customerInformationTextArea.value = "";
+
+        // Update the invalid feedback message
+        customerInformationInvalidFeedback.innerHTML = "Additional " +
+            "information cannot contain more than 250 characters.";
+
+        // Add the SWAP_VALUE class to the customer Information textarea control
+        customerInformationTextArea.classList.add(SWAP_VALUE);
+
+        invalidateInputControl(customerInformationPrependDiv,
+            customerInformationTextAreaGroupTextDiv);
+
+
+    } else // Passed all validation checks
+    {
+        validateInputControl(customerInformationPrependDiv,
+            customerInformationTextAreaGroupTextDiv);
+    }
+
+    customerInformationDiv.classList.add("was-validated");
+
+    // Enable/Disable the navigation button(s)
+    console.log(allInputsAreValidated());
+    if (allInputsAreValidated() === true) {
+        customerCardNextButton.disabled = false;
+    } else {
+        customerCardNextButton.disabled = true;
+    }
+
+}
+
 /*****************************************************************************/
 /* HELPER FUNCTIONS                                                          */
 /*****************************************************************************/
@@ -711,10 +835,27 @@ const allInputsAreValidated = () => {
         // check if the input box has any value - if it does not have any
         // value - consider it to be validated
         if (containerDiv.classList.contains("optional") === true) {
-            if (containerDiv.getElementsByTagName("input")[0].value.length === 0) {
-                allFieldsAreValidated = true;
-                continue;
+
+            // Check if the container div has an input control
+            if (containerDiv.getElementsByTagName("input").length > 0) {
+
+                // If the length of the input value in the input control is 0
+                if (containerDiv.getElementsByTagName("input")[0]
+                    .value.length === 0) {
+                    allFieldsAreValidated = true;
+                }
+
+            } // The container div has a textarea control
+            else {
+
+                // If the length of the textarea value in the textarea control is 0
+                if (containerDiv.getElementsByTagName("textarea")[0]
+                    .value.length === 0) {
+                    allFieldsAreValidated = true;
+                }
+
             }
+
         }
 
         if (prependDiv.classList.contains("prepend-valid")) {
@@ -723,11 +864,13 @@ const allInputsAreValidated = () => {
             allFieldsAreValidated = false;
             break;
         }
+
     }
 
     return allFieldsAreValidated;
 
 }
+
 /*****************************************************************************/
 /* REGISTER EVENT LISTENERS                                                  */
 /*****************************************************************************/
@@ -759,6 +902,12 @@ customerAddress3Input.addEventListener("blur",
     validateCustomerAddress3InputOnBlur);
 customerAddress3Input.addEventListener("focus",
     resetCustomerAddress3InputOnGetFocus);
+
+// Event listeners registered for the Customer Information text area control
+customerInformationTextArea.addEventListener("blur",
+    validateCustomerInformationTextAreaOnBlur);
+customerInformationTextArea.addEventListener("focus",
+    resetCustomerInformationTextAreaOnGetFocus);
 
 /*****************************************************************************/
 /* END OF FILE                                                               */

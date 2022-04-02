@@ -30,11 +30,11 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap"
       rel="stylesheet">
 
-      <!-- Favicon -->
+    <!-- Favicon -->
     <link rel="shortcut icon" type="image/ico"
       href="./../favicon/favicon.ico" />
 
-      <!-- Page Title -->
+    <!-- Page Title -->
     <title>Lock Selection Survey</title>
 
   </head>
@@ -110,7 +110,7 @@
 
               <!-- Customer Address - Line 1 -->
               <div id="customer-address1-div" class="input-group form-group">
-                
+
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i
                       class="fas fa-building"></i></span>
@@ -119,14 +119,14 @@
                   class="form-control" placeholder="Customer Address - Line 1"
                   required>
                 <div class="invalid-feedback">Address cannot be blank.</div>
-              
+
               </div>
               <!-- End Customer Address - Line 1 -->
 
               <!-- Customer Address - Line 2 -->
               <div id="customer-address2-div"
                 class="input-group form-group optional">
-               
+
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i
                       class="fas fa-building"></i></span>
@@ -154,6 +154,24 @@
 
               </div>
               <!-- End Customer Address - Line 3 -->
+
+              <!-- Customer Additional Information -->
+              <div id="customer-info-div"
+                class="input-group form-group optional">
+
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i
+                      class="fa fa-info"></i></span>
+                </div>
+                <textarea id="input-customer-info" class="form-control"
+                  placeholder="Additional Information" rows="5" cols="50"
+                  ></textarea>
+                <div class="invalid-feedback">Additional Information cannot
+                  contain more
+                  than 250 characters.</div>
+
+              </div>
+              <!-- End Customer Additional Information -->
 
             </div>
             <!-- Card Body -->
@@ -199,7 +217,8 @@
 
     <!-- Information Capture Javascript -->
     <script src="https://apis.google.com/js/api.js"></script>
-    <script src="./../js/controller/lock-selection-survey-customer-card.js" type="text/javascript">
+    <script src="./../js/controller/lock-selection-survey-customer-card.js"
+      type="text/javascript">
     </script>
 
   </body>
