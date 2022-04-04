@@ -1,0 +1,67 @@
+/* * CSS for all web pages.
+ *  @author Sanket Rajgarhia
+ *  @date   03/04/2022 (dd/mm/yyyy)
+ *  @version 1.0
+ * */
+
+/*****************************************************************************/
+/* TOP LEVEL TAGS - <html> <header> and <body>                               */
+/*****************************************************************************/
+
+/* <html>, <header> and <body> tags */
+html,
+header,
+body {
+    background-color: #F9F9F9;
+    font-size: 1rem;
+    font-weight: 400;
+    min-height: 100vh;
+    min-width: 100vw;
+    padding: 0;
+}
+
+/* <body> needs to be relatively positioned to accommodate the absolutely
+positioned footer tag */
+body {
+    position: relative;
+}
+
+/*****************************************************************************/
+/* HEADER AND FOOTER SECTION                                                 */
+/*****************************************************************************/
+
+/* The page header */
+#page-header {
+    background-color: black;
+    min-height: 10vh;
+}
+
+/* The spacer div has the same minimum height as that of the absolutely
+positioned page footer to prevent contents of the body div from going
+under the absolutely positioned footer div - when screen resizes */
+#spacer {
+    min-height: 5vh;
+}
+
+/* The page footer */
+#page-footer {
+    background-color: black;
+    color: white;
+
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40px;
+
+    position: absolute;
+    bottom: 0;
+    max-height: 5vh;
+}
+
+/* Copy right information in the footer */
+.copyright {
+    font-size: 0.7rem;
+}
+
+/*****************************************************************************/
+/* END OF FILE                                                               */
+/*****************************************************************************/
