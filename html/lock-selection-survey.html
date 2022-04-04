@@ -16,6 +16,7 @@
       crossorigin="anonymous">
 
     <!-- Custom Styles CSS -->
+    <link rel="stylesheet" type="text/css" href="./../css/global.css">
     <link rel="stylesheet" type="text/css"
       href="./../css/lock-selection-survey.css">
 
@@ -41,23 +42,28 @@
 
   <body>
 
+    <!-- Page Header -->
+    <div id="page-header" class="container-fluid">
+
+    </div>
+    <!-- End Page Header -->
+
+    <!-- Page Heading -->
+    <div id="survey-heading" class="container-fluid">
+
+      <h1>Lock Selection Survey</h1>
+
+      <!-- Start Status Message -->
+      <div id="status" class="status-hidden">
+        <p class="normal-severity status-message">Placeholder text</p>
+      </div>
+      <!-- End Status Message -->
+
+    </div>
+    <!-- End Page Heading -->
+
     <!-- Main container -->
     <div class="container">
-
-      <!-- Page Heading -->
-      <div id="survey-heading">
-
-        <h1>Lock Selection Survey</h1>
-        <h2>Lorem Ipsum</h2>
-
-        <!-- Start Status Message -->
-        <div id="status" class="status-hidden">
-          <p class="normal-severity status-message">Placeholder text</p>
-        </div>
-        <!-- End Status Message -->
-
-      </div>
-      <!-- End Page Heading -->
 
       <!-- Page Body -->
       <div id="survey-body">
@@ -281,6 +287,19 @@
 
     </div>
     <!-- End Main container -->
+
+    <!-- Spacer div -->
+    <div id="spacer">
+      <!-- A <div> having the same heigh as the <footer> tag to prevent contents of <body>
+        from going under the absolutely positioned <footer> tag when screen resizes. -->
+    </div>
+    <!-- End div -->
+
+    <!-- Page Footer -->
+    <footer id="page-footer" class="container-fluid" text-center>
+      <p class="copyright">Copyright © Hafele 2022</p>
+    </footer>
+    <!-- End Page Footer -->
 
     <!-- Bootstrap v 4.6.0 javascript -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
