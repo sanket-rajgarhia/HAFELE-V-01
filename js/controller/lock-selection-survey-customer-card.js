@@ -79,6 +79,10 @@ let customerInformationPrependDiv = customerInformationDiv
 let customerInformationTextAreaGroupTextDiv = customerInformationDiv
     .getElementsByClassName("input-group-text")[0];
 
+// Reference to the Previous and Next button
+let customerCardPreviousButton = document.getElementById("customer-previous");
+let customerCardNextButton = document.getElementById("customer-next");
+
 /*****************************************************************************/
 /* EVENT LISTENER - CALLBACKS                                                */
 /*****************************************************************************/
@@ -175,13 +179,6 @@ const validateCustomerNameInputOnBlur = () => {
     }
 
     customerNameDiv.classList.add("was-validated");
-
-    // Enable/Disable the navigation button(s)
-    if (allInputsAreValidated("customer-information-capture") === true) {
-        customerCardNextButton.disabled = false;
-    } else {
-        customerCardNextButton.disabled = true;
-    }
 
 }
 
@@ -283,13 +280,6 @@ const validateCustomerMobileInputOnBlur = () => {
 
     customerMobileDiv.classList.add("was-validated");
 
-    // Enable/Disable the navigation button(s)
-    if (allInputsAreValidated("customer-information-capture") === true) {
-        customerCardNextButton.disabled = false;
-    } else {
-        customerCardNextButton.disabled = true;
-    }
-
 }
 
 /* The callback function fired on 'get focus' - for customer 
@@ -385,13 +375,6 @@ const validateCustomerAddress1InputOnBlur = () => {
     }
 
     customerAddress1Div.classList.add("was-validated");
-
-    // Enable/Disable the navigation button(s)
-    if (allInputsAreValidated("customer-information-capture") === true) {
-        customerCardNextButton.disabled = false;
-    } else {
-        customerCardNextButton.disabled = true;
-    }
 
 }
 
@@ -495,13 +478,6 @@ const validateCustomerAddress2InputOnBlur = () => {
 
     customerAddress2Div.classList.add("was-validated");
 
-    // Enable/Disable the navigation button(s)
-    if (allInputsAreValidated("customer-information-capture") === true) {
-        customerCardNextButton.disabled = false;
-    } else {
-        customerCardNextButton.disabled = true;
-    }
-
 }
 
 /* The callback function fired on 'get focus' - for customer 
@@ -603,13 +579,6 @@ const validateCustomerAddress3InputOnBlur = () => {
     }
 
     customerAddress3Div.classList.add("was-validated");
-
-    // Enable/Disable the navigation button(s)
-    if (allInputsAreValidated("customer-information-capture") === true) {
-        customerCardNextButton.disabled = false;
-    } else {
-        customerCardNextButton.disabled = true;
-    }
 
 }
 
@@ -716,11 +685,97 @@ const validateCustomerInformationTextAreaOnBlur = () => {
 
     customerInformationDiv.classList.add("was-validated");
 
-    // Enable/Disable the navigation button(s)
-    if (allInputsAreValidated("customer-information-capture") === true) {
-        customerCardNextButton.disabled = false;
+}
+
+/* The callback function fired on 'click' - for customer previous button 
+ * control.
+ * @param    
+ * @return   
+ * */
+const customerCardPreviousButtonClick = (event) => {
+
+    // Hide the status message
+    invalidStatusMessageDisplay(false);
+
+    // Transition to lock screen
+    let customerInformationCaptureCard = document.getElementById(
+        "customer-information-capture");
+    let lockInformationCaptureCard = document.getElementById(
+        "lock-information-capture");
+
+    window.scrollTo(0, 0);
+    customerInformationCaptureCard.classList.toggle('fade-out');
+
+    setTimeout(function() {
+
+        customerInformationCaptureCard.classList.remove('card-fade-in');
+        customerInformationCaptureCard.classList.add("card-fade-out");
+
+        lockInformationCaptureCard.classList.remove('card-fade-out');
+        lockInformationCaptureCard.classList.add('card-fade-in');
+
+    }, 500);
+
+}
+
+/* The callback function fired on 'click' - for customer next button 
+ * control.
+ * @param    
+ * @return   
+ * */
+const customerCardNextButtonClick = (event) => {
+
+    // Transition to sales screen
+    let customerInformationCaptureCard = document.getElementById(
+        "customer-information-capture");
+    let salesPersonCaptureCard = document.getElementById(
+        "sale-person-information-capture");
+
+    if (allInputsAreValidated("customer-information-capture") === false) {
+
+        // Display the top level warning message
+        invalidStatusMessageDisplay(true, "high-severity",
+            MESSAGE.MESSAGE_MISSING_INPUT);
+
+        // Apply the valid and invalid styles
+        customerNameInput.dispatchEvent(new Event("blur"));
+        customerMobileInput.dispatchEvent(new Event("blur"));
+        customerAddress1Input.dispatchEvent(new Event("blur"));
+        customerAddress2Input.dispatchEvent(new Event("blur"));
+        customerAddress3Input.dispatchEvent(new Event("blur"));
+        customerInformationTextArea.dispatchEvent(new Event("blur"));
+
+
     } else {
-        customerCardNextButton.disabled = true;
+
+        // Hide the status message
+        invalidStatusMessageDisplay(false);
+
+        // Save the customer data
+        let customerData = {
+            customerName: customerNameInput.value,
+            customerMobile: customerMobileInput.value,
+            customerAddress1: customerAddress1Input.value,
+            customerAddress2: customerAddress2Input.value,
+            customerAddress3: customerAddress3Input.value,
+            customerInformation: customerInformationTextArea.value
+        }
+        sessionStorage.setItem("customerData", JSON.stringify(customerData));
+
+        // Transition to the sales person screen
+        window.scrollTo(0, 0);
+        customerInformationCaptureCard.classList.toggle('fade-out');
+
+        setTimeout(function() {
+
+            customerInformationCaptureCard.classList.remove('card-fade-in');
+            customerInformationCaptureCard.classList.add("card-fade-out");
+
+            salesPersonCaptureCard.classList.remove('card-fade-out');
+            salesPersonCaptureCard.classList.add('card-fade-in');
+
+        }, 500);
+
     }
 
 }
@@ -762,6 +817,11 @@ customerInformationTextArea.addEventListener("blur",
     validateCustomerInformationTextAreaOnBlur);
 customerInformationTextArea.addEventListener("focus",
     resetCustomerInformationTextAreaOnGetFocus);
+
+// Event listeners registered for the Customer previous and next buttons
+customerCardPreviousButton.addEventListener("click",
+    customerCardPreviousButtonClick);
+customerCardNextButton.addEventListener("click", customerCardNextButtonClick);
 
 /*****************************************************************************/
 /* END OF FILE                                                               */

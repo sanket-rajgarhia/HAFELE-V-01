@@ -37,8 +37,13 @@ window.onload = function(event) {
 
         // Coming from home page
         if (page === "1") {
+
             // Initialize the lock selection card controls
             initializeLockCardControls();
+
+            // Initialize the customer card controls
+            initializeCustomerCardControls();
+
         }
 
         // Scroll to the top
@@ -47,7 +52,7 @@ window.onload = function(event) {
     } else {
         // Redirect to the index page
         window.location.replace("./../html/index.html");
-        
+
     }
 
 };
@@ -611,6 +616,51 @@ const initializeLockCardControls = () => {
             // doorThicknessSelectionGroup.dispatchEvent(new Event("change"));
 
         }
+    }
+
+}
+
+/* Helper function to initialize all the customer card fields.
+ * @param  
+ * @return 
+ * */
+const initializeCustomerCardControls = () => {
+
+    // Check if the customer data has been captured - if found then 
+    // initialize the customer fields with the previously captured data
+    let customerData = sessionStorage.getItem("customerData");
+    if (customerData !== null) {
+
+        customerData = JSON.parse(customerData);
+        customerNameInput.value = customerData.customerName;
+        customerMobileInput.value = customerData.customerMobile;
+        customerAddress1Input.value = customerData.customerAddress1;
+        customerAddress2Input.value = customerData.customerAddress2;
+        customerAddress3Input.value = customerData.customerAddress3;
+        customerInformationTextArea.value = customerData.customerInformation;
+
+        // Apply the valid and invalid styles
+        customerNameInput.dispatchEvent(new Event("blur"));
+        customerMobileInput.dispatchEvent(new Event("blur"));
+        customerAddress1Input.dispatchEvent(new Event("blur"));
+        customerAddress2Input.dispatchEvent(new Event("blur"));
+        customerAddress3Input.dispatchEvent(new Event("blur"));
+        customerInformationTextArea.dispatchEvent(new Event("blur"));
+
+        if (allInputsAreValidated("customer-information-capture") === false) {
+
+            // Display the top level warning message
+            invalidStatusMessageDisplay(true, "high-severity",
+                MESSAGE.MESSAGE_MISSING_INPUT);
+
+        } else {
+
+            // Hide the status message
+            invalidStatusMessageDisplay(false);
+
+        }
+
+
     }
 
 }

@@ -833,6 +833,8 @@ const lockCardNextButtonClick = (event) => {
         sessionStorage.setItem('lockAndDoorData', JSON.stringify(lockAndDoorData));
 
         // Transition to the customer screen
+        initializeCustomerCardControls();
+
         let customerInformationCaptureCard = document.getElementById(
             "customer-information-capture");
         let lockInformationCaptureCard = document.getElementById(
