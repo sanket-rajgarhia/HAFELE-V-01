@@ -39,7 +39,7 @@
 
   </head>
 
-  <body>
+  <body class="page-fade-in">
 
     <!-- Page Header -->
     <div id="page-header" class="container-fluid">
@@ -76,17 +76,21 @@
             <div class="card-body">
 
               <!-- Lock Model Selection Field -->
-              <div id="lock-model-selection-div" class="input-group form-group">
+              <div id="lock-model-selection-div" class="form-group">
 
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i
-                      class="fa-solid fa-lock"></i></span>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i
+                        class="fa-solid fa-lock"></i></span>
+                  </div>
+
+                  <select id="lock-model-group"
+                    class="custom-select custom-select-extended">
+                    <optgroup>
+                      <option value="" selected>Lock Model</option>
+                    </optgroup>
+                  </select>
                 </div>
-
-                <select id="lockModelGroup"
-                  class="custom-select custom-select-extended">
-                  <option value="" selected>Select a lock model</option>
-                </select>
 
               </div>
               <!-- End Lock Model Selection Field -->

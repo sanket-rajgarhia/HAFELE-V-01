@@ -11,7 +11,7 @@
 /*****************************************************************************/
 
 // Global variable - associated with the - lock model select control
-let lockModelSelectionGroup = document.getElementById("lockModelGroup");
+let lockModelSelectionGroup = document.getElementById("lock-model-group");
 
 // Global variable - associated with the - lock model selection next button
 let lockSelectionNextButton = document.getElementById("lock-selection-next");
@@ -30,14 +30,102 @@ let doorSpecificationNextButton = document.getElementById(
  * */
 window.onload = function() {
 
-    // Add all the lock model names to the lock model group selection combo box
+    // Add all the swing door - lock model name options to the lock model
+    // group selection combo box
+    let optionGroup = document.createElement("optgroup");
+    optionGroup.setAttribute("label", DOOR_TYPE.SWING_DOOR);
+    let optionGroupAdded = false;
     Object.keys(LOCK_MODEL).forEach(key => {
 
-        let optionTag = document.createElement("option");
-        optionTag.setAttribute("value", LOCK_MODEL[key])
-        let lockTextNode = document.createTextNode(LOCK_MODEL[key]);
-        optionTag.appendChild(lockTextNode);
-        lockModelSelectionGroup.appendChild(optionTag);
+        let lockModelSelectionGroup = document.getElementById("lock-model-group");
+
+        // The lock and door type compatibility object
+        let compatibleDoor = lockCompatibility(
+            key.toUpperCase());
+
+        // Add only if the lock is meant for swing doors
+        if (compatibleDoor.doorType.toUpperCase() ===
+            DOOR_TYPE.SWING_DOOR.toUpperCase()) {
+
+            if (optionGroupAdded === false) {
+                lockModelSelectionGroup.appendChild(optionGroup);
+                optionGroupAdded = true;
+            }
+
+            let optionTag = document.createElement("option");
+            optionTag.setAttribute("value", LOCK_MODEL[key]);
+            optionTag.setAttribute("data-door-type", DOOR_TYPE.SWING_DOOR);
+            let textNode = document.createTextNode(LOCK_MODEL[key]);
+            optionTag.appendChild(textNode);
+
+            optionGroup.appendChild(optionTag);
+        }
+
+    });
+
+    // Add all the sliding door - lock model name options to the lock model
+    // group selection combo box
+    optionGroup = document.createElement("optgroup");
+    optionGroup.setAttribute("label", DOOR_TYPE.SLIDING_DOOR);
+    optionGroupAdded = false;
+    Object.keys(LOCK_MODEL).forEach(key => {
+
+        let lockModelSelectionGroup = document.getElementById("lock-model-group");
+
+        // The lock and door type compatibility object
+        let compatibleDoor = lockCompatibility(
+            key.toUpperCase());
+
+        // Add only if the lock is meant for swing doors
+        if (compatibleDoor.doorType.toUpperCase() ===
+            DOOR_TYPE.SLIDING_DOOR.toUpperCase()) {
+
+            if (optionGroupAdded === false) {
+                lockModelSelectionGroup.appendChild(optionGroup);
+                optionGroupAdded = true;
+            }
+
+            let optionTag = document.createElement("option");
+            optionTag.setAttribute("value", LOCK_MODEL[key]);
+            optionTag.setAttribute("data-door-type", DOOR_TYPE.SLIDING_DOOR);
+            let textNode = document.createTextNode(LOCK_MODEL[key]);
+            optionTag.appendChild(textNode);
+
+            optionGroup.appendChild(optionTag);
+        }
+
+    });
+
+    // Add all the swing and sliding door - lock model name options to the
+    // lock model group selection combo box
+    optionGroup = document.createElement("optgroup");
+    optionGroup.setAttribute("label", DOOR_TYPE.SWING_DOOR + " AND " +
+        DOOR_TYPE.SLIDING_DOOR);
+    optionGroupAdded = false;
+    Object.keys(LOCK_MODEL).forEach(key => {
+
+        let lockModelSelectionGroup = document.getElementById("lock-model-group");
+
+        // The lock and door type compatibility object
+        let compatibleDoor = lockCompatibility(
+            key.toUpperCase());
+
+        // Add only if the lock is meant for swing doors
+        if (compatibleDoor.doorType.indexOf("/") > -1) {
+
+            if (optionGroupAdded === false) {
+                lockModelSelectionGroup.appendChild(optionGroup);
+                optionGroupAdded = true;
+            }
+
+            let optionTag = document.createElement("option");
+            optionTag.setAttribute("value", LOCK_MODEL[key]);
+            optionTag.setAttribute("data-door-type", compatibleDoor.doorType);
+            let textNode = document.createTextNode(LOCK_MODEL[key]);
+            optionTag.appendChild(textNode);
+
+            optionGroup.appendChild(optionTag);
+        }
 
     });
 
@@ -69,21 +157,25 @@ window.onload = function() {
         text = document.createTextNode(lock.doorThickness);
         doorThicknessValueElement.appendChild(text);
 
-        // Delete the session storage items
-        sessionStorage.removeItem('lockModelSelected');
-        sessionStorage.removeItem('compatibleDoor');
-
         // Enable the lock model selection next button
         lockSelectionNextButton.disabled = false;
 
     } else {
-        
+
         // Ensure that no lock models are selected by default
         lockModelSelectionGroup.options[0].selected = true
 
         // Ensure that the lock model selection next button is disabled by default
         lockSelectionNextButton.disabled = true;
     }
+
+    // Delete the session storage items - at start of flow
+    sessionStorage.removeItem('page');
+    sessionStorage.removeItem('lockModelSelected');
+    sessionStorage.removeItem('compatibleDoor');
+    sessionStorage.removeItem('lockAndDoorData');
+    sessionStorage.removeItem('customerData');
+    sessionStorage.removeItem('salesPersonData');
 
 };
 
@@ -145,8 +237,9 @@ const lockSelectionOnChange = (event) => {
  * */
 const loadSurveyPageOnClick = () => {
 
-    // Save the selected lock and associated door type and door thickness
-    // range object to the session storage
+    // Save the page data, selected lock and associated door type and
+    // door thickness range object to the session storage
+    sessionStorage.setItem('page', "1");
     sessionStorage.setItem('lockModelSelected', lockModelSelectionGroup.value);
     sessionStorage.setItem('compatibleDoor',
         JSON.stringify(lockCompatibility(
