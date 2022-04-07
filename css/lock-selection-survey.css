@@ -59,7 +59,7 @@ textarea {
 
 /* Severity of status (error) message */
 .high-severity {
-    color: rgb(182, 21, 21);
+    color: rgb(236, 11, 22);
 }
 
 .normal-severity {
@@ -78,6 +78,7 @@ textarea {
 }
 
 .status-displayed {
+    margin-top: 2rem;
     max-height: 1000px;
     opacity: 1;
     transition: max-height 3000ms ease-in, opacity 4000ms;
@@ -114,6 +115,16 @@ textarea {
     background-color: green;
 }
 
+.prepend-invalid-combo {
+    background-color: #F57B83;
+    border: 1px solid red ! important;
+}
+
+.prepend-valid-combo {
+    background-color: #7AB67E;
+    border: 1px solid green ! important;
+}
+
 /*****************************************************************************/
 /* INPUT PREPEND GROUP TRANSPARENCY CONTROL - AND ASSOCIATED CLASSES         */
 /*****************************************************************************/
@@ -124,6 +135,21 @@ textarea {
 
 .input-group-text-opaque {
     opacity: 1;
+}
+
+/*****************************************************************************/
+/* GENERAL CARDS STYLING                                                     */
+/*****************************************************************************/
+
+.custom-select-extended {
+    font-size: calc(10px + (14 - 10) * ((100vw - 500px) / (1200 - 300))) !important;
+}
+
+.message,
+.caution {
+    margin-top: 10px;
+    box-shadow: none !important;
+    font-size: 0.8rem;
 }
 
 /*****************************************************************************/

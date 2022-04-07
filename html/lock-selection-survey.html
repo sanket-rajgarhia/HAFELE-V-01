@@ -40,7 +40,7 @@
 
   </head>
 
-  <body>
+  <body class="page-fade-in">
 
     <!-- Page Header -->
     <div id="page-header" class="container-fluid">
@@ -68,8 +68,314 @@
       <!-- Page Body -->
       <div id="survey-body">
 
+        <!-- Capture Lock and Door Details -->
+        <div id="lock-information-capture" class="flex-component card-fade-in">
+
+          <!-- Card 1 -->
+          <div id="card-1" class="bg-white rounded-lg shadow">
+
+            <!-- Card Heading -->
+            <div class="card-heading">
+              <h3>Door And Lock Information</h3>
+            </div>
+            <!-- End Card Heading -->
+
+            <!-- Card Body -->
+            <div class="card-body">
+
+              <!-- Lock Model Selection Field -->
+              <div id="lock-model-selection-div" class="form-group">
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i
+                        class="fa-solid fa-lock"></i></span>
+                  </div>
+
+                  <select id="lock-model-group"
+                    class="custom-select custom-select-extended">
+                    <optgroup>
+                      <option value="" selected>Lock Model</option>
+                    </optgroup>
+                  </select>
+                </div>
+
+              </div>
+              <!-- End Lock Model Selection Field -->
+
+              <!-- Installation Location Selection Field -->
+              <div id="installation-location-selection-div" class="form-group">
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i
+                        class="fa-solid fa-door-open"></i></span>
+                  </div>
+
+                  <select id="installation-location-group"
+                    class="custom-select custom-select-extended">
+                    <option value="" selected>Installation Location
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Message -->
+                <div class="field-info"><label
+                    id="message-installation-location"
+                    class="high-severity message fade-out hide"></label>
+                </div>
+                <!-- End Message -->
+
+              </div>
+              <!-- End Installation Location Selection Field -->
+
+              <!-- Door Condition Selection Field -->
+              <div id="door-condition-selection-div" class="form-group">
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i
+                        class="fas fa-ribbon"></i></span>
+                  </div>
+
+                  <select id="door-condition-group"
+                    class="custom-select custom-select-extended">
+                    <option value="" selected>Door Condition
+                    </option>
+                  </select>
+                </div>
+
+              </div>
+              <!-- End Door Condition Selection Field -->
+
+              <!-- Existing Door Retrofit Selection Field -->
+              <div id="existing-door-retrofit-selection-div"
+                class="form-group fade-out hide">
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i
+                        class="fa-solid fa-grip-vertical"></i></span>
+                  </div>
+
+                  <select id="existing-door-retrofit-group"
+                    class="custom-select custom-select-extended">
+                    <option value="" selected>Existing Door Retrofit
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Message -->
+                <div class="field-info"><label
+                    id="message-existing-door-retrofit"
+                    class="high-severity message fade-out hide"></label>
+                </div>
+                <!-- End Message -->
+
+                <!-- Caution -->
+                <div class="field-caution">
+                  <label id="caution-existing-door-retrofit"
+                    class="low-severity caution fade-out hide"></label>
+                </div>
+                <!-- End Caution -->
+
+              </div>
+              <!-- End Existing Door Retrofit Selection Field -->
+
+              <!-- Door Type Selection Field -->
+              <div id="door-type-selection-div" class="form-group">
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i
+                        class="fas fa-door-closed"></i></span>
+                  </div>
+
+                  <select id="door-type-group"
+                    class="custom-select custom-select-extended">
+                    <option value="" selected>Door Type
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Message -->
+                <div class="field-info"><label id="message-door-type"
+                    class="high-severity message fade-out hide"></label>
+                </div>
+                <!-- End Message -->
+
+              </div>
+              <!-- End Door Type Selection Field -->
+
+              <!-- Swing Door Type Selection Field -->
+              <div id="swing-door-type-selection-div"
+                class="form-group fade-out hide">
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i
+                        class="fas fa-door-closed"></i></span>
+                  </div>
+
+                  <select id="swing-door-type-group"
+                    class="custom-select custom-select-extended">
+                    <option value="" selected>Swing Door Type
+                    </option>
+                  </select>
+                </div>
+
+              </div>
+              <!-- End Swing Door Type Selection Field -->
+
+              <!-- Swing Door Jamb Selection Field -->
+              <div id="swing-door-jamb-selection-div"
+                class="form-group fade-out hide">
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i
+                        class="fas fa-columns"></i></span>
+                  </div>
+
+                  <select id="swing-door-jamb-group"
+                    class="custom-select custom-select-extended">
+                    <option value="" selected>Swing Door Jamb
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Message -->
+                <div class="field-info">
+                  <label id="message-swing-door-jamb"
+                    class="high-severity message fade-out hide"></label>
+                </div>
+                <!-- End Message -->
+
+                <!-- Caution -->
+                <div class="field-caution">
+                  <label id="caution-swing-door-jamb"
+                    class="low-severity caution fade-out hide"></label>
+                </div>
+                <!-- End Caution -->
+
+              </div>
+              <!-- End Swing Door Jamb Selection Field -->
+
+              <!-- Door Thickness Selection Field -->
+              <div id="door-thickness-selection-div" class="form-group">
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i
+                        class="fas fa-cube"></i></span>
+                  </div>
+
+                  <select id="door-thickness-group"
+                    class="custom-select custom-select-extended">
+                    <option value="" selected>Door Thickness
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Message -->
+                <div class="field-info">
+                  <label id="message-door-thickness"
+                    class="high-severity message fade-out hide"></label>
+                </div>
+                <!-- End Message -->
+
+              </div>
+              <!-- End Door Thickness Selection Field -->
+
+              <!-- Door Thickness Input Field -->
+              <div id="door-thickness-input-div"
+                class="form-group fade-out hide">
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i
+                        class="fas fa-cube"></i></span>
+                  </div>
+
+                  <input id="input-door-thickness" type="number" min="1"
+                    class="form-control" placeholder="Door Thickness In mm"
+                    required>
+                </div>
+
+              </div>
+              <!-- End Door Thickness Input Field -->
+
+              <!-- Door Material Selection Field -->
+              <div id="door-material-selection-div" class="form-group">
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i
+                        class="fab fa-hive"></i></span>
+                  </div>
+
+                  <select id="door-material-group"
+                    class="custom-select custom-select-extended">
+                    <option value="" selected>Door Material
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Message -->
+                <div class="field-info">
+                  <label id="message-door-material"
+                    class="high-severity message fade-out hide"></label>
+                </div>
+                <!-- End Message -->
+
+              </div>
+              <!-- End Door Material Selection Field -->
+
+              <!-- Door Leaf Selection Field -->
+              <div id="door-leaf-selection-div" class="form-group">
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i
+                        class="fas fa-border-all"></i></span>
+                  </div>
+
+                  <select id="door-leaf-group"
+                    class="custom-select custom-select-extended">
+                    <optgroup>
+                      <option value="" selected>Door Leaf</option>
+                    </optgroup>
+                  </select>
+                </div>
+
+                <!-- Message -->
+                <div class="field-info"><label id="message-door-leaf"
+                    class="high-severity message fade-out hide"></label>
+                </div>
+                <!-- End Message -->
+
+              </div>
+              <!-- End Door Leaf Selection Field -->
+
+            </div>
+            <!-- End Card Body -->
+
+            <!-- Card Footer -->
+            <div class="card-footer text-center">
+              <input id="lock-selection-next" class="btn btn-success"
+                type="submit" value="      Next      ">
+            </div>
+            <!-- End Card Footer -->
+
+          </div>
+          <!-- End Card 1 -->
+
+        </div>
+        <!-- End Capture Lock and Door Details -->
+
         <!-- Capture Customer Details -->
-        <div id="customer-information-capture" class="flex-component">
+        <div id="customer-information-capture"
+          class="flex-component card-fade-out">
 
           <!-- Card 1 -->
           <div id="card-1" class="bg-white rounded-lg shadow">
@@ -180,7 +486,7 @@
               <!-- End Customer Additional Information -->
 
             </div>
-            <!-- Card Body -->
+            <!-- End Card Body -->
 
             <!-- Card Footer -->
             <div class="card-footer text-center">
@@ -191,7 +497,7 @@
                 value="   Next   ">
 
             </div>
-            <!-- Card Footer -->
+            <!-- End Card Footer -->
 
           </div>
           <!-- End Card 1 -->
@@ -200,7 +506,8 @@
         <!-- End Capture Customer Details -->
 
         <!-- Capture Sales Person Details -->
-        <div id="sale-person-information-capture" class="flex-component">
+        <div id="sale-person-information-capture"
+          class="flex-component card-fade-out">
 
           <!-- Card 1 -->
           <div id="card-1" class="bg-white rounded-lg shadow">
@@ -263,7 +570,7 @@
               <!-- End Sales Person Location Information -->
 
             </div>
-            <!-- Card Body -->
+            <!-- End Card Body -->
 
             <!-- Card Footer -->
             <div class="card-footer text-center">
@@ -274,7 +581,7 @@
                 type="button" value="   Next   ">
 
             </div>
-            <!-- Card Footer -->
+            <!-- End Card Footer -->
 
           </div>
           <!-- End Card 1 -->
@@ -319,10 +626,23 @@
 
     <!-- Information Capture Javascript -->
     <script src="https://apis.google.com/js/api.js"></script>
+
+    <script src="./../lib/lang/en/enum/door/door-enum.js"
+      type="text/javascript"></script>
+    <script src="./../lib/lang/en/enum/lock/lock-enum.js"
+      type="text/javascript"></script>
+    <script src="./../lib/lang/en/enum/message/message-enum.js"
+      type="text/javascript"></script>
+
     <script src="./../js/controller/global.js" type="text/javascript"></script>
+
     <script src="./../js/controller/lock-selection-survey-customer-card.js"
       type="text/javascript"></script>
     <script src="./../js/controller/lock-selection-survey-sales-person-card.js"
+      type="text/javascript"></script>
+    <script src="./../js/controller/lock-compatibility.js"
+      type="text/javascript"></script>
+    <script src="./../js/controller/lock-selection-survey-lock-card.js"
       type="text/javascript"></script>
 
   </body>

@@ -20,9 +20,7 @@ const SWAP_VALUE = "swapValue";
 /* GLOBAL VARIABLE                                                          */
 /*****************************************************************************/
 
-// Global variables - associated with the - Next button control
-let salesPersonCardNextButton = document.getElementById("sales-person-next");
-let customerCardNextButton = document.getElementById("customer-next");
+// Define global variables in this section
 
 /*****************************************************************************/
 /* WINDOWS ONLOAD                                                            */
@@ -34,12 +32,19 @@ let customerCardNextButton = document.getElementById("customer-next");
  * */
 window.onload = function() {
 
-    // Disable the Next button in salesPerson Card
-    salesPersonCardNextButton.disabled = true;
-    // Disable the Next button in Customer Card
-    customerCardNextButton.disabled = true;
+    // Initialize the lock selection card controls
+    initializeLockCardControls();
+
+    // Scroll to the top
+    window.scrollTo(0, 0);
 
 };
+
+/*****************************************************************************/
+/* EVENT LISTENER - CALLBACKS                                                */
+/*****************************************************************************/
+
+// Implement event listeners callbacks in this section
 
 /*****************************************************************************/
 /* HELPER FUNCTIONS                                                          */
@@ -97,6 +102,87 @@ const resetValidation = (prependDiv, inputGroupTextDiv) => {
     // Make the input-group-text <div> opaque
     inputGroupTextDiv.classList.remove("input-group-text-transparent");
     inputGroupTextDiv.classList.add("input-group-text-opaque");
+
+}
+
+/* Helper function to provide the invalidate style for the select control. 
+ * @param   {HTMLElement}   selectionGroup   Top Field selection <div>
+ * @param   {HTMLElement}   selectionDiv     <div class="input-group-prepend">
+ * @return   
+ * */
+const invalidateSelectControl = (selectionGroup, selectionDiv) => {
+
+    selectionGroup.setAttribute("style", "border-color: red");
+    selectionDiv.getElementsByTagName("span")[0].classList.add("prepend-invalid-combo");
+    selectionDiv.getElementsByTagName("i")[0].setAttribute("style", "color: #A52C36");
+
+}
+
+/* Helper function to provide the validate style for the select control. 
+ * @param   {HTMLElement}   selectionGroup   Top Field selection <div>
+ * @param   {HTMLElement}   selectionDiv     <div class="input-group-prepend">
+ * @return   
+ * */
+const validateSelectControl = (selectionGroup, selectionDiv) => {
+
+    selectionGroup.setAttribute("style", "border-color: green");
+    selectionDiv.getElementsByTagName("span")[0].classList.remove("prepend-invalid-combo");
+    selectionDiv.getElementsByTagName("span")[0].classList.add("prepend-valid-combo");
+    selectionDiv.getElementsByTagName("i")[0].removeAttribute("style");
+
+}
+
+/* Helper function to remove the validate and invalidate style
+ * for the select control.
+ * @param   {HTMLElement}   selectionGroup   Top Field selection <div>
+ * @param   {HTMLElement}   selectionDiv     <div class="input-group-prepend">
+ * @return   
+ * */
+const resetSelectControl = (selectionGroup, selectionDiv) => {
+
+    selectionGroup.removeAttribute("style");
+    selectionDiv.getElementsByTagName("span")[0].classList.remove("prepend-valid-combo");
+    selectionDiv.getElementsByTagName("span")[0].classList.remove("prepend-invalid-combo");
+    selectionDiv.getElementsByTagName("i")[0].removeAttribute("style");
+
+}
+
+/* Helper function to show or hide the top level status message
+ * for the select control.
+ * @param   {boolean}  display   If true the the status message is displayed
+ *                               else the status message is hidden
+ * @param   {cssClassName} severity  low-severity/normal-severity/high-severity
+ * @ param  {String} message The message to be displayed
+ * @return   
+ * */
+const invalidStatusMessageDisplay = (display, severity = "low-severity", message = "") => {
+
+    let statusId = document.getElementById("status");
+    let messagePara = statusId.getElementsByTagName("p")[0];
+
+    if (display === true) {
+
+        messagePara.classList.remove("low-severity");
+        messagePara.classList.remove("normal-severity");
+        messagePara.classList.remove("high-severity");
+
+        messagePara.classList.add(severity);
+        messagePara.innerHTML = message;
+        statusId.classList.remove("status-hidden");
+        statusId.classList.add("status-displayed");
+
+    } else {
+
+        messagePara.classList.remove("low-severity");
+        messagePara.classList.remove("normal-severity");
+        messagePara.classList.remove("high-severity");
+
+        messagePara.classList.add("normal-severity");
+        messagePara.innerHTML = "";
+        statusId.classList.add("status-hidden");
+        statusId.classList.remove("status-displayed");
+
+    }
 
 }
 
@@ -174,6 +260,354 @@ const allInputsAreValidated = (topLevelDivId) => {
     return allFieldsAreValidated;
 
 }
+
+/* Helper function to initialize all the lock selection card fields.
+ * @param  
+ * @return 
+ * */
+const initializeLockCardControls = () => {
+
+    // Add all the swing door - lock model name options to the lock model
+    // group selection combo box
+    let optionGroup = document.createElement("optgroup");
+    optionGroup.setAttribute("label", DOOR_TYPE.SWING_DOOR);
+    let optionGroupAdded = false;
+    Object.keys(LOCK_MODEL).forEach(key => {
+
+        let lockModelSelectionGroup = document.getElementById("lock-model-group");
+
+        // The lock and door type compatibility object
+        let compatibleDoor = lockCompatibility(
+            key.toUpperCase());
+
+        // Add only if the lock is meant for swing doors
+        if (compatibleDoor.doorType.toUpperCase() ===
+            DOOR_TYPE.SWING_DOOR.toUpperCase()) {
+
+            if (optionGroupAdded === false) {
+                lockModelSelectionGroup.appendChild(optionGroup);
+                optionGroupAdded = true;
+            }
+
+            let optionTag = document.createElement("option");
+            optionTag.setAttribute("value", LOCK_MODEL[key]);
+            optionTag.setAttribute("data-door-type", DOOR_TYPE.SWING_DOOR);
+            let textNode = document.createTextNode(LOCK_MODEL[key]);
+            optionTag.appendChild(textNode);
+
+            optionGroup.appendChild(optionTag);
+        }
+
+    });
+
+    // Add all the sliding door - lock model name options to the lock model
+    // group selection combo box
+    optionGroup = document.createElement("optgroup");
+    optionGroup.setAttribute("label", DOOR_TYPE.SLIDING_DOOR);
+    optionGroupAdded = false;
+    Object.keys(LOCK_MODEL).forEach(key => {
+
+        let lockModelSelectionGroup = document.getElementById("lock-model-group");
+
+        // The lock and door type compatibility object
+        let compatibleDoor = lockCompatibility(
+            key.toUpperCase());
+
+        // Add only if the lock is meant for swing doors
+        if (compatibleDoor.doorType.toUpperCase() ===
+            DOOR_TYPE.SLIDING_DOOR.toUpperCase()) {
+
+            if (optionGroupAdded === false) {
+                lockModelSelectionGroup.appendChild(optionGroup);
+                optionGroupAdded = true;
+            }
+
+            let optionTag = document.createElement("option");
+            optionTag.setAttribute("value", LOCK_MODEL[key]);
+            optionTag.setAttribute("data-door-type", DOOR_TYPE.SLIDING_DOOR);
+            let textNode = document.createTextNode(LOCK_MODEL[key]);
+            optionTag.appendChild(textNode);
+
+            optionGroup.appendChild(optionTag);
+        }
+
+    });
+
+    // Add all the swing and sliding door - lock model name options to the
+    // lock model group selection combo box
+    optionGroup = document.createElement("optgroup");
+    optionGroup.setAttribute("label", DOOR_TYPE.SWING_DOOR + " AND " +
+        DOOR_TYPE.SLIDING_DOOR);
+    optionGroupAdded = false;
+    Object.keys(LOCK_MODEL).forEach(key => {
+
+        let lockModelSelectionGroup = document.getElementById("lock-model-group");
+
+        // The lock and door type compatibility object
+        let compatibleDoor = lockCompatibility(
+            key.toUpperCase());
+
+        // Add only if the lock is meant for swing doors
+        if (compatibleDoor.doorType.indexOf("/") > -1) {
+
+            if (optionGroupAdded === false) {
+                lockModelSelectionGroup.appendChild(optionGroup);
+                optionGroupAdded = true;
+            }
+
+            let optionTag = document.createElement("option");
+            optionTag.setAttribute("value", LOCK_MODEL[key]);
+            optionTag.setAttribute("data-door-type", compatibleDoor.doorType);
+            let textNode = document.createTextNode(LOCK_MODEL[key]);
+            optionTag.appendChild(textNode);
+
+            optionGroup.appendChild(optionTag);
+        }
+
+    });
+
+    // Add all the installation locations options to the installation location
+    // group selection combo box
+    Object.keys(DOOR_INSTALLATION_LOCATION).forEach(key => {
+
+        let installationLocationSelectionGroup = document.getElementById(
+            "installation-location-group");
+        let optionTag = document.createElement("option");
+        optionTag.setAttribute("value", DOOR_INSTALLATION_LOCATION[key]);
+        let textNode = document.createTextNode(DOOR_INSTALLATION_LOCATION[key]);
+        optionTag.appendChild(textNode);
+        installationLocationSelectionGroup.appendChild(optionTag);
+
+    });
+
+    // Add all the door condition options to the door condition
+    // group selection combo box
+    Object.keys(DOOR_CONDITION).forEach(key => {
+
+        let doorConditionSelectionGroup = document.getElementById(
+            "door-condition-group");
+        let optionTag = document.createElement("option");
+        optionTag.setAttribute("value", DOOR_CONDITION[key]);
+        let textNode = document.createTextNode(DOOR_CONDITION[key]);
+        optionTag.appendChild(textNode);
+        doorConditionSelectionGroup.appendChild(optionTag);
+
+    });
+
+    // Add all the existing door retrofit options to the existing door retrofit
+    // group selection combo box
+    Object.keys(DOOR_RETROFIT).forEach(key => {
+
+        let existingDoorRetrofitSelectionGroup = document.getElementById(
+            "existing-door-retrofit-group");
+        let optionTag = document.createElement("option");
+        optionTag.setAttribute("value", DOOR_RETROFIT[key]);
+        let textNode = document.createTextNode(DOOR_RETROFIT[key]);
+        optionTag.appendChild(textNode);
+        existingDoorRetrofitSelectionGroup.appendChild(optionTag);
+
+    });
+
+    // Add all the door type options to the door type
+    // group selection combo box
+    Object.keys(DOOR_TYPE).forEach(key => {
+
+        let doorTypeSelectionGroup = document.getElementById(
+            "door-type-group");
+        let optionTag = document.createElement("option");
+        optionTag.setAttribute("value", DOOR_TYPE[key]);
+        let textNode = document.createTextNode(DOOR_TYPE[key]);
+        optionTag.appendChild(textNode);
+        doorTypeSelectionGroup.appendChild(optionTag);
+
+    });
+
+    // Add all the swing door type options to the swing door type
+    // group selection combo box
+    Object.keys(SWING_DOOR_TYPE).forEach(key => {
+
+        let swingDoorTypeSelectionGroup = document.getElementById(
+            "swing-door-type-group");
+        let optionTag = document.createElement("option");
+        optionTag.setAttribute("value", SWING_DOOR_TYPE[key]);
+        let textNode = document.createTextNode(SWING_DOOR_TYPE[key]);
+        optionTag.appendChild(textNode);
+        swingDoorTypeSelectionGroup.appendChild(optionTag);
+
+    });
+
+    // Add all the swing door jamb options to the swing door jamb
+    // group selection combo box
+    Object.keys(SWING_DOOR_JAMB).forEach(key => {
+
+        let swingDoorJambSelectionGroup = document.getElementById(
+            "swing-door-jamb-group");
+        let optionTag = document.createElement("option");
+        optionTag.setAttribute("value", SWING_DOOR_JAMB[key]);
+        let textNode = document.createTextNode(SWING_DOOR_JAMB[key]);
+        optionTag.appendChild(textNode);
+        swingDoorJambSelectionGroup.appendChild(optionTag);
+
+    });
+
+    // Add all the door thickness options to the door thickness
+    // group selection combo box
+    Object.keys(DOOR_THICKNESS_IN_MM).forEach(key => {
+
+        let doorThicknessSelectionGroup = document.getElementById(
+            "door-thickness-group");
+        let optionTag = document.createElement("option");
+        optionTag.setAttribute("value", DOOR_THICKNESS_IN_MM[key]);
+        let textNode = document.createTextNode(DOOR_THICKNESS_IN_MM[key]);
+        optionTag.appendChild(textNode);
+        doorThicknessSelectionGroup.appendChild(optionTag);
+
+    });
+
+    // Add all the door material options to the door material
+    // group selection combo box
+    Object.keys(DOOR_MATERIAL).forEach(key => {
+
+        let doorMaterialSelectionGroup = document.getElementById(
+            "door-material-group");
+        let optionTag = document.createElement("option");
+        optionTag.setAttribute("value", DOOR_MATERIAL[key])
+        let textNode = document.createTextNode(DOOR_MATERIAL[key]);
+        optionTag.appendChild(textNode);
+        doorMaterialSelectionGroup.appendChild(optionTag);
+
+    });
+
+    // Add all the swing door leaf options to the door leaf
+    // group selection combo box
+    optionGroup = document.createElement("optgroup");
+    optionGroup.setAttribute("label", "SWING DOOR LEAF");
+    optionGroupAdded = false;
+    Object.keys(SWING_DOOR_LEAF).forEach(key => {
+
+        let doorLeafSelectionGroup = document.getElementById(
+            "door-leaf-group");
+
+        if (optionGroupAdded === false) {
+            doorLeafSelectionGroup.appendChild(optionGroup);
+            optionGroupAdded = true;
+        }
+        let optionTag = document.createElement("option");
+        optionTag.setAttribute("value", SWING_DOOR_LEAF[key]);
+        optionTag.setAttribute("data-door-type", DOOR_TYPE.SWING_DOOR);
+        let textNode = document.createTextNode(SWING_DOOR_LEAF[key]);
+        optionTag.appendChild(textNode);
+
+        optionGroup.appendChild(optionTag);
+
+    });
+
+    // Add all the sliding door leaf options to the door leaf
+    // group selection combo box
+    optionGroup = document.createElement("optgroup");
+    optionGroup.setAttribute("label", "SLIDING DOOR LEAF");
+    optionGroupAdded = false;
+    Object.keys(SLIDING_DOOR_LEAF).forEach(key => {
+
+        let doorLeafSelectionGroup = document.getElementById(
+            "door-leaf-group");
+        if (optionGroupAdded === false) {
+            doorLeafSelectionGroup.appendChild(optionGroup);
+            optionGroupAdded = true;
+        }
+        let optionTag = document.createElement("option");
+        optionTag.setAttribute("value", SLIDING_DOOR_LEAF[key]);
+        optionTag.setAttribute("data-door-type", DOOR_TYPE.SLIDING_DOOR);
+        let textNode = document.createTextNode(SLIDING_DOOR_LEAF[key]);
+        optionTag.appendChild(textNode);
+
+        optionGroup.appendChild(optionTag);
+
+    });
+
+    // If the user is returning to the page after filling all the form details
+    // recreate the filled up lock and door data card
+    let lockAndDoorData = sessionStorage.getItem("lockAndDoorData");
+    if (lockAndDoorData !== null) {
+
+        lockAndDoorData = JSON.parse(lockAndDoorData);
+
+        lockModelSelectionGroup.value = lockAndDoorData.lockModel;
+        lockModelSelectionGroup.dispatchEvent(new Event("change"));
+        installationLocationSelectionGroup.value = lockAndDoorData.installationLocation;
+        installationLocationSelectionGroup.dispatchEvent(new Event("change"));
+        doorConditionSelectionGroup.value = lockAndDoorData.doorCondition;
+        doorConditionSelectionGroup.dispatchEvent(new Event("change"));
+        existingDoorRetrofitSelectionGroup.value = lockAndDoorData.existingDoorRetrofit;
+        existingDoorRetrofitSelectionGroup.dispatchEvent(new Event("change"));
+        doorTypeSelectionGroup.value = lockAndDoorData.doorType;
+        doorTypeSelectionGroup.dispatchEvent(new Event("change"));
+        swingDoorTypeSelectionGroup.value = lockAndDoorData.swingDoorType;
+        swingDoorTypeSelectionGroup.dispatchEvent(new Event("change"));
+        swingDoorJambSelectionGroup.value = lockAndDoorData.swingDoorJamb;
+        swingDoorJambSelectionGroup.dispatchEvent(new Event("change"));
+        doorThicknessSelectionGroup.value = lockAndDoorData.doorThickness;
+        doorThicknessSelectionGroup.dispatchEvent(new Event("change"));
+
+        if (doorThicknessSelectionGroup.value.toUpperCase() ===
+            DOOR_THICKNESS_IN_MM.MM_OTHER.toUpperCase()) {
+            doorThicknessInputGroup.value = lockAndDoorData.doorThicknessInput;
+        }
+
+        doorMaterialSelectionGroup.value = lockAndDoorData.doorMaterial;
+        doorMaterialSelectionGroup.dispatchEvent(new Event("change"));
+        doorLeafSelectionGroup.value = lockAndDoorData.doorLeaf;
+        doorLeafSelectionGroup.dispatchEvent(new Event("change"));
+
+    } // Check if the user has selected a lock in the index.html file 
+    else {
+
+        // If the user has selected a lock in the index.html file 
+        let lockModel = sessionStorage.getItem("lockModelSelected");
+        if (lockModel !== null) {
+
+            let compatibleDoor = JSON.parse(sessionStorage.getItem("compatibleDoor"));
+
+            // Select the lock model - automatically
+            let lockModelSelectionGroup = document.getElementById("lock-model-group");
+            lockModelSelectionGroup.value = lockModel;
+
+            // Dispatch the "change" Event on model lock selection
+            lockModelSelectionGroup.dispatchEvent(new Event("change"));
+
+            // Select the door type - automatically
+            let doorTypeSelectionGroup = document.getElementById("door-type-group");
+
+            // Check if the door is compatible with - both - Swing and Sliding type
+            // If it is then set the door type selection to Swing
+            if (compatibleDoor.doorType.indexOf('/') > -1) {
+                doorTypeSelectionGroup.value = DOOR_TYPE.SWING_DOOR;
+            } else {
+                doorTypeSelectionGroup.value = compatibleDoor.doorType;
+            }
+
+            // DO NOT DELETE THE FOLLOWING COMMENTS
+            //ENABLE THE FOLLOWING COMMENT ONLY IF REQUIRED
+            // doorTypeSelectionGroup.dispatchEvent(new Event("change"));
+
+            // Select the door thickness - automatically
+            let doorThicknessSelectionGroup = document.getElementById("door-thickness-group");
+            doorThicknessSelectionGroup.value = compatibleDoor.doorThickness;
+
+            // DO NOT DELETE THE FOLLOWING COMMENTS
+            //ENABLE THE FOLLOWING COMMENT ONLY IF REQUIRED
+            // doorThicknessSelectionGroup.dispatchEvent(new Event("change"));
+
+        }
+    }
+
+}
+
+/*****************************************************************************/
+/* REGISTER EVENT LISTENERS                                                  */
+/*****************************************************************************/
+
+// Register event listeners in this section
 
 /*****************************************************************************/
 /* END OF FILE                                                               */
