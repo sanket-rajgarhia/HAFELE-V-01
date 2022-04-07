@@ -30,13 +30,25 @@ const SWAP_VALUE = "swapValue";
  * @param    
  * @return   
  * */
-window.onload = function() {
+window.onload = function(event) {
 
-    // Initialize the lock selection card controls
-    initializeLockCardControls();
+    let page = sessionStorage.getItem("page");
+    if (page !== null) {
 
-    // Scroll to the top
-    window.scrollTo(0, 0);
+        // Coming from home page
+        if (page === "1") {
+            // Initialize the lock selection card controls
+            initializeLockCardControls();
+        }
+
+        // Scroll to the top
+        window.scrollTo(0, 0);
+
+    } else {
+        // Redirect to the index page
+        window.location.replace("./../html/index.html");
+        
+    }
 
 };
 

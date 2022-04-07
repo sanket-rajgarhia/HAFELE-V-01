@@ -99,7 +99,8 @@ let doorMaterialPrependDiv = doorMaterialSelectionDiv
 let doorLeafPrependDiv = doorLeafSelectionDiv
     .getElementsByClassName("input-group-prepend")[0];
 
-// Reference to the Next button
+// Reference to the Previous and Next button
+let lockCardPreviousButton = document.getElementById("lock-selection-previous");
 let lockCardNextButton = document.getElementById("lock-selection-next");
 
 /*****************************************************************************/
@@ -690,6 +691,18 @@ const doorLeafSelectionChange = (event) => {
 
 }
 
+/* The callback function fired on 'click' - for lock card previous button
+ * control. 
+ * @param    
+ * @return   
+ * */
+const lockCardPreviousButtonClick = (event) => {
+
+    // Redirect to the index page
+    window.location.replace("../html/index.html");
+
+}
+
 /* The callback function fired on 'click' - for lock card next button 
  * control. 
  * @param    
@@ -916,6 +929,7 @@ doorMaterialSelectionGroup.addEventListener("change",
     doorMaterialSelectionChange);
 doorLeafSelectionGroup.addEventListener("change", doorLeafSelectionChange);
 
+lockCardPreviousButton.addEventListener("click", lockCardPreviousButtonClick);
 lockCardNextButton.addEventListener("click", lockCardNextButtonClick);
 
 /*****************************************************************************/
