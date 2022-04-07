@@ -257,9 +257,8 @@ const loadSurveyPageOnSpecificationClick = () => {
     // Ensure that no lock models are selected by default
     lockModelSelectionGroup.options[0].selected = true
 
-    // Remove all data from session store
-    sessionStorage.removeItem('lockModelSelected');
-    sessionStorage.removeItem('compatibleDoor');
+     // Save the page data to the session storage
+     sessionStorage.setItem('page', "1");
 
 }
 
