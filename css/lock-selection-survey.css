@@ -40,8 +40,18 @@ h3 {
 /*****************************************************************************/
 
 input,
-textarea {
+textarea,
+label {
     font-size: calc(10px + (14 - 10) * ((100vw - 500px) / (1200 - 300))) !important;
+}
+
+/*****************************************************************************/
+/* SURVEY HEADING <div>                                                      */
+/*****************************************************************************/
+
+/* survey-heading page heading <div> */
+#survey-heading {
+    padding: 0 ! important;
 }
 
 /*****************************************************************************/
@@ -91,16 +101,16 @@ textarea {
 /* survey-body page body <div> */
 #survey-body {
     display: flex;
+    align-items: flex-start;
     justify-content: center;
     flex-grow: 1;
 }
 
 /* Flex component to layout the cards inside the survey-body <div> */
 .flex-component {
-    flex-basis: 50%;
-    flex-grow: 0;
-    flex-shrink: 0;
-    margin: 25px;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 /*****************************************************************************/

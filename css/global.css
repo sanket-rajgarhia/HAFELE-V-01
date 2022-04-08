@@ -85,12 +85,22 @@ under the absolutely positioned footer div - when screen resizes */
 
 .card-fade-in {
     flex-basis: 50%;
-    flex-wrap: wrap;
-    align-items: flex-start;
-
     opacity: 1;
     overflow: hidden;
     transition: flex-basis 1s, opacity 3000ms;
+}
+
+/* Styling the flex cards - on screen sizes 768px and less */
+@media screen and (max-width: 768px) {
+
+    .card-fade-in {
+        flex-basis: 100%;
+
+        opacity: 1;
+        overflow: hidden;
+        transition: flex-basis 1s, opacity 3000ms;
+    }
+
 }
 
 .fade-in {
@@ -163,6 +173,7 @@ under the absolutely positioned footer div - when screen resizes */
     flex-basis: 0px !important;
     opacity: 0;
     overflow: hidden;
+    max-height: 0;
 }
 
 .fade-out {
