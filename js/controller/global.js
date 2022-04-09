@@ -44,6 +44,9 @@ window.onload = function(event) {
             // Initialize the customer card controls
             initializeCustomerCardControls();
 
+            // Initialize the sales person card controls
+            initializeSalesPersonCardControls();
+
         }
 
         // Scroll to the top
@@ -648,6 +651,46 @@ const initializeCustomerCardControls = () => {
         customerInformationTextArea.dispatchEvent(new Event("blur"));
 
         if (allInputsAreValidated("customer-information-capture") === false) {
+
+            // Display the top level warning message
+            invalidStatusMessageDisplay(true, "high-severity",
+                MESSAGE.MESSAGE_MISSING_INPUT);
+
+        } else {
+
+            // Hide the status message
+            invalidStatusMessageDisplay(false);
+
+        }
+
+
+    }
+
+}
+
+/* Helper function to initialize all the sales person card fields.
+ * @param  
+ * @return 
+ * */
+const initializeSalesPersonCardControls = () => {
+
+    // Check if the sales person data has been captured - if found then 
+    // initialize the sales person fields with the previously captured data
+    let salesPersonData = sessionStorage.getItem("salesPersonData");
+    if (salesPersonData !== null) {
+
+        salesPersonData = JSON.parse(salesPersonData);
+
+        salesPersonIdInput.value = salesPersonData.salesPersonID;
+        salesPersonNameInput.value = salesPersonData.salesPersonName;
+        salesPersonLocationTextArea.value = salesPersonData.salesPersonLocation;
+
+        // Apply the valid and invalid styles
+        salesPersonIdInput.dispatchEvent(new Event("blur"));
+        salesPersonNameInput.dispatchEvent(new Event("blur"));
+        salesPersonLocationTextArea.dispatchEvent(new Event("blur"));
+
+        if (allInputsAreValidated("sale-person-information-capture") === false) {
 
             // Display the top level warning message
             invalidStatusMessageDisplay(true, "high-severity",

@@ -763,6 +763,8 @@ const customerCardNextButtonClick = (event) => {
         sessionStorage.setItem("customerData", JSON.stringify(customerData));
 
         // Transition to the sales person screen
+        initializeSalesPersonCardControls();
+
         window.scrollTo(0, 0);
         customerInformationCaptureCard.classList.toggle('fade-out');
 

@@ -47,6 +47,11 @@ let salesPersonLocationPrependDiv = salesPersonLocationDiv
 let salesPersonLocationTextAreaGroupTextDiv = salesPersonLocationDiv
     .getElementsByClassName("input-group-text")[0];
 
+// Reference to the Previous and Next button
+let salesPersonCardPreviousButton = document.getElementById(
+    "sales-person-previous");
+let salesPersonCardNextButton = document.getElementById("sales-person-next");
+
 /*****************************************************************************/
 /* EVENT LISTENER - CALLBACKS                                                */
 /*****************************************************************************/
@@ -144,13 +149,6 @@ const validateSalesPersonIdInputOnBlur = () => {
 
     salesPersonIdDiv.classList.add("was-validated");
 
-    // Enable/Disable the navigation button(s)
-    if (allInputsAreValidated("sale-person-information-capture") === true) {
-        salesPersonCardNextButton.disabled = false;
-    } else {
-        salesPersonCardNextButton.disabled = true;
-    }
-
 }
 
 /* The callback function fired on 'get focus' - for sales person 
@@ -245,13 +243,6 @@ const validateSalesPersonNameInputOnBlur = () => {
     }
 
     salesPersonNameDiv.classList.add("was-validated");
-
-    // Enable/Disable the navigation button(s)
-    if (allInputsAreValidated("sale-person-information-capture") === true) {
-        salesPersonCardNextButton.disabled = false;
-    } else {
-        salesPersonCardNextButton.disabled = true;
-    }
 
 }
 
@@ -358,11 +349,80 @@ const validateSalesPersonLocationTextAreaOnBlur = () => {
 
     salesPersonLocationDiv.classList.add("was-validated");
 
-    // Enable/Disable the navigation button(s)
-    if (allInputsAreValidated("sale-person-information-capture") === true) {
-        salesPersonCardNextButton.disabled = false;
+}
+
+/* The callback function fired on 'click' - for sales person previous button
+ * control.
+ * @param    
+ * @return   
+ * */
+const salesPersonCardPreviousButtonClick = (event) => {
+
+    // Hide the status message
+    invalidStatusMessageDisplay(false);
+
+    // Transition to lock screen
+    let salesPersonInformationCaptureCard = document.getElementById(
+        "sale-person-information-capture");
+    let customerInformationCaptureCard = document.getElementById(
+        "customer-information-capture");
+
+
+    window.scrollTo(0, 0);
+    salesPersonInformationCaptureCard.classList.toggle('fade-out');
+
+    setTimeout(function() {
+
+        salesPersonInformationCaptureCard.classList.remove('card-fade-in');
+        salesPersonInformationCaptureCard.classList.add("card-fade-out");
+
+        customerInformationCaptureCard.classList.remove('card-fade-out');
+        customerInformationCaptureCard.classList.add('card-fade-in');
+
+    }, 500);
+
+}
+
+/* The callback function fired on 'click' - for sales person next button
+ * control.
+ * @param    
+ * @return   
+ * */
+const salesPersonCardNextButtonClick = (event) => {
+
+    // Transition to survey report page
+    let salesPersonCaptureCard = document.getElementById(
+        "sale-person-information-capture");
+
+    if (allInputsAreValidated("sale-person-information-capture") === false) {
+
+        // Display the top level warning message
+        invalidStatusMessageDisplay(true, "high-severity",
+            MESSAGE.MESSAGE_MISSING_INPUT);
+
+        // Apply the valid and invalid styles
+        salesPersonIdInput.dispatchEvent(new Event("blur"));
+        salesPersonNameInput.dispatchEvent(new Event("blur"));
+        salesPersonLocationTextArea.dispatchEvent(new Event("blur"));
+
+
     } else {
-        salesPersonCardNextButton.disabled = true;
+
+        // Hide the status message
+        invalidStatusMessageDisplay(false);
+
+        // Save the customer data
+        let salesPersonData = {
+            salesPersonID: salesPersonIdInput.value,
+            salesPersonName: salesPersonNameInput.value,
+            salesPersonLocation: salesPersonLocationTextArea.value,
+        }
+
+        sessionStorage.setItem("salesPersonData", JSON.stringify(salesPersonData));
+
+        // Transition to the survey report page
+        window.location.replace("../html/survey-report.html");
+
     }
 
 }
@@ -388,6 +448,12 @@ salesPersonLocationTextArea.addEventListener("blur",
     validateSalesPersonLocationTextAreaOnBlur);
 salesPersonLocationTextArea.addEventListener("focus",
     resetSalesPersonLocationTextAreaOnGetFocus);
+
+// Event listeners registered for the Customer previous and next buttons
+salesPersonCardPreviousButton.addEventListener("click",
+    salesPersonCardPreviousButtonClick);
+salesPersonCardNextButton.addEventListener("click",
+    salesPersonCardNextButtonClick);
 
 /*****************************************************************************/
 /* END OF FILE                                                               */
