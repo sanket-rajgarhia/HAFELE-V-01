@@ -420,6 +420,9 @@ const salesPersonCardNextButtonClick = (event) => {
 
         sessionStorage.setItem("salesPersonData", JSON.stringify(salesPersonData));
 
+        // Update the page variable
+        sessionStorage.setItem("page", "2");
+
         // Transition to the survey report page
         window.location.replace("../html/survey-report.html");
 

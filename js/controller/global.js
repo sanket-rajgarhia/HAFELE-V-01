@@ -35,8 +35,8 @@ window.onload = function(event) {
     let page = sessionStorage.getItem("page");
     if (page !== null) {
 
-        // Coming from home page
-        if (page === "1") {
+        // Coming from home page or report page
+        if (page === "1" || page === "2") {
 
             // Initialize the lock selection card controls
             initializeLockCardControls();
