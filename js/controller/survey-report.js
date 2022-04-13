@@ -258,6 +258,40 @@ const formatReportFields = (fieldDivId, labelName, labelValue, message = NONE) =
 
 }
 
+/* The function creates a pdf file for the report.
+ *  
+ * @param
+ * @return      
+ * */
+const createPDF = () => {
+
+    // Get the parent <div> element for the report
+    let element = document.getElementById('report-body');
+
+    // Configure the pdf
+    let option = {
+        margin: [0.50, 0.25, 0.25, 0.25],
+        filename: JSON.parse(sessionStorage.getItem("customerData"))
+            .customerMobile + '.pdf',
+        image: {
+            type: 'jpeg',
+            quality: 0.98
+        },
+        html2canvas: {
+            scale: window.devicePixelRatio
+        },
+        jsPDF: {
+            unit: 'in',
+            format: 'letter',
+            orientation: 'portrait'
+        }
+    };
+
+    // Create the pdf and provide an option to save it
+    html2pdf().set(option).from(element).save();
+
+}
+
 /*****************************************************************************/
 /* END OF FILE                                                               */
 /*****************************************************************************/

@@ -79,6 +79,19 @@ p {
 }
 
 /*****************************************************************************/
+/* MENU LINKS                                                                */
+/*****************************************************************************/
+
+a:hover {
+    color: rgb(24, 143, 223) !important;
+}
+
+.report-link {
+    font-family: 'Noto Sans JP', sans-serif !important;
+    color: rgb(136, 196, 236) !important;
+}
+
+/*****************************************************************************/
 /* SURVEY HEADING <div>                                                      */
 /*****************************************************************************/
 
@@ -131,6 +144,10 @@ p {
 /* SURVEY REPORT HEADER <div>                                                */
 /*****************************************************************************/
 
+.report-title {
+    border: 1px dotted #c0bdbd;
+}
+
 /* The customer and sales person detail columns */
 .header-detail {
     border-left: 1px dotted #c0bdbd;
@@ -165,7 +182,8 @@ p {
 
 /* The report enclosing <div> */
 #report-body {
-    margin-top: 3rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
 #survey-report-body-section {
