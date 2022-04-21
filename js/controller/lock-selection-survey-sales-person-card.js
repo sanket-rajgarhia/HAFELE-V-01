@@ -115,8 +115,8 @@ const validateSalesPersonIdInputOnBlur = () => {
         salesPersonIdInput.value = "";
 
         // Update the invalid feedback message
-        salesPersonIdInvalidFeedback.innerHTML = "Sales Person ID cannot " +
-            "be blank.";
+        salesPersonIdInvalidFeedback.innerHTML = LOCK_SELECTION_SURVEY
+            .SALES_PERSON_ID_INVALID_MESSAGE_FEEDBACK;
 
         invalidateInputControl(salesPersonIdPrependDiv,
             salesPersonIdInputGroupTextDiv);
@@ -131,8 +131,8 @@ const validateSalesPersonIdInputOnBlur = () => {
         salesPersonIdInput.value = "";
 
         // Update the invalid feedback message
-        salesPersonIdInvalidFeedback.innerHTML = "Sales Person ID cannot " +
-            " contain more than 50 characters.";
+        salesPersonIdInvalidFeedback.innerHTML = LOCK_SELECTION_SURVEY
+            .SALES_PERSON_ID_LENGTH_INVALID_MESSAGE_FEEDBACK;
 
         // Add the SWAP_VALUE class to the sales person id input control
         salesPersonIdInput.classList.add(SWAP_VALUE);
@@ -210,8 +210,8 @@ const validateSalesPersonNameInputOnBlur = () => {
         salesPersonNameInput.value = "";
 
         // Update the invalid feedback message
-        salesPersonNameInvalidFeedback.innerHTML = "Sales Person name cannot " +
-            "be blank.";
+        salesPersonNameInvalidFeedback.innerHTML = LOCK_SELECTION_SURVEY
+            .SALES_PERSON_NAME_INVALID_MESSAGE_FEEDBACK;
 
         invalidateInputControl(salesPersonNamePrependDiv,
             salesPersonNameInputGroupTextDiv);
@@ -226,8 +226,8 @@ const validateSalesPersonNameInputOnBlur = () => {
         salesPersonNameInput.value = "";
 
         // Update the invalid feedback message
-        salesPersonNameInvalidFeedback.innerHTML = "Name cannot contain more " +
-            "than 50 characters.";
+        salesPersonNameInvalidFeedback.innerHTML = LOCK_SELECTION_SURVEY
+            .SALES_PERSON_NAME_LENGTH_INVALID_MESSAGE_FEEDBACK;
 
         // Add the SWAP_VALUE class to the sales person name input control
         salesPersonNameInput.classList.add(SWAP_VALUE);
@@ -331,8 +331,8 @@ const validateSalesPersonLocationTextAreaOnBlur = () => {
         salesPersonLocationTextArea.value = "";
 
         // Update the invalid feedback message
-        salesPersonLocationInvalidFeedback.innerHTML = "Sales " +
-            "Person location cannot contain more than 150 characters.";
+        salesPersonLocationInvalidFeedback.innerHTML = LOCK_SELECTION_SURVEY
+            .SALES_PERSON_LOCATION_INVALID_MESSAGE_FEEDBACK;
 
         // Add the SWAP_VALUE class to the customer Information textarea control
         salesPersonLocationTextArea.classList.add(SWAP_VALUE);

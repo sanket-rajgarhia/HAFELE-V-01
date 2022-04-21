@@ -146,8 +146,8 @@ const validateCustomerNameInputOnBlur = () => {
         customerNameInput.value = "";
 
         // Update the invalid feedback message
-        customerNameInvalidFeedback.innerHTML = "Customer name cannot " +
-            "be blank.";
+        customerNameInvalidFeedback.innerHTML = LOCK_SELECTION_SURVEY
+            .CUSTOMER_NAME_INVALID_MESSAGE_FEEDBACK;
 
         invalidateInputControl(customerNamePrependDiv,
             customerNameInputGroupTextDiv);
@@ -162,8 +162,8 @@ const validateCustomerNameInputOnBlur = () => {
         customerNameInput.value = "";
 
         // Update the invalid feedback message
-        customerNameInvalidFeedback.innerHTML = "Name cannot contain more " +
-            "than 50 characters.";
+        customerNameInvalidFeedback.innerHTML = LOCK_SELECTION_SURVEY
+            .CUSTOMER_NAME_LENGTH_INVALID_MESSAGE_FEEDBACK;
 
         // Add the SWAP_VALUE class to the customer name input control
         customerNameInput.classList.add(SWAP_VALUE);
@@ -241,9 +241,8 @@ const validateCustomerMobileInputOnBlur = () => {
         customerMobileInput.value = "";
 
         // Update the invalid feedback message
-        customerMobileInvalidFeedback.innerHTML = "Mobile number cannot " +
-            "be blank.";
-
+        customerMobileInvalidFeedback.innerHTML = LOCK_SELECTION_SURVEY
+            .CUSTOMER_MOBILE_INVALID_MESSAGE_FEEDBACK;
         invalidateInputControl(customerMobilePrependDiv,
             customerMobileInputGroupTextDiv);
 
@@ -262,8 +261,8 @@ const validateCustomerMobileInputOnBlur = () => {
         customerMobileInput.value = "";
 
         // Update the invalid feedback message
-        customerMobileInvalidFeedback.innerHTML = "Mobile No. must contain " +
-            "10 digits, starting with a 0."
+        customerMobileInvalidFeedback.innerHTML = LOCK_SELECTION_SURVEY
+            .CUSTOMER_MOBILE_DIGITS_INVALID_MESSAGE_FEEDBACK;
 
         // Add the SWAP_VALUE class to the customer mobile input control
         customerMobileInput.classList.add(SWAP_VALUE);
@@ -343,7 +342,8 @@ const validateCustomerAddress1InputOnBlur = () => {
         customerAddress1Input.value = "";
 
         // Update the invalid feedback message
-        customerAddress1InvalidFeedback.innerHTML = "Address cannot be blank.";
+        customerAddress1InvalidFeedback.innerHTML = LOCK_SELECTION_SURVEY
+            .CUSTOMER_ADDRESS1_INVALID_MESSAGE_FEEDBACK;
 
         invalidateInputControl(customerAddress1PrependDiv,
             customerAddress1InputGroupTextDiv);
@@ -358,8 +358,8 @@ const validateCustomerAddress1InputOnBlur = () => {
         customerAddress1Input.value = "";
 
         // Update the invalid feedback message
-        customerAddress1InvalidFeedback.innerHTML = "Address Line 1 cannot " +
-            "contain more than 50 characters.";
+        customerAddress1InvalidFeedback.innerHTML = LOCK_SELECTION_SURVEY
+            .CUSTOMER_ADDRESS1_LENGTH_INVALID_MESSAGE_FEEDBACK;
 
         // Add the SWAP_VALUE class to the customer Address1 input control
         customerAddress1Input.classList.add(SWAP_VALUE);
@@ -460,8 +460,8 @@ const validateCustomerAddress2InputOnBlur = () => {
         customerAddress2Input.value = "";
 
         // Update the invalid feedback message
-        customerAddress2InvalidFeedback.innerHTML = "Address Line 2 cannot " +
-            "contain more than 50 characters.";
+        customerAddress2InvalidFeedback.innerHTML = LOCK_SELECTION_SURVEY
+            .CUSTOMER_ADDRESS2_INVALID_MESSAGE_FEEDBACK;
 
         // Add the SWAP_VALUE class to the customer Address2 input control
         customerAddress2Input.classList.add(SWAP_VALUE);
@@ -562,8 +562,8 @@ const validateCustomerAddress3InputOnBlur = () => {
         customerAddress3Input.value = "";
 
         // Update the invalid feedback message
-        customerAddress3InvalidFeedback.innerHTML = "Address Line 3 cannot " +
-            "contain more than 50 characters.";
+        customerAddress3InvalidFeedback.innerHTML = LOCK_SELECTION_SURVEY
+            .CUSTOMER_ADDRESS3_INVALID_MESSAGE_FEEDBACK;
 
         // Add the SWAP_VALUE class to the customer Address3 input control
         customerAddress3Input.classList.add(SWAP_VALUE);
@@ -667,8 +667,8 @@ const validateCustomerInformationTextAreaOnBlur = () => {
         customerInformationTextArea.value = "";
 
         // Update the invalid feedback message
-        customerInformationInvalidFeedback.innerHTML = "Additional " +
-            "information cannot contain more than 250 characters.";
+        customerInformationInvalidFeedback.innerHTML = LOCK_SELECTION_SURVEY
+            .CUSTOMER_ADDITIONAL_INFORMATION_INVALID_MESSAGE_FEEDBACK;
 
         // Add the SWAP_VALUE class to the customer Information textarea control
         customerInformationTextArea.classList.add(SWAP_VALUE);

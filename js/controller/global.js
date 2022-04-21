@@ -38,6 +38,12 @@ window.onload = function(event) {
         // Coming from home page or report page
         if (page === "1" || page === "2") {
 
+            // Page setup
+            let titleElement = document.getElementsByTagName("title")[0];
+            titleElement.innerHTML = LOCK_SELECTION_SURVEY.TITLE;
+            let pageHeading = document.getElementById("page-heading-h1");
+            pageHeading.innerHTML = LOCK_SELECTION_SURVEY.PAGE_HEADING;
+
             // Initialize the lock selection card controls
             initializeLockCardControls();
 
@@ -286,6 +292,45 @@ const allInputsAreValidated = (topLevelDivId) => {
  * @return 
  * */
 const initializeLockCardControls = () => {
+
+    // Setup the door lock card heading
+    let lockAndDoorCardHeading = document.getElementById(
+        "door-lock-card-heading");
+    lockAndDoorCardHeading.innerHTML = LOCK_SELECTION_SURVEY.LOCK_CARD_HEADING;
+
+    // Fields of the door lock selection card
+    let lockModelComboDefault = document.getElementById("label-lock-model");
+    lockModelComboDefault.innerHTML = LOCK_SELECTION_SURVEY.LOCK_MODEL;
+    let installationLocationComboDefault = document.getElementById(
+        "label-installation-location");
+    installationLocationComboDefault.innerHTML = LOCK_SELECTION_SURVEY
+        .LOCK_INSTALLATION_LOCATION;
+    let doorConditionComboDefault = document.getElementById("label-door-condition");
+    doorConditionComboDefault.innerHTML = LOCK_SELECTION_SURVEY.LOCK_DOOR_CONDITION;
+    let existingDoorRetrofitComboDefault = document
+        .getElementById("label-existing-door-retrofit");
+    existingDoorRetrofitComboDefault.innerHTML = LOCK_SELECTION_SURVEY
+        .LOCK_DOOR_RETROFIT;
+    let doorTypeComboDefault = document.getElementById("label-door-type");
+    doorTypeComboDefault.innerHTML = LOCK_SELECTION_SURVEY.LOCK_DOOR_TYPE;
+    let swingDoorTypeComboDefault = document.getElementById("label-swing-door-type");
+    swingDoorTypeComboDefault.innerHTML = LOCK_SELECTION_SURVEY.LOCK_SWING_DOOR_TYPE;
+    let swingDoorJambComboDefault = document.getElementById("label-swing-door-jamb");
+    swingDoorJambComboDefault.innerHTML = LOCK_SELECTION_SURVEY.LOCK_SWING_DOOR_JAMB;
+    let doorThicknessComboDefault = document.getElementById("label-door-thickness");
+    doorThicknessComboDefault.innerHTML = LOCK_SELECTION_SURVEY.LOCK_DOOR_THICKNESS;
+    let doorThicknessInputPlaceholder = document.getElementById("input-door-thickness");
+    doorThicknessInputPlaceholder.setAttribute("placeholder", LOCK_SELECTION_SURVEY.LOCK_DOOR_THICKNESS_INPUT);
+    let doorMaterialComboDefault = document.getElementById("label-door-material");
+    doorMaterialComboDefault.innerHTML = LOCK_SELECTION_SURVEY.LOCK_DOOR_MATERIAL;
+    let doorLeafComboDefault = document.getElementById("label-door-leaf");
+    doorLeafComboDefault.innerHTML = LOCK_SELECTION_SURVEY.LOCK_DOOR_LEAF;
+
+    // Previous and Next buttons of the door lock selection card
+    let navPreviousButton = document.getElementById("lock-selection-previous");
+    navPreviousButton.setAttribute("value", NAVIGATION_BUTTONS.LOCK_PREVIOUS_BUTTON);
+    let navNextButton = document.getElementById("lock-selection-next");
+    navNextButton.setAttribute("value", NAVIGATION_BUTTONS.LOCK_NEXT_BUTTON);
 
     // Add all the swing door - lock model name options to the lock model
     // group selection combo box
@@ -629,6 +674,57 @@ const initializeLockCardControls = () => {
  * */
 const initializeCustomerCardControls = () => {
 
+    // Setup the customer card heading
+    let customerCardHeading = document.getElementById(
+        "customer-card-heading");
+    customerCardHeading.innerHTML = LOCK_SELECTION_SURVEY.CUSTOMER_CARD_HEADING;
+
+    // Fields of the customer card
+    let customerNameInput = document.getElementById("input-customer-name");
+    customerNameInput.setAttribute("placeholder", LOCK_SELECTION_SURVEY
+        .CUSTOMER_NAME_PLACEHOLDER);
+    let invalidFeedBackDiv = customerNameInput.nextElementSibling;
+    invalidFeedBackDiv.innerHTML = LOCK_SELECTION_SURVEY
+        .CUSTOMER_NAME_INVALID_MESSAGE_FEEDBACK;
+    let customerMobileInput = document.getElementById("input-customer-mobile");
+    customerMobileInput.setAttribute("placeholder", LOCK_SELECTION_SURVEY
+        .CUSTOMER_MOBILE_PLACEHOLDER);
+    invalidFeedBackDiv = customerMobileInput.nextElementSibling;
+    invalidFeedBackDiv.innerHTML = LOCK_SELECTION_SURVEY
+        .CUSTOMER_MOBILE_INVALID_MESSAGE_FEEDBACK;
+    let customerAddress1Input = document.getElementById("input-customer-address1");
+    customerAddress1Input.setAttribute("placeholder", LOCK_SELECTION_SURVEY
+        .CUSTOMER_ADDRESS1_PLACEHOLDER);
+    invalidFeedBackDiv = customerAddress1Input.nextElementSibling;
+    invalidFeedBackDiv.innerHTML = LOCK_SELECTION_SURVEY
+        .CUSTOMER_ADDRESS1_INVALID_MESSAGE_FEEDBACK;
+    let customerAddress2Input = document.getElementById("input-customer-address2");
+    customerAddress2Input.setAttribute("placeholder", LOCK_SELECTION_SURVEY
+        .CUSTOMER_ADDRESS2_PLACEHOLDER);
+    invalidFeedBackDiv = customerAddress2Input.nextElementSibling;
+    invalidFeedBackDiv.innerHTML = LOCK_SELECTION_SURVEY
+        .CUSTOMER_ADDRESS2_INVALID_MESSAGE_FEEDBACK;
+    let customerAddress3Input = document.getElementById("input-customer-address3");
+    customerAddress3Input.setAttribute("placeholder", LOCK_SELECTION_SURVEY
+        .CUSTOMER_ADDRESS3_PLACEHOLDER);
+    invalidFeedBackDiv = customerAddress3Input.nextElementSibling;
+    invalidFeedBackDiv.innerHTML = LOCK_SELECTION_SURVEY
+        .CUSTOMER_ADDRESS3_INVALID_MESSAGE_FEEDBACK;
+    let customerAdditionalInformationTextArea = document
+        .getElementById("input-customer-info");
+    customerAdditionalInformationTextArea
+        .setAttribute("placeholder", LOCK_SELECTION_SURVEY
+            .CUSTOMER_ADDITIONAL_INFORMATION_PLACEHOLDER);
+    invalidFeedBackDiv = customerAdditionalInformationTextArea.nextElementSibling;
+    invalidFeedBackDiv.innerHTML = LOCK_SELECTION_SURVEY
+        .CUSTOMER_ADDITIONAL_INFORMATION_INVALID_MESSAGE_FEEDBACK;
+
+    // Previous and Next buttons of the customer card
+    let navPreviousButton = document.getElementById("customer-previous");
+    navPreviousButton.setAttribute("value", NAVIGATION_BUTTONS.LOCK_PREVIOUS_BUTTON);
+    let navNextButton = document.getElementById("customer-next");
+    navNextButton.setAttribute("value", NAVIGATION_BUTTONS.LOCK_NEXT_BUTTON);
+
     // Check if the customer data has been captured - if found then 
     // initialize the customer fields with the previously captured data
     let customerData = sessionStorage.getItem("customerData");
@@ -673,6 +769,37 @@ const initializeCustomerCardControls = () => {
  * @return 
  * */
 const initializeSalesPersonCardControls = () => {
+
+    // Setup the sales person card heading
+    let salesPersonCardHeading = document.getElementById(
+        "sales-person-card-heading");
+    salesPersonCardHeading.innerHTML = LOCK_SELECTION_SURVEY.SALES_PERSON_CARD_HEADING;
+
+    // Fields of the sales person card
+    let salesPersonIdInput = document.getElementById("input-sales-person-id");
+    salesPersonIdInput.setAttribute("placeholder", LOCK_SELECTION_SURVEY
+        .SALES_PERSON_ID_PLACEHOLDER);
+    let invalidFeedBackDiv = salesPersonIdInput.nextElementSibling;
+    invalidFeedBackDiv.innerHTML = LOCK_SELECTION_SURVEY
+        .SALES_PERSON_ID_INVALID_MESSAGE_FEEDBACK;
+    let salesPersonNameInput = document.getElementById("input-sales-person-name");
+    salesPersonNameInput.setAttribute("placeholder", LOCK_SELECTION_SURVEY
+        .SALES_PERSON_NAME_PLACEHOLDER);
+    invalidFeedBackDiv = salesPersonNameInput.nextElementSibling;
+    invalidFeedBackDiv.innerHTML = LOCK_SELECTION_SURVEY
+        .SALES_PERSON_NAME_INVALID_MESSAGE_FEEDBACK;
+    let salesPersonLocationTextArea = document.getElementById("input-sales-person-info");
+    salesPersonLocationTextArea.setAttribute("placeholder", LOCK_SELECTION_SURVEY
+        .SALES_PERSON_LOCATION_PLACEHOLDER);
+    invalidFeedBackDiv = salesPersonLocationTextArea.nextElementSibling;
+    invalidFeedBackDiv.innerHTML = LOCK_SELECTION_SURVEY
+        .SALES_PERSON_LOCATION_INVALID_MESSAGE_FEEDBACK;
+
+    // Previous and Next buttons of the sales person card
+    let navPreviousButton = document.getElementById("sales-person-previous");
+    navPreviousButton.setAttribute("value", NAVIGATION_BUTTONS.LOCK_PREVIOUS_BUTTON);
+    let navNextButton = document.getElementById("sales-person-next");
+    navNextButton.setAttribute("value", NAVIGATION_BUTTONS.LOCK_NEXT_BUTTON);
 
     // Check if the sales person data has been captured - if found then 
     // initialize the sales person fields with the previously captured data

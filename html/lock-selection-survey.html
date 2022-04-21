@@ -36,7 +36,7 @@
       href="./../favicon/favicon.ico" />
 
     <!-- Page Title -->
-    <title>Lock Selection Survey</title>
+    <title></title>
 
   </head>
 
@@ -44,14 +44,13 @@
 
     <!-- Page Header -->
     <div id="page-header" class="container-fluid">
-
     </div>
     <!-- End Page Header -->
 
     <!-- Page Heading -->
     <div id="survey-heading" class="container-fluid">
 
-      <h1>Lock Selection Survey</h1>
+      <h1 id="page-heading-h1"></h1>
 
       <!-- Start Status Message -->
       <div id="status" class="status-hidden">
@@ -76,7 +75,7 @@
 
             <!-- Card Heading -->
             <div class="card-heading">
-              <h3>Door And Lock Information</h3>
+              <h3 id="door-lock-card-heading"></h3>
             </div>
             <!-- End Card Heading -->
 
@@ -95,7 +94,8 @@
                   <select id="lock-model-group"
                     class="custom-select custom-select-extended">
                     <optgroup>
-                      <option value="" selected>Lock Model</option>
+                      <option id="label-lock-model" value="" selected>
+                      </option>
                     </optgroup>
                   </select>
                 </div>
@@ -114,7 +114,7 @@
 
                   <select id="installation-location-group"
                     class="custom-select custom-select-extended">
-                    <option value="" selected>Installation Location
+                    <option id="label-installation-location" value="" selected>
                     </option>
                   </select>
                 </div>
@@ -140,7 +140,7 @@
 
                   <select id="door-condition-group"
                     class="custom-select custom-select-extended">
-                    <option value="" selected>Door Condition
+                    <option id="label-door-condition" value="" selected>
                     </option>
                   </select>
                 </div>
@@ -160,7 +160,7 @@
 
                   <select id="existing-door-retrofit-group"
                     class="custom-select custom-select-extended">
-                    <option value="" selected>Existing Door Retrofit
+                    <option id="label-existing-door-retrofit" value="" selected>
                     </option>
                   </select>
                 </div>
@@ -193,7 +193,7 @@
 
                   <select id="door-type-group"
                     class="custom-select custom-select-extended">
-                    <option value="" selected>Door Type
+                    <option id="label-door-type" value="" selected>
                     </option>
                   </select>
                 </div>
@@ -219,7 +219,7 @@
 
                   <select id="swing-door-type-group"
                     class="custom-select custom-select-extended">
-                    <option value="" selected>Swing Door Type
+                    <option id="label-swing-door-type" value="" selected>
                     </option>
                   </select>
                 </div>
@@ -239,7 +239,7 @@
 
                   <select id="swing-door-jamb-group"
                     class="custom-select custom-select-extended">
-                    <option value="" selected>Swing Door Jamb
+                    <option id="label-swing-door-jamb" value="" selected>
                     </option>
                   </select>
                 </div>
@@ -272,7 +272,7 @@
 
                   <select id="door-thickness-group"
                     class="custom-select custom-select-extended">
-                    <option value="" selected>Door Thickness
+                    <option id="label-door-thickness" value="" selected>
                     </option>
                   </select>
                 </div>
@@ -298,8 +298,7 @@
                   </div>
 
                   <input id="input-door-thickness" type="number" min="1"
-                    class="form-control" placeholder="Door Thickness In mm"
-                    required>
+                    class="form-control" placeholder="" required>
                 </div>
 
               </div>
@@ -316,7 +315,7 @@
 
                   <select id="door-material-group"
                     class="custom-select custom-select-extended">
-                    <option value="" selected>Door Material
+                    <option id="label-door-material" value="" selected>
                     </option>
                   </select>
                 </div>
@@ -343,7 +342,7 @@
                   <select id="door-leaf-group"
                     class="custom-select custom-select-extended">
                     <optgroup>
-                      <option value="" selected>Door Leaf</option>
+                      <option id="label-door-leaf" value="" selected></option>
                     </optgroup>
                   </select>
                 </div>
@@ -363,9 +362,9 @@
             <!-- Card Footer -->
             <div class="card-footer text-center">
               <input id="lock-selection-previous" class="btn btn-primary"
-                type="submit" value="    Previous    ">
+                type="submit" value="">
               <input id="lock-selection-next" class="btn btn-success"
-                type="submit" value="      Next      ">
+                type="submit" value="">
             </div>
             <!-- End Card Footer -->
 
@@ -384,7 +383,7 @@
 
             <!-- Card Heading -->
             <div class="card-heading">
-              <h3>Customer Information</h3>
+              <h3 id="customer-card-heading"></h3>
             </div>
             <!-- End Card Heading -->
 
@@ -399,8 +398,8 @@
                       class="fas fa-user"></i></span>
                 </div>
                 <input id="input-customer-name" type="text" class="form-control"
-                  placeholder="Customer name" required>
-                <div class="invalid-feedback">Customer name cannot be blank.
+                  placeholder="" required>
+                <div class="invalid-feedback">
                 </div>
 
               </div>
@@ -414,9 +413,8 @@
                       class="fas fa-mobile"></i></span>
                 </div>
                 <input id="input-customer-mobile" type="text"
-                  class="form-control" placeholder="Mobile No. (10 digit)"
-                  required>
-                <div class="invalid-feedback">Mobile number cannot be blank.
+                  class="form-control" placeholder="" required>
+                <div class="invalid-feedback">
                 </div>
 
               </div>
@@ -430,9 +428,8 @@
                       class="fas fa-building"></i></span>
                 </div>
                 <input id="input-customer-address1" type="text"
-                  class="form-control" placeholder="Customer Address - Line 1"
-                  required>
-                <div class="invalid-feedback">Address cannot be blank.</div>
+                  class="form-control" placeholder="" required>
+                <div class="invalid-feedback"></div>
 
               </div>
               <!-- End Customer Address - Line 1 -->
@@ -446,9 +443,8 @@
                       class="fas fa-building"></i></span>
                 </div>
                 <input id="input-customer-address2" type="text"
-                  class="form-control" placeholder="Customer Address - Line 2">
-                <div class="invalid-feedback">Address Line 2 cannot contain more
-                  than 50 characters.</div>
+                  class="form-control" placeholder="">
+                <div class="invalid-feedback"></div>
 
               </div>
               <!-- End Customer Address - Line 2 -->
@@ -462,9 +458,8 @@
                       class="fas fa-building"></i></span>
                 </div>
                 <input id="input-customer-address3" type="text"
-                  class="form-control" placeholder="Customer Address - Line 3">
-                <div class="invalid-feedback">Address Line 3 cannot contain more
-                  than 50 characters.</div>
+                  class="form-control" placeholder="">
+                <div class="invalid-feedback"></div>
 
               </div>
               <!-- End Customer Address - Line 3 -->
@@ -478,11 +473,8 @@
                       class="fa fa-info"></i></span>
                 </div>
                 <textarea id="input-customer-info" class="form-control"
-                  placeholder="Additional Information" rows="5"
-                  cols="50"></textarea>
-                <div class="invalid-feedback">Additional Information cannot
-                  contain more
-                  than 250 characters.</div>
+                  placeholder="" rows="5" cols="50"></textarea>
+                <div class="invalid-feedback"></div>
 
               </div>
               <!-- End Customer Additional Information -->
@@ -494,9 +486,9 @@
             <div class="card-footer text-center">
 
               <input id="customer-previous" class="btn btn-primary"
-                type="button" value="Previous">
+                type="button" value="">
               <input id="customer-next" class="btn btn-success" type="button"
-                value="   Next   ">
+                value="">
 
             </div>
             <!-- End Card Footer -->
@@ -516,7 +508,7 @@
 
             <!-- Card Heading -->
             <div class="card-heading">
-              <h3>Sales Person Information</h3>
+              <h3 id="sales-person-card-heading"></h3>
             </div>
             <!-- End Card Heading -->
 
@@ -531,8 +523,8 @@
                       class="fa-solid fa-id-badge"></i></span>
                 </div>
                 <input id="input-sales-person-id" type="text"
-                  class="form-control" placeholder="Sales Person ID" required>
-                <div class="invalid-feedback">Sales Person ID cannot be blank.
+                  class="form-control" placeholder="" required>
+                <div class="invalid-feedback">
                 </div>
 
               </div>
@@ -546,8 +538,8 @@
                       class="fas fa-user"></i></span>
                 </div>
                 <input id="input-sales-person-name" type="text"
-                  class="form-control" placeholder="Sales Person name" required>
-                <div class="invalid-feedback">Sales Person name cannot be blank.
+                  class="form-control" placeholder="" required>
+                <div class="invalid-feedback">
                 </div>
 
               </div>
@@ -562,11 +554,8 @@
                       class="fa-solid fa-location-dot"></i></span>
                 </div>
                 <textarea id="input-sales-person-info" class="form-control"
-                  placeholder="Location Information" rows="3"
-                  cols="50"></textarea>
-                <div class="invalid-feedback">Location Information cannot
-                  contain more
-                  than 150 characters.</div>
+                  placeholder="" rows="3" cols="50"></textarea>
+                <div class="invalid-feedback"></div>
 
               </div>
               <!-- End Sales Person Location Information -->
@@ -578,9 +567,9 @@
             <div class="card-footer text-center">
 
               <input id="sales-person-previous" class="btn btn-primary"
-                type="button" value="Previous">
+                type="button" value="">
               <input id="sales-person-next" class="btn btn-success"
-                type="button" value="   Next   ">
+                type="button" value="">
 
             </div>
             <!-- End Card Footer -->
@@ -629,6 +618,8 @@
     <!-- Information Capture Javascript -->
     <script src="https://apis.google.com/js/api.js"></script>
 
+    <script src="./../lib/lang/en/enum/page/lock-selection-survey-enum.js"
+      type="text/javascript"></script>
     <script src="./../lib/lang/en/enum/door/door-enum.js"
       type="text/javascript"></script>
     <script src="./../lib/lang/en/enum/lock/lock-enum.js"
