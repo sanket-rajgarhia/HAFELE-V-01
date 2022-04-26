@@ -35,7 +35,7 @@
       href="./../favicon/favicon.ico" />
 
     <!-- Page Title -->
-    <title>Lock Selection Survey</title>
+    <title></title>
 
   </head>
 
@@ -68,7 +68,7 @@
 
             <!-- Lock Selection Card Header -->
             <div class="card-header card-header-extended">
-              <h5>Lock Model Lookup</h5>
+              <h5 id="lock-selection-card-header"></h5>
             </div>
             <!-- End Lock Selection Card Header -->
 
@@ -87,7 +87,7 @@
                   <select id="lock-model-group"
                     class="custom-select custom-select-extended">
                     <optgroup>
-                      <option value="" selected>Lock Model</option>
+                      <option id="label-lock-model" value="" selected></option>
                     </optgroup>
                   </select>
                 </div>
@@ -97,12 +97,9 @@
 
               <div id="suggestion" class="hide-suggestion">
 
-                <p id="suitability-message">This lock is suitable for the
-                  following door type</p>
-                <p id="door-type"><span class="field-name">Door Type :
-                  </span><span id="type-value"></span></p>
-                <p id="door-thickness"><span class="field-name">Door Thickness
-                    Range : </span><span id="thickness-value"></span></p>
+                <p id="suitability-message"></p>
+                <p id="door-type"></p>
+                <p id="door-thickness"></p>
 
               </div>
 
@@ -113,7 +110,7 @@
             <div class="card-footer text-center card-footer-extended">
               <form action="./lock-selection-survey.html">
                 <input id="lock-selection-next" class="btn btn-success"
-                  type="submit" value="     Select     ">
+                  type="submit" value="">
               </form>
             </div>
             <!-- End Lock Selection Card Footer -->
@@ -132,7 +129,7 @@
 
             <!-- Door Specification Card Header -->
             <div class="card-header card-header-extended">
-              <h5>Door Specification</h5>
+              <h5 id="door-specification-header"></h5>
             </div>
             <!-- End Door Specification Card Header -->
 
@@ -140,9 +137,7 @@
             <div class="card-body">
 
               <div id="message">
-                <p>Click on the <span class="highlight-text">Next</span> button
-                  and provide the door specification to determine the
-                  suitability of a lock model.</p>
+                <p id="proceed-message"></p>
               </div>
 
             </div>
@@ -152,7 +147,7 @@
             <div class="card-footer text-center card-footer-extended">
               <form action="./lock-selection-survey.html">
                 <input id="door-specification-next" class="btn btn-primary"
-                  type="submit" value="      Next      ">
+                  type="submit" value="">
               </form>
             </div>
             <!-- End Door Specification Card Footer -->
@@ -201,6 +196,8 @@
     <!-- Information Capture Javascript -->
     <script src="https://apis.google.com/js/api.js"></script>
 
+    <script src="./../lib/lang/en/enum/page/index-enum.js"
+      type="text/javascript"></script>
     <script src="./../lib/lang/en/enum/door/door-enum.js"
       type="text/javascript"></script>
     <script src="./../lib/lang/en/enum/lock/lock-enum.js"

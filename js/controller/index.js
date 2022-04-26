@@ -30,6 +30,43 @@ let doorSpecificationNextButton = document.getElementById(
  * */
 window.onload = function() {
 
+
+    // Setup the index page
+    let titleElement = document.getElementsByTagName("title")[0];
+    titleElement.innerHTML = INDEX.TITLE;
+
+    // Lock selection card setup
+    let lockSelectionCardHeader = document.getElementById("lock-selection-card-header");
+    lockSelectionCardHeader.innerHTML = LOCK_SELECTION_CARD.HEADER;
+    let labelLockModel = document.getElementById("label-lock-model");
+    labelLockModel.innerHTML = LOCK_SELECTION_CARD.LABEL_LOCK_MODEL;
+    let suitabilityMessage = document.getElementById("suitability-message");
+    suitabilityMessage.innerHTML = LOCK_SELECTION_CARD.SUITABILITY_MESSAGE;
+    let doorType = document.getElementById("door-type");
+    doorType.innerHTML = `<span class="field-name">` +
+        LOCK_SELECTION_CARD.LABEL_DOOR_TYPE + `</span>` +
+        `<span id="type-value"></span>`;
+    let doorThicknessRange = document.getElementById("door-thickness");
+    doorThicknessRange.innerHTML = `<span class="field-name">` +
+        LOCK_SELECTION_CARD.LABEL_DOOR_THICKNESS + `</span>` +
+        `<span id="thickness-value"></span>`;
+
+    // Select buttons of the lock selection card
+    let navLockSelectionNextButton = document.getElementById("lock-selection-next");
+    navLockSelectionNextButton.setAttribute("value", NAVIGATION_BUTTONS.SELECT_BUTTON);
+
+    // Door selection card setup
+    let doorSelectionCardHeader = document.getElementById("door-specification-header");
+    doorSelectionCardHeader.innerHTML = DOOR_SPECIFICATION_CARD.HEADER;
+    let proceedMessage = document.getElementById("proceed-message");
+    proceedMessage.innerHTML = DOOR_SPECIFICATION_CARD.PROCEED_MESSAGE;
+    let labelNext = document.getElementById("label-next");
+    labelNext.innerHTML = DOOR_SPECIFICATION_CARD.LABEL_NEXT;
+
+    // Next buttons of the door selection card
+    let navDoorSpecificationNextButton = document.getElementById("door-specification-next");
+    navDoorSpecificationNextButton.setAttribute("value", NAVIGATION_BUTTONS.NEXT_BUTTON);
+
     // Add all the swing door - lock model name options to the lock model
     // group selection combo box
     let optionGroup = document.createElement("optgroup");
@@ -257,8 +294,8 @@ const loadSurveyPageOnSpecificationClick = () => {
     // Ensure that no lock models are selected by default
     lockModelSelectionGroup.options[0].selected = true
 
-     // Save the page data to the session storage
-     sessionStorage.setItem('page', "1");
+    // Save the page data to the session storage
+    sessionStorage.setItem('page', "1");
 
 }
 
