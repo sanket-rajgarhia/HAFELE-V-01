@@ -41,6 +41,8 @@ let swingDoorJambMessageLabel = document.getElementById(
     "message-swing-door-jamb");
 let doorThicknessMessageLabel = document.getElementById(
     "message-door-thickness");
+let doorThicknessInputMessageLabel = document.getElementById(
+    "message-door-thickness-input");
 let doorMaterialMessageLabel = document.getElementById(
     "message-door-material");
 let doorLeafMessageLabel = document.getElementById(
@@ -98,6 +100,9 @@ let doorMaterialPrependDiv = doorMaterialSelectionDiv
     .getElementsByClassName("input-group-prepend")[0];
 let doorLeafPrependDiv = doorLeafSelectionDiv
     .getElementsByClassName("input-group-prepend")[0];
+
+let doorThicknessInputGroupTextDiv = doorThicknessInputPrependDiv
+    .getElementsByClassName("input-group-text")[0];
 
 // Reference to the Previous and Next button
 let lockCardPreviousButton = document.getElementById("lock-selection-previous");
@@ -388,6 +393,8 @@ const doorTypeSelectionChange = (event) => {
  * */
 const swingDoorTypeSelectionChange = (event) => {
 
+    let selectedValue = swingDoorTypeSelectionGroup.value;
+
     if (swingDoorTypeSelectionGroup.selectedIndex === 0) {
 
         // Reset the validate and invalidate style
@@ -396,11 +403,19 @@ const swingDoorTypeSelectionChange = (event) => {
 
     } else {
 
+        // If Swing door type is DOUBLE DOOR then Swing door jamb must be
+        // double leaf door
+        if (selectedValue === SWING_DOOR_TYPE.SWING_DOOR_DOUBLE) {
+            swingDoorJambSelectionGroup.value = SWING_DOOR_JAMB.DOUBLE_LEAF_DOOR;
+            swingDoorJambSelectionGroup.dispatchEvent(new Event("change"));
+        }
+
         // Validate style applied upon selection 
         validateSelectControl(swingDoorTypeSelectionGroup,
             swingDoorTypePrependDiv);
 
     }
+
 }
 
 /* The callback function fired on 'change' - for swing door jamb select 
@@ -477,11 +492,25 @@ const doorThicknessSelectionChange = (event) => {
         if (selectedValue === DOOR_THICKNESS_IN_MM.MM_OTHER) {
 
             messageLabelShow(doorThicknessMessageLabel, false, "");
+
+            // Get the compatible door type and door thickness object
+            // resolve the minimum thickness value and set the starting value 
+            // of the door thickness input control to the minimum value
+            let compatibleDoor = lockCompatibility(
+                lockModelSelectionGroup.value.toUpperCase());
+            let thickness = compatibleDoor.doorThickness.split(" ")[0].split("-");
+            let minThickness = Number.parseInt(thickness[0]);
+            let maxThickness = Number.parseInt(thickness[1]);
+            doorThicknessInputGroup.value = minThickness;
+
             elementShow(doorThicknessInputDiv, true);
 
             // Validate style applied upon selection 
-            validateSelectControl(doorThicknessInputGroup,
-                doorThicknessInputPrependDiv);
+            // Validate style applied since the input box has a value 
+            doorThicknessInputDiv.classList.add("was-validated");
+            validateInputControl(doorThicknessInputPrependDiv,
+                doorThicknessInputGroupTextDiv);
+
         } // Hide the input field - and validate
         else {
 
@@ -537,7 +566,7 @@ const doorThicknessInputKeyPress = (event) => {
 
     // Prevent the user from entering a negative quantity
     if (event.cancelable === true) {
-        if (event.key === "-") {
+        if (event.key === "-" || event.key === '.') {
 
             event.preventDefault();
             event.stopPropagation();
@@ -547,17 +576,54 @@ const doorThicknessInputKeyPress = (event) => {
 
 }
 
-/* The callback function fired on 'keydown' - for door thickness input 
+/* The callback function fired on 'keyup' - for door thickness input 
  * control. 
  * @param    
  * @return   
  * */
-const doorThicknessInputKeyDown = (event) => {
+const doorThicknessInputKeyUp = (event) => {
 
-    // If the door thickness input field is empty then initialize it with the
-    // minimum value of 1
-    if (doorThicknessInputGroup.value.trim() === "") {
-        doorThicknessInputGroup.value = 1;
+    let selectedValue = doorThicknessInputGroup.value;
+
+    resetValidation(doorThicknessInputGroupTextDiv, doorThicknessInputPrependDiv);
+
+    if (selectedValue.trim() === "") {
+        messageLabelShow(doorThicknessInputMessageLabel,
+            true, MESSAGE.MESSAGE_DOOR_THICKNESS_AND_LOCK_MISMATCH);
+
+        // Invalidate style applied since input box is empty 
+        invalidateInputControl(doorThicknessInputPrependDiv, doorThicknessInputGroupTextDiv);
+
+    } else {
+
+        // Validate style applied since the input box has a value 
+        validateInputControl(doorThicknessInputPrependDiv, doorThicknessInputGroupTextDiv);
+
+        // Get the compatible door type and door thickness object
+        // and determine the minimum and maximum thickness of the door supported
+        // by the selected lock model
+        let compatibleDoor = lockCompatibility(
+            lockModelSelectionGroup.value.toUpperCase());
+        let thickness = compatibleDoor.doorThickness.split(" ")[0].split("-");
+        let minThickness = Number.parseInt(thickness[0]);
+        let maxThickness = Number.parseInt(thickness[1]);
+
+
+        let inputValue = Number.parseInt(doorThicknessInputGroup.value);
+
+        // If the selected door thickness does not match the door thickness
+        // of the selected lock type and the selected door thickness is not 
+        // the default value - display the warning message
+        if ((inputValue < minThickness || inputValue > maxThickness) &&
+            doorThicknessSelectionGroup.selectedIndex > 0) {
+
+            messageLabelShow(doorThicknessInputMessageLabel,
+                true, MESSAGE.MESSAGE_DOOR_THICKNESS_AND_LOCK_MISMATCH);
+
+        } else {
+            messageLabelShow(doorThicknessInputMessageLabel, false, "");
+        }
+
     }
 
 }
@@ -776,6 +842,16 @@ const lockCardNextButtonClick = (event) => {
         invalidateSelectControl(doorThicknessSelectionGroup,
             doorThicknessPrependDiv);
         inValidate = true;
+    } else {
+        if (doorThicknessSelectionGroup.value === DOOR_THICKNESS_IN_MM.MM_OTHER) {
+            if (doorThicknessInputGroup.value.trim() === "") {
+
+                // Invalidate style applied since input box is empty 
+                invalidateInputControl(doorThicknessInputPrependDiv,
+                    doorThicknessInputGroupTextDiv);
+                inValidate = true;
+            }
+        }
     }
 
     // Validate the door material selection combo
@@ -924,8 +1000,9 @@ doorThicknessSelectionGroup.addEventListener("change",
 
 doorThicknessInputGroup.addEventListener("keypress",
     doorThicknessInputKeyPress);
-doorThicknessInputGroup.addEventListener("keydown",
-    doorThicknessInputKeyDown);
+doorThicknessInputGroup.addEventListener("keyup",
+    doorThicknessInputKeyUp);
+
 
 doorMaterialSelectionGroup.addEventListener("change",
     doorMaterialSelectionChange);
