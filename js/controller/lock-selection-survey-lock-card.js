@@ -283,12 +283,10 @@ const existingDoorRetrofitSelectionChange = (event) => {
     let selectedValue = existingDoorRetrofitSelectionGroup.value;
 
     messageLabelShow(existingDoorRetrofitMessageLabel, false, "");
+    messageLabelShow(existingDoorRetrofitCautionLabel, false, "");
 
     // In case of de-selection hide any warning and caution message displayed
     if (existingDoorRetrofitSelectionGroup.selectedIndex === 0) {
-
-        messageLabelShow(existingDoorRetrofitMessageLabel, false, "");
-        messageLabelShow(existingDoorRetrofitCautionLabel, false, "");
 
         // Reset the validate and invalidate style
         resetSelectControl(existingDoorRetrofitSelectionGroup,
@@ -1245,18 +1243,22 @@ const lockCardNextButtonClick = (event) => {
             installationLocation: installationLocationSelectionGroup.value,
             installationLocationMessage: installationLocationMessageLabel.innerHTML,
             doorCondition: doorConditionSelectionGroup.value,
+            doorConditionMessage: doorConditionMessageLabel.innerHTML,
             existingDoorRetrofit: existingDoorRetrofitSelectionGroup.value,
             existingDoorRetrofitMessage: existingDoorRetrofitMessageLabel.innerHTML,
             existingDoorRetrofitCaution: existingDoorRetrofitCautionLabel.innerHTML,
             doorType: doorTypeSelectionGroup.value,
             doorTypeMessage: doorTypeMessageLabel.innerHTML,
             swingDoorType: swingDoorTypeSelectionGroup.value,
+            swingDoorTypeMessage: swingDoorTypeMessageLabel.innerHTML,
             swingDoorJamb: swingDoorJambSelectionGroup.value,
             swingDoorJambMessage: swingDoorJambMessageLabel.innerHTML,
             swingDoorJambCaution: swingDoorJambCautionLabel.innerHTML,
             doorThickness: doorThicknessSelectionGroup.value,
+            doorThicknessMessage: doorThicknessMessageLabel.innerHTML,
             doorThicknessInput: doorThicknessSelectionGroup.value.toUpperCase() ===
                 DOOR_THICKNESS_IN_MM.MM_OTHER.toUpperCase() ? doorThicknessInputGroup.value : "",
+            doorThicknessInputMessage: doorThicknessInputMessageLabel.innerHTML,
             doorMaterial: doorMaterialSelectionGroup.value,
             doorMaterialMessage: doorMaterialMessageLabel.innerHTML,
             doorLeaf: doorLeafSelectionGroup.value,

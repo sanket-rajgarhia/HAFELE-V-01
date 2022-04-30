@@ -56,9 +56,11 @@ window.onload = function(event) {
                 customerData.customerAddress3.toUpperCase());
             let customerInformation = customerData.customerInformation.toUpperCase();
             let customerInformationLines = customerInformation.match(/(.|[\r\n]){1,50}/g);
+            customerInformation = "";
             for (let line of customerInformationLines) {
-                customerInformation += line + "\n";
+                customerInformation += line + "\n ";
             }
+            console.log(customerInformation);
             formatReportFields("customerInformation",
                 REPORT_FIELD.CUSTOMER_INFORMATION.toUpperCase(), customerInformation);
 
@@ -75,10 +77,16 @@ window.onload = function(event) {
             formatReportFields("salesPersonName",
                 REPORT_FIELD.SALES_PERSON_NAME.toUpperCase(),
                 salesPersonData.salesPersonName.toUpperCase());
+
+            let salesPersonLocation = salesPersonData.salesPersonLocation.toUpperCase();
+            let salesPersonLocationLines = salesPersonLocation.match(/(.|[\r\n]){1,50}/g);
+            salesPersonLocation = "";
+            for (let line of salesPersonLocationLines) {
+                salesPersonLocation += line + "\n ";
+            }
             formatReportFields("salesPersonLocation",
                 REPORT_FIELD.SALES_PERSON_LOCATION.toUpperCase(),
-                salesPersonData.salesPersonLocation.toUpperCase());
-
+                salesPersonLocation.toUpperCase());
         }
 
         let lockAndDoorData = sessionStorage.getItem("lockAndDoorData");
@@ -106,7 +114,11 @@ window.onload = function(event) {
             formatReportFields("doorCondition",
                 REPORT_FIELD.LOCK_DOOR_CONDITION.toUpperCase(),
                 lockAndDoorData.doorCondition);
-
+            if (lockAndDoorData.doorConditionMessage.trim().length > 0) {
+                formatReportFields("doorConditionMessage",
+                    REPORT_FIELD.LOCK_DOOR_CONDITION_MESSAGE.toUpperCase(),
+                    lockAndDoorData.doorConditionMessage, WARNING);
+            }
             if (lockAndDoorData.doorCondition.toUpperCase() ===
                 DOOR_CONDITION.INSTALLED.toUpperCase()) {
 
@@ -140,6 +152,11 @@ window.onload = function(event) {
                 formatReportFields("swingDoorType",
                     REPORT_FIELD.LOCK_SWING_DOOR_TYPE.toUpperCase(),
                     lockAndDoorData.swingDoorType);
+                if (lockAndDoorData.swingDoorTypeMessage.trim().length > 0) {
+                    formatReportFields("swingDoorTypeMessage",
+                        REPORT_FIELD.LOCK_SWING_DOOR_TYPE_MESSAGE.toUpperCase(),
+                        lockAndDoorData.swingDoorTypeMessage, WARNING);
+                }
                 formatReportFields("swingDoorJamb",
                     REPORT_FIELD.LOCK_SWING_DOOR_JAMB.toUpperCase(),
                     lockAndDoorData.swingDoorJamb);
@@ -159,11 +176,21 @@ window.onload = function(event) {
                 formatReportFields("doorThickness",
                     REPORT_FIELD.LOCK_DOOR_THICKNESS.toUpperCase(),
                     lockAndDoorData.doorThickness);
+                if (lockAndDoorData.doorThicknessMessage.trim().length > 0) {
+                    formatReportFields("doorThicknessMessage",
+                        REPORT_FIELD.LOCK_DOOR_THICKNESS_MESSAGE.toUpperCase(),
+                        lockAndDoorData.doorThicknessMessage, WARNING);
+                }
             } else {
                 formatReportFields("doorThicknessInput",
                     REPORT_FIELD.LOCK_DOOR_THICKNESS_INPUT.toUpperCase(),
                     lockAndDoorData.doorThicknessInput + " " +
                     REPORT_FIELD.LOCK_THICKNESS_MM);
+                if (lockAndDoorData.doorThicknessInputMessage.trim().length > 0) {
+                    formatReportFields("doorThicknessInputMessage",
+                        REPORT_FIELD.LOCK_DOOR_THICKNESS_INPUT_MESSAGE.toUpperCase(),
+                        lockAndDoorData.doorThicknessInputMessage, WARNING);
+                }
             }
             formatReportFields("doorMaterial",
                 REPORT_FIELD.LOCK_DOOR_MATERIAL.toUpperCase(),
@@ -177,7 +204,7 @@ window.onload = function(event) {
             formatReportFields("doorLeaf",
                 REPORT_FIELD.LOCK_DOOR_LEAF.toUpperCase(),
                 lockAndDoorData.doorLeaf);
-            if (lockAndDoorData.doorLeafMessage.trim().length === 0) {
+            if (lockAndDoorData.doorLeafMessage.trim().length > 0) {
                 formatReportFields("doorLeafMessage",
                     REPORT_FIELD.LOCK_DOOR_LEAF_MESSAGE.toUpperCase(),
                     lockAndDoorData.doorLeafMessage, WARNING);
