@@ -546,7 +546,8 @@ const initializeLockCardControls = () => {
     // Add all the swing door leaf options to the door leaf
     // group selection combo box
     optionGroup = document.createElement("optgroup");
-    optionGroup.setAttribute("label", "SWING DOOR LEAF");
+    optionGroup.setAttribute("label",
+        LOCK_SELECTION_SURVEY.LOCK_DOOR_LEAF_GROUP_LABEL_SWING_DOOR);
     optionGroupAdded = false;
     Object.keys(SWING_DOOR_LEAF).forEach(key => {
 
@@ -570,7 +571,8 @@ const initializeLockCardControls = () => {
     // Add all the sliding door leaf options to the door leaf
     // group selection combo box
     optionGroup = document.createElement("optgroup");
-    optionGroup.setAttribute("label", "SLIDING DOOR LEAF");
+    optionGroup.setAttribute("label",
+        LOCK_SELECTION_SURVEY.LOCK_DOOR_LEAF_GROUP_LABEL_SLIDING_DOOR);
     optionGroupAdded = false;
     Object.keys(SLIDING_DOOR_LEAF).forEach(key => {
 

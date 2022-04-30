@@ -22,10 +22,18 @@ const lockCompatibility = (lockModel) => {
     switch (lockModel) {
 
         case LOCK_MODEL.DC1000:
+        case LOCK_MODEL.ER4900:
+        case LOCK_MODEL.ER5100:
             return {
                 doorType: DOOR_TYPE.SWING_DOOR,
                     doorThickness: DOOR_THICKNESS_IN_MM.MM_30_TO_50
             };
+        case LOCK_MODEL.ER5200:
+            return {
+                doorType: DOOR_TYPE.SLIDING_DOOR,
+                    doorThickness: DOOR_THICKNESS_IN_MM.MM_30_TO_50
+            };
+
         case LOCK_MODEL.DH2000:
             return {
                 doorType: DOOR_TYPE.SWING_DOOR,
@@ -38,17 +46,11 @@ const lockCompatibility = (lockModel) => {
         case LOCK_MODEL.EL6000:
         case LOCK_MODEL.EL7200:
         case LOCK_MODEL.EL7500:
-        case LOCK_MODEL.ER4900:
-        case LOCK_MODEL.ER5100:
             return {
                 doorType: DOOR_TYPE.SWING_DOOR,
                     doorThickness: DOOR_THICKNESS_IN_MM.MM_35_TO_50
             };
-        case LOCK_MODEL.ER5200:
-            return {
-                doorType: DOOR_TYPE.SLIDING_DOOR,
-                    doorThickness: DOOR_THICKNESS_IN_MM.MM_35_TO_50
-            };
+
 
         case LOCK_MODEL.DL7600:
         case LOCK_MODEL.PP8100:

@@ -33,10 +33,14 @@ let doorLeafSelectionGroup = document.getElementById(
 // Reference to the message label ids
 let installationLocationMessageLabel = document.getElementById(
     "message-installation-location");
+let doorConditionMessageLabel = document.getElementById(
+    "message-door-condition");
 let existingDoorRetrofitMessageLabel = document.getElementById(
     "message-existing-door-retrofit");
 let doorTypeMessageLabel = document.getElementById(
     "message-door-type");
+let swingDoorTypeMessageLabel = document.getElementById(
+    "message-swing-door-type");
 let swingDoorJambMessageLabel = document.getElementById(
     "message-swing-door-jamb");
 let doorThicknessMessageLabel = document.getElementById(
@@ -119,11 +123,27 @@ let lockCardNextButton = document.getElementById("lock-selection-next");
  * */
 const lockModelSelectionChange = (event) => {
 
+    installationLocationSelectionGroup.selectedIndex = 0;
+    doorTypeSelectionGroup.selectedIndex = 0;
+    doorThicknessSelectionGroup.selectedIndex = 0;
+    doorMaterialSelectionGroup.selectedIndex = 0;
+
     // If a lock model has been selected - then update the door type and 
     // door thickness select control
     if (lockModelSelectionGroup.selectedIndex > 0) {
 
         let selectedValue = lockModelSelectionGroup.value;
+
+        // Hide the GARAGE (EXAMPLE) - Door Installation location 
+        let optionElements = installationLocationSelectionGroup.getElementsByTagName('option');
+        optionElements = Array.prototype.slice.call(optionElements, 0);
+        let values = optionElements.map(function(item) {
+            return item.value
+        });
+        let index = values.indexOf(DOOR_INSTALLATION_LOCATION.GARAGE_DOOR_EXAMPLE);
+        if (typeof index !== -1) {
+            optionElements[index].setAttribute("class", "hide");
+        }
 
         // Fetch the object specifying the door type and door thickness range
         let compatibleDoor = lockCompatibility(selectedValue.toUpperCase());
@@ -138,22 +158,26 @@ const lockModelSelectionChange = (event) => {
 
         // Select the door thickness - automatically
         doorThicknessSelectionGroup.value = compatibleDoor.doorThickness;
+        doorMaterialSelectionGroup.selectedIndex = 0;
 
         // Validate style applied upon selection 
         validateSelectControl(lockModelSelectionGroup, lockModelPrependDiv);
 
     } // Reset the door type and door thickness select control
     else {
-        doorTypeSelectionGroup.selectedIndex = 0;
-        doorThicknessSelectionGroup.selectedIndex = 0;
 
         // Reset the validate and invalidate style
         resetSelectControl(lockModelSelectionGroup, lockModelPrependDiv);
     }
 
+    installationLocationSelectionGroup.dispatchEvent(new Event("change"));
+    doorConditionSelectionGroup.dispatchEvent(new Event("change"));
     doorTypeSelectionGroup.dispatchEvent(new Event("change"));
+    swingDoorTypeSelectionGroup.dispatchEvent(new Event("change"));
     swingDoorJambSelectionGroup.dispatchEvent(new Event("change"));
     doorThicknessSelectionGroup.dispatchEvent(new Event("change"));
+    doorMaterialSelectionGroup.dispatchEvent(new Event("change"));
+
 }
 
 /* The callback function fired on 'change' - for installation location select 
@@ -165,10 +189,10 @@ const installationLocationSelectionChange = (event) => {
 
     let selectedValue = installationLocationSelectionGroup.value;
 
+    messageLabelShow(installationLocationMessageLabel, false, "");
+
     // In case of de-selection hide any warning message displayed
     if (installationLocationSelectionGroup.selectedIndex === 0) {
-
-        messageLabelShow(installationLocationMessageLabel, false, "");
 
         // Reset the validate and invalidate style
         resetSelectControl(installationLocationSelectionGroup,
@@ -182,9 +206,6 @@ const installationLocationSelectionChange = (event) => {
             messageLabelShow(installationLocationMessageLabel,
                 true, MESSAGE.MESSAGE_FAILURE);
 
-        } // Hide the warning message
-        else {
-            messageLabelShow(installationLocationMessageLabel, false, "");
         }
 
         // Validate style applied upon selection 
@@ -204,12 +225,15 @@ const doorConditionSelectionChange = (event) => {
 
     let selectedValue = doorConditionSelectionGroup.value;
 
+    messageLabelShow(doorConditionMessageLabel, false, "");
+
     // Reset the existing door retrofit select control and 
     // associated message and caution warnings - and also
     // reset the validate and invalidate style
     resetSelectControl(existingDoorRetrofitSelectionGroup,
         existingDoorRetrofitPrependDiv);
     existingDoorRetrofitSelectionGroup.selectedIndex = 0;
+
     messageLabelShow(existingDoorRetrofitMessageLabel, false, "");
     messageLabelShow(existingDoorRetrofitCautionLabel, false, "");
 
@@ -229,6 +253,15 @@ const doorConditionSelectionChange = (event) => {
         if (selectedValue === DOOR_CONDITION.INSTALLED) {
             elementShow(existingDoorRetrofitSelectionDiv, true);
 
+            // Validation for lock model EL6000 - cannot be installed on 
+            // an existing door
+            if (lockModelSelectionGroup.value === LOCK_MODEL.DL6600) {
+                messageLabelShow(doorConditionMessageLabel,
+                    true, MESSAGE.MESSAGE_FAILURE);
+            } else {
+                messageLabelShow(doorConditionMessageLabel, false, "");
+            }
+
         } else {
             elementShow(existingDoorRetrofitSelectionDiv, false);
         }
@@ -237,7 +270,6 @@ const doorConditionSelectionChange = (event) => {
         validateSelectControl(doorConditionSelectionGroup,
             doorConditionPrependDiv);
     }
-
 
 }
 
@@ -249,6 +281,8 @@ const doorConditionSelectionChange = (event) => {
 const existingDoorRetrofitSelectionChange = (event) => {
 
     let selectedValue = existingDoorRetrofitSelectionGroup.value;
+
+    messageLabelShow(existingDoorRetrofitMessageLabel, false, "");
 
     // In case of de-selection hide any warning and caution message displayed
     if (existingDoorRetrofitSelectionGroup.selectedIndex === 0) {
@@ -262,26 +296,116 @@ const existingDoorRetrofitSelectionChange = (event) => {
 
     } else {
 
-        messageLabelShow(existingDoorRetrofitCautionLabel,
-            true, CAUTION.EXISTING_DOOR_RETROFIT_CAUTION);
+        // Error messages and caution messages for various locks and 
+        // existing door retrofit selection
+        let lockModelsUnsuitableForDoorWithLeverHandleSet = [
+            LOCK_MODEL.DH2000, LOCK_MODEL.DL6500, LOCK_MODEL.DL6600,
+            LOCK_MODEL.DL7000, LOCK_MODEL.DL7900
+        ];
+        let lockModelUnsuitableForDoorWithKnobLockSet = [LOCK_MODEL.DC1000,
+            LOCK_MODEL.DL6600
+        ];
+        let lockModelUnsuitableForDoorWithGripHandle = [LOCK_MODEL.DC1000,
+            LOCK_MODEL.DH2000, LOCK_MODEL.DL6500, LOCK_MODEL.DL6600,
+            LOCK_MODEL.DL7000, LOCK_MODEL.DL7100, LOCK_MODEL.DL7600,
+            LOCK_MODEL.DL7900, LOCK_MODEL.EL6000, LOCK_MODEL.EL7200,
+            LOCK_MODEL.EL7500, LOCK_MODEL.PP8100, LOCK_MODEL.PP9000
+        ];
 
-        // If the type of handle on the retro fit door is grip then 
-        // display the message
-        if (selectedValue === DOOR_RETROFIT.GRIP) {
+        let lockModelSelectedValue = lockModelSelectionGroup.value;
 
-            if (doorConditionSelectionGroup.value === DOOR_CONDITION.INSTALLED) {
-                messageLabelShow(existingDoorRetrofitMessageLabel,
-                    true, MESSAGE.MESSAGE_FAILURE);
-            } // Flow should never reach here - unless order is changed 
-            else {
-                messageLabelShow(existingDoorRetrofitMessageLabel,
-                    false, "");
-            }
+        switch (selectedValue) {
+            case DOOR_RETROFIT.LEVER_HANDLE:
 
-        } // Reset the message
-        else {
-            messageLabelShow(existingDoorRetrofitMessageLabel,
-                false, "");
+                // Message Display
+                if (lockModelsUnsuitableForDoorWithLeverHandleSet
+                    .includes(lockModelSelectedValue) === true) {
+
+                    messageLabelShow(existingDoorRetrofitMessageLabel,
+                        true, MESSAGE.MESSAGE_FAILURE);
+
+                } else {
+                    messageLabelShow(existingDoorRetrofitMessageLabel,
+                        false, "");
+                }
+
+                // Caution Message display
+                if (lockModelSelectedValue === LOCK_MODEL.DC1000 ||
+                    lockModelSelectedValue === LOCK_MODEL.DL6600) {
+                    messageLabelShow(existingDoorRetrofitCautionLabel,
+                        false, "");
+                } else if (lockModelSelectedValue === LOCK_MODEL.ER4900 ||
+                    lockModelSelectedValue === LOCK_MODEL.ER5100 ||
+                    lockModelSelectedValue === LOCK_MODEL.ER5200) {
+                    messageLabelShow(existingDoorRetrofitCautionLabel,
+                        true, CAUTION.EXISTING_DOOR_RETROFIT_RIM_LOCK_CAUTION);
+                } else {
+                    messageLabelShow(existingDoorRetrofitCautionLabel,
+                        true, CAUTION.EXISTING_DOOR_RETROFIT_CAUTION);
+                }
+
+                break;
+            case DOOR_RETROFIT.KNOB:
+
+                // Message Display
+                if (lockModelUnsuitableForDoorWithKnobLockSet
+                    .includes(lockModelSelectedValue) === true) {
+
+                    messageLabelShow(existingDoorRetrofitMessageLabel,
+                        true, MESSAGE.MESSAGE_FAILURE);
+
+                } else {
+                    messageLabelShow(existingDoorRetrofitMessageLabel,
+                        false, "");
+                }
+
+                // Caution Message display
+                if (lockModelSelectedValue === LOCK_MODEL.DL6600) {
+                    messageLabelShow(existingDoorRetrofitCautionLabel,
+                        false, "");
+                } else if (lockModelSelectedValue === LOCK_MODEL.ER4900 ||
+                    lockModelSelectedValue === LOCK_MODEL.ER5100 ||
+                    lockModelSelectedValue === LOCK_MODEL.ER5200) {
+                    messageLabelShow(existingDoorRetrofitCautionLabel,
+                        true, CAUTION.EXISTING_DOOR_RETROFIT_RIM_LOCK_CAUTION);
+                } else {
+                    messageLabelShow(existingDoorRetrofitCautionLabel,
+                        true, CAUTION.EXISTING_DOOR_RETROFIT_CAUTION);
+                }
+
+                break;
+            case DOOR_RETROFIT.GRIP:
+
+                // Message Display
+                if (lockModelUnsuitableForDoorWithGripHandle
+                    .includes(lockModelSelectedValue) === true) {
+
+                    messageLabelShow(existingDoorRetrofitMessageLabel,
+                        true, MESSAGE.MESSAGE_FAILURE);
+
+                } else {
+                    messageLabelShow(existingDoorRetrofitMessageLabel,
+                        false, "");
+                }
+
+                // Caution Message display
+                if (lockModelSelectedValue === LOCK_MODEL.DL6600) {
+                    messageLabelShow(existingDoorRetrofitCautionLabel,
+                        false, "");
+                } else if (lockModelSelectedValue === LOCK_MODEL.ER4900 ||
+                    lockModelSelectedValue === LOCK_MODEL.ER5100 ||
+                    lockModelSelectedValue === LOCK_MODEL.ER5200) {
+                    messageLabelShow(existingDoorRetrofitCautionLabel,
+                        true, CAUTION.EXISTING_DOOR_RETROFIT_RIM_LOCK_CAUTION);
+                } else {
+                    messageLabelShow(existingDoorRetrofitCautionLabel,
+                        true, CAUTION.EXISTING_DOOR_RETROFIT_CAUTION);
+                }
+
+                break;
+            default:
+                break;
+
         }
 
         // Validate style applied upon selection 
@@ -307,6 +431,10 @@ const doorTypeSelectionChange = (event) => {
     swingDoorJambSelectionGroup.selectedIndex = 0;
     doorLeafSelectionGroup.selectedIndex = 0;
 
+    swingDoorTypeSelectionGroup.dispatchEvent(new Event("change"));
+    swingDoorJambSelectionGroup.dispatchEvent(new Event("change"));
+    doorLeafSelectionGroup.dispatchEvent(new Event("change"));
+
     // Reset the swing door jamb and door leaf select control and 
     // associated message and caution warnings
     messageLabelShow(swingDoorJambMessageLabel, false, "");
@@ -319,6 +447,32 @@ const doorTypeSelectionChange = (event) => {
         swingDoorJambPrependDiv);
     resetSelectControl(doorLeafSelectionGroup,
         doorLeafPrependDiv);
+
+    // Locate all the 'optgroup' tags
+    let optionGroupElements = doorLeafSelectionGroup.getElementsByTagName('optgroup');
+    optionGroupElements = Array.prototype.slice.call(optionGroupElements, 0);
+    let labels = optionGroupElements.map(function(item) {
+        return item.label
+    });
+
+    // Reset the visibility of all optgroup elements - make them visible
+    for (let optGroupElement of optionGroupElements) {
+        optGroupElement.removeAttribute("class", "hide");
+    }
+
+    // Locate all the 'option' tags
+    let optionElements = doorLeafSelectionGroup.getElementsByTagName('option');
+    optionElements = Array.prototype.slice.call(optionElements, 0);
+    let values = optionElements.map(function(item) {
+        return item.value
+    });
+
+    // Reset the visibility of all option elements - make them visible
+    for (let optionElement of optionElements) {
+        optionElement.removeAttribute("class", "hide");
+    }
+
+    messageLabelShow(doorTypeMessageLabel, false, "");
 
     if (doorTypeSelectionGroup.selectedIndex === 0) {
 
@@ -335,12 +489,87 @@ const doorTypeSelectionChange = (event) => {
         // If the door type selected is swing door then - display the 
         // swing door type and swing door jamb select controls
         if (selectedValue === DOOR_TYPE.SWING_DOOR) {
+
             elementShow(swingDoorTypeSelectionDiv, true);
             elementShow(swingDoorJambSelectionDiv, true);
-        } // Hide the wing door type and swing door jamb select controls
+
+            // Hide the sliding door optgroup and hide it 
+            let index = labels.indexOf(LOCK_SELECTION_SURVEY
+                .LOCK_DOOR_LEAF_GROUP_LABEL_SLIDING_DOOR);
+            if (index !== -1) {
+                optionGroupElements[index].setAttribute("class", "hide");
+            }
+
+            // Hide selected items in the swing door selection as well
+            // depending upon the lock type
+            let selectedLockModel = lockModelSelectionGroup.value;
+            let showOptions = []
+            switch (selectedLockModel) {
+
+                case LOCK_MODEL.DC1000:
+                    break;
+                case LOCK_MODEL.DH2000:
+                case LOCK_MODEL.DL6500:
+                case LOCK_MODEL.DL7000:
+                case LOCK_MODEL.DL7100:
+                    showOptions = [SWING_DOOR_LEAF.PLAIN_LEAF,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_100_MM,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_100_MM,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_100_MM,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_100_MM
+                    ]
+                    displayDoorLeafOptions(showOptions);
+                    break;
+                case LOCK_MODEL.ER4900:
+                case LOCK_MODEL.ER5100:
+                case LOCK_MODEL.ER5200:
+                    showOptions = [SWING_DOOR_LEAF.PLAIN_LEAF,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_50_MM,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_50_MM,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_50_MM,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_50_MM
+                    ]
+                    displayDoorLeafOptions(showOptions);
+                    break;
+                case LOCK_MODEL.DL6600:
+                    showOptions = [SWING_DOOR_LEAF.PLAIN_LEAF,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_60_MM,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_60_MM,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_60_MM,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_60_MM
+                    ]
+                    displayDoorLeafOptions(showOptions);
+                    break;
+                case LOCK_MODEL.EL6000:
+                case LOCK_MODEL.EL7200:
+                case LOCK_MODEL.EL7500:
+                case LOCK_MODEL.DL7600:
+                case LOCK_MODEL.DL7900:
+                case LOCK_MODEL.PP8100:
+                case LOCK_MODEL.PP9000:
+                    showOptions = [SWING_DOOR_LEAF.PLAIN_LEAF,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_130_MM,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_130_MM,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_130_MM,
+                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_130_MM
+                    ]
+                    displayDoorLeafOptions(showOptions);
+                    break;
+                default:
+                    break;
+            }
+
+        } // Hide the Swing door type and swing door jamb select controls
         else {
             elementShow(swingDoorTypeSelectionDiv, false);
             elementShow(swingDoorJambSelectionDiv, false);
+
+            // Hide the swing door optgroup and hide it 
+            let index = labels.indexOf(LOCK_SELECTION_SURVEY
+                .LOCK_DOOR_LEAF_GROUP_LABEL_SWING_DOOR);
+            if (index !== -1) {
+                optionGroupElements[index].setAttribute("class", "hide");
+            }
         }
 
         // If the lock model has been selected - then
@@ -353,7 +582,6 @@ const doorTypeSelectionChange = (event) => {
 
             // Check if the door is compatible with both Swing and Sliding type
             if (compatibleDoor.doorType.indexOf('/') > -1) {
-
                 // Lock supports both types of door - do nothing
                 messageLabelShow(doorTypeMessageLabel, false, "");
 
@@ -383,7 +611,6 @@ const doorTypeSelectionChange = (event) => {
 
     }
 
-
 }
 
 /* The callback function fired on 'change' - for swing door type select 
@@ -394,6 +621,11 @@ const doorTypeSelectionChange = (event) => {
 const swingDoorTypeSelectionChange = (event) => {
 
     let selectedValue = swingDoorTypeSelectionGroup.value;
+
+    swingDoorJambSelectionGroup.selectedIndex = 0;
+    swingDoorJambSelectionGroup.dispatchEvent(new Event("change"));
+
+    messageLabelShow(swingDoorTypeMessageLabel, false, "");
 
     if (swingDoorTypeSelectionGroup.selectedIndex === 0) {
 
@@ -406,8 +638,19 @@ const swingDoorTypeSelectionChange = (event) => {
         // If Swing door type is DOUBLE DOOR then Swing door jamb must be
         // double leaf door
         if (selectedValue === SWING_DOOR_TYPE.SWING_DOOR_DOUBLE) {
+
+            if (lockModelSelectionGroup.value === LOCK_MODEL.PP8100) {
+                messageLabelShow(swingDoorTypeMessageLabel, true,
+                    MESSAGE.MESSAGE_JAMB_AND_LOCK_TYPE_MISMATCH);
+            } else {
+                messageLabelShow(swingDoorTypeMessageLabel, false, "");
+            }
+
             swingDoorJambSelectionGroup.value = SWING_DOOR_JAMB.DOUBLE_LEAF_DOOR;
             swingDoorJambSelectionGroup.dispatchEvent(new Event("change"));
+
+        } else {
+            messageLabelShow(swingDoorTypeMessageLabel, false, "");
         }
 
         // Validate style applied upon selection 
@@ -427,12 +670,13 @@ const swingDoorJambSelectionChange = (event) => {
 
     let selectedValue = swingDoorJambSelectionGroup.value;
 
+    messageLabelShow(swingDoorJambMessageLabel, false, "");
+
+    // Hide the caution warning
+    messageLabelShow(swingDoorJambCautionLabel, false, "");
+
     // In case of de-selection hide any warning message displayed
     if (swingDoorJambSelectionGroup.selectedIndex === 0) {
-        messageLabelShow(swingDoorJambMessageLabel, false, "");
-
-        // Hide the caution warning
-        messageLabelShow(swingDoorJambCautionLabel, false, "");
 
         // Reset the validate and invalidate style
         resetSelectControl(swingDoorJambSelectionGroup,
@@ -637,9 +881,10 @@ const doorMaterialSelectionChange = (event) => {
 
     let selectedValue = doorMaterialSelectionGroup.value;
 
+    messageLabelShow(doorMaterialMessageLabel, false, "");
+
     // In case of de-selection hide any warning message displayed
     if (doorMaterialSelectionGroup.selectedIndex === 0) {
-        messageLabelShow(doorMaterialMessageLabel, false, "");
 
         // Reset the validate and invalidate style
         resetSelectControl(doorMaterialSelectionGroup,
@@ -649,10 +894,28 @@ const doorMaterialSelectionChange = (event) => {
 
         if (selectedValue === DOOR_MATERIAL.GLASS ||
             selectedValue === DOOR_MATERIAL.PVC ||
-            selectedValue === DOOR_MATERIAL.UPVC ||
             selectedValue === DOOR_MATERIAL.WPC) {
+
             messageLabelShow(doorMaterialMessageLabel,
                 true, MESSAGE.MESSAGE_MATERIAL_FAILURE);
+
+        } // If material is UPVC
+        else if (selectedValue === DOOR_MATERIAL.UPVC) {
+
+            let selectedLockModel = lockModelSelectionGroup.value;
+
+            let suitableLockModels = [LOCK_MODEL.ER4900,
+                LOCK_MODEL.ER5100, LOCK_MODEL.ER5200,
+                LOCK_MODEL.DH2000, LOCK_MODEL.DL6500
+            ]
+
+            if (suitableLockModels.includes(selectedLockModel) === true) {
+                messageLabelShow(doorMaterialMessageLabel,
+                    false, "");
+            } else {
+                messageLabelShow(doorMaterialMessageLabel,
+                    true, MESSAGE.MESSAGE_MATERIAL_FAILURE);
+            }
         } else {
             messageLabelShow(doorMaterialMessageLabel,
                 false, "");
@@ -675,10 +938,9 @@ const doorLeafSelectionChange = (event) => {
 
     let selectedValue = doorLeafSelectionGroup.value;
 
-    if (doorLeafSelectionGroup.selectedIndex === 0) {
+    messageLabelShow(doorLeafMessageLabel, false, "");
 
-        messageLabelShow(doorLeafMessageLabel,
-            false, "");
+    if (doorLeafSelectionGroup.selectedIndex === 0) {
 
         // Reset the validate and invalidate style
         resetSelectControl(doorLeafSelectionGroup,
@@ -688,71 +950,167 @@ const doorLeafSelectionChange = (event) => {
 
         // Locate the selected option tag
         let selectedOptionTag;
+        let allOptionTags = doorLeafSelectionGroup
+            .getElementsByTagName("option");
 
-        let allOptionTags = doorLeafSelectionGroup.getElementsByTagName("option");
+        // Loop over all the options tag - displayed or hidden
         for (let optionTag of allOptionTags) {
+
+            //The option tag containing the selected value is found
             if (optionTag.value === selectedValue) {
-                selectedOptionTag = optionTag;
-                break;
+
+                // If the option tag is of type PLAIN LEAF
+                if (optionTag.value === SWING_DOOR_LEAF.PLAIN_LEAF) {
+
+                    //Determine if it is the PLAIN LEAF with data-door-type
+                    // data attribute [having either "", "SWING DOOR" or 
+                    // "SLIDING DOOR"] matches the doorTypeSelection
+                    if (doorTypeSelectionGroup.value === optionTag.dataset.doorType) {
+
+                        // The option tag with PLAIN leaf of the same type as
+                        // the door type selection ["SWING DOOR" or
+                        // "SLIDING DOOR"]
+                        selectedOptionTag = optionTag;
+                        break;
+
+                    } else {
+                        // The option tag is of type PLAIN LEAF but it DOES NOT
+                        // match the doorTypeSelection 
+                        // ["SWING DOOR"/"SLIDING DOOR"]
+                        continue;
+                    }
+                } // If the option tag is of type OTHER THAN - PLAIN LEAF
+                else {
+                    // For any other option tag other than PLAIN LEAF, a
+                    // match was found - break from loop processing all the
+                    // option tags
+                    selectedOptionTag = optionTag;
+                    break;
+                }
+
             }
+
         }
 
-        // Determine the selected option tag's door type
-        let doorType = selectedOptionTag.dataset.doorType;
+        // If the door type selection is either ["SWING DOOR" OR 
+        // "SLIDING DOOR"] and NOT in the UNSELECTED state
+        // If the door type selection is in UNSELECTED STATE and you 
+        // select PLAIN LEAF in any section - selectedOptionTag will
+        // be undefined and selectedOptionTag.dataset.doorType
+        // will generate an exception and hence this check is required.
+        if (doorTypeSelectionGroup.value.trim() !== "" &&
+            doorTypeSelectionGroup.selectedIndex > 0) {
 
-        // If a door leaf of the type - swing or sliding has been 
-        // selected (and not the default message value) - then perform validations
-        if (typeof doorType !== 'undefined') {
+            // Determine the selected option tag's door type
+            let doorType = selectedOptionTag.dataset.doorType;
 
-            // Check that the door type select control's value matches the doorType.
-            // If it does not match then display the warning message.
-            if (doorTypeSelectionGroup.value.toUpperCase() !==
-                doorType.toUpperCase() &&
-                doorTypeSelectionGroup.selectedIndex > 0) {
+            // If a door leaf of the type - swing or sliding has been 
+            // selected (and not the default message value) - then perform validations
+            if (typeof doorType !== 'undefined') {
 
-                messageLabelShow(doorLeafMessageLabel,
-                    true, MESSAGE.MESSAGE_DOOR_LEAF_AND_DOOR_TYPE_MISMATCH);
+                let selectedLockModel = lockModelSelectionGroup.value;
+                switch (selectedLockModel) {
 
-            } // Hide any warning message - door type select control's value matches the doorType
-            else {
+                    case LOCK_MODEL.DC1000:
+                        if (doorType.toUpperCase() === DOOR_TYPE.SLIDING_DOOR) {
+                            messageLabelShow(doorLeafMessageLabel, true,
+                                MESSAGE.MESSAGE_DOOR_LEAF_AND_DOOR_TYPE_MISMATCH);
+                        }
+                        break;
+                    case LOCK_MODEL.DH2000:
+                    case LOCK_MODEL.DL6500:
+                    case LOCK_MODEL.DL7000:
+                    case LOCK_MODEL.DL7100:
+                        if (doorType.toUpperCase() === DOOR_TYPE.SLIDING_DOOR) {
+                            messageLabelShow(doorLeafMessageLabel, true,
+                                MESSAGE.MESSAGE_DOOR_LEAF_AND_DOOR_TYPE_MISMATCH);
+                        } else {
+                            if (selectedValue ===
+                                SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_100_MM ||
+                                selectedValue ===
+                                SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_100_MM) {
+                                messageLabelShow(doorLeafMessageLabel, true,
+                                    MESSAGE.MESSAGE_DOOR_LEAF_FRAME_THICKNESS_INADEQUATE);
+                            }
+                        }
+                        break;
+                    case LOCK_MODEL.ER4900:
+                    case LOCK_MODEL.ER5100:
+                        if (doorType.toUpperCase() === DOOR_TYPE.SLIDING_DOOR) {
+                            messageLabelShow(doorLeafMessageLabel, true,
+                                MESSAGE.MESSAGE_DOOR_LEAF_AND_DOOR_TYPE_MISMATCH);
+                        } else {
+                            if (selectedValue ===
+                                SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_50_MM ||
+                                selectedValue ===
+                                SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_50_MM) {
+                                messageLabelShow(doorLeafMessageLabel, true,
+                                    MESSAGE.MESSAGE_DOOR_LEAF_FRAME_THICKNESS_INADEQUATE);
+                            }
+                        }
+                        break;
+                    case LOCK_MODEL.ER5200:
+                        if (selectedValue ===
+                            SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_50_MM ||
+                            selectedValue ===
+                            SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_50_MM) {
+                            messageLabelShow(doorLeafMessageLabel, true,
+                                MESSAGE.MESSAGE_DOOR_LEAF_FRAME_THICKNESS_INADEQUATE);
+                        }
+                        break;
+                    case LOCK_MODEL.DL6600:
+                        if (selectedValue ===
+                            SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_60_MM ||
+                            selectedValue ===
+                            SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_60_MM) {
+                            messageLabelShow(doorLeafMessageLabel, true,
+                                MESSAGE.MESSAGE_DOOR_LEAF_FRAME_THICKNESS_INADEQUATE);
+                        }
+                        break;
+                    case LOCK_MODEL.EL6000:
+                    case LOCK_MODEL.EL7200:
+                    case LOCK_MODEL.EL7500:
+                    case LOCK_MODEL.DL7600:
+                    case LOCK_MODEL.DL7900:
+                    case LOCK_MODEL.PP8100:
+                    case LOCK_MODEL.PP9000:
+                        if (doorType.toUpperCase() === DOOR_TYPE.SLIDING_DOOR) {
+                            messageLabelShow(doorLeafMessageLabel, true,
+                                MESSAGE.MESSAGE_DOOR_LEAF_AND_DOOR_TYPE_MISMATCH);
+                        } else {
+                            if (selectedValue ===
+                                SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_130_MM ||
+                                selectedValue ===
+                                SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_130_MM) {
+                                messageLabelShow(doorLeafMessageLabel, true,
+                                    MESSAGE.MESSAGE_DOOR_LEAF_FRAME_THICKNESS_INADEQUATE);
+                            }
+                        }
+                        break;
+                    default:
+                        break;
 
-                // Check if the door leaf can support a lock - check for
-                // '<' symbol in selected option (NOT SUPPORTED CASE)
-                if (selectedValue.indexOf('<') > -1) {
-
-                    // If it is a door leaf for a swing door selection
-                    if (doorType.toUpperCase() === DOOR_TYPE.SWING_DOOR) {
-                        messageLabelShow(doorLeafMessageLabel,
-                            true,
-                            MESSAGE.MESSAGE_DOOR_LEAF_FRAME_THICKNESS_INADEQUATE);
-                    } // It is a door leaf for a sliding door selection
-                    else {
-                        messageLabelShow(doorLeafMessageLabel,
-                            true,
-                            MESSAGE.MESSAGE_DOOR_LEAF_THICKNESS_INADEQUATE);
-                    }
-
-                } // SUPPORTED CASE 
-                else {
-                    messageLabelShow(doorLeafMessageLabel,
-                        false, "");
                 }
+
+                // Validate style applied upon selection 
+                validateSelectControl(doorLeafSelectionGroup,
+                    doorLeafPrependDiv);
+
+            } // Hide any warning message
+            else {
+                messageLabelShow(doorLeafMessageLabel, false, "");
+
+                // Validate style applied upon selection 
+                validateSelectControl(doorLeafSelectionGroup,
+                    doorLeafPrependDiv);
             }
+        } else {
+            messageLabelShow(doorLeafMessageLabel, false, "");
 
             // Validate style applied upon selection 
             validateSelectControl(doorLeafSelectionGroup,
                 doorLeafPrependDiv);
-
-        } // Hide any warning message
-        else {
-            messageLabelShow(doorLeafMessageLabel,
-                false, "");
-
-            // Reset the validate and invalidate style
-            resetSelectControl(doorLeafSelectionGroup,
-                doorLeafPrependDiv);
         }
-
     }
 
 }
@@ -977,6 +1335,42 @@ const elementShow = (element, display) => {
         element.classList.remove("fade-in");
     }
 
+}
+
+/* Function that hides the items in the doorLeafSelection options
+ * except for the ones contained in the array which is passed.
+ * @param    {string[]} showOptions  Options which are not to be hidden.
+ **/
+const displayDoorLeafOptions = (showOptions) => {
+
+    // Hide the selected options in Door Leaf swing door selection
+    let optionElements = doorLeafSelectionGroup.getElementsByTagName('option');
+    optionElements = Array.prototype.slice.call(optionElements, 0);
+    let values = optionElements.map(function(item) {
+        return item.value
+    });
+
+    for (let optionValue of values) {
+
+        if (showOptions.includes(optionValue) == false) {
+            let index = values.indexOf(optionValue);
+            if (index !== -1) {
+                optionElements[index].setAttribute("class", "hide");
+            }
+        } else {
+            if (optionValue === SLIDING_DOOR_LEAF.PLAIN_LEAF) {
+
+                let index = values.indexOf(optionValue, 2);
+                if (index !== -1) {
+
+                    if (optionElements[index].dataset.doorType === DOOR_TYPE.SLIDING_DOOR) {
+                        optionElements[index].setAttribute("class", "hide");
+                    }
+
+                }
+            }
+        }
+    }
 }
 
 /*****************************************************************************/
