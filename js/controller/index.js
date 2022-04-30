@@ -21,6 +21,42 @@ let doorSpecificationNextButton = document.getElementById(
     "door-specification-next");
 
 /*****************************************************************************/
+/* DOCUMENT - ON READY STATE CHANGE                                          */
+/*****************************************************************************/
+
+document.onreadystatechange = function(event) {
+
+    // Attach the language specific scripts before the DOM is in ready state
+    if (document.readyState !== 'complete') {
+
+        let newLanguage = sessionStorage.getItem("LANGUAGE");
+        if (newLanguage !== null) {
+            language = newLanguage;
+        }
+
+        // Load language specific scripts
+        switch (language) {
+            case LANGUAGE.ENGLISH:
+                loadScript("./../lib/lang/en/enum/page/index-enum.js");
+                loadScript("./../lib/lang/en/enum/door/door-enum.js");
+                loadScript("./../lib/lang/en/enum/lock/lock-enum.js")
+                break;
+            case LANGUAGE.THAI:
+                loadScript("./../lib/lang/th/enum/page/index-enum.js");
+                loadScript("./../lib/lang/th/enum/door/door-enum.js");
+                loadScript("./../lib/lang/th/enum/lock/lock-enum.js")
+                break;
+            default:
+                loadScript("./../lib/lang/en/enum/page/index-enum.js");
+                loadScript("./../lib/lang/en/enum/door/door-enum.js");
+                loadScript("./../lib/lang/en/enum/lock/lock-enum.js")
+                break;
+        }
+    }
+
+};
+
+/*****************************************************************************/
 /* WINDOWS ONLOAD                                                            */
 /*****************************************************************************/
 
@@ -30,6 +66,32 @@ let doorSpecificationNextButton = document.getElementById(
  * */
 window.onload = function() {
 
+    // Language links styling based on the selected language
+    let englishLanguageAnchor = "";
+    let thaiLanguageAnchor = "";
+
+    switch (language) {
+        case LANGUAGE.ENGLISH:
+
+            englishLanguageAnchor = document.getElementById("lang-en");
+            if (englishLanguageAnchor.classList.contains("selected-language") === false) {
+                englishLanguageAnchor.classList.add("selected-language")
+            }
+            thaiLanguageAnchor = document.getElementById("lang-th");
+            thaiLanguageAnchor.classList.remove("selected-language");
+            break;
+
+        case LANGUAGE.THAI:
+
+            thaiLanguageAnchor = document.getElementById("lang-th");
+            if (thaiLanguageAnchor.classList.contains("selected-language") === false) {
+                thaiLanguageAnchor.classList.add("selected-language")
+            }
+            englishLanguageAnchor = document.getElementById("lang-en");
+            englishLanguageAnchor.classList.remove("selected-language");
+            break;
+
+    }
 
     // Setup the index page
     let titleElement = document.getElementsByTagName("title")[0];

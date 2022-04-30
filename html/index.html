@@ -42,8 +42,11 @@
   <body class="page-fade-in">
 
     <!-- Page Header -->
-    <div id="page-header" class="container-fluid">
-
+    <div id="page-header" class="container-fluid d-flex justify-content-end">
+      <div id="language" class="align-self-center">
+        <a id="lang-en" class="selected-language"
+          href="javascript: changeLanguage('EN');">EN</a> |
+        <a id="lang-th" href="javascript: changeLanguage('ไทย');">ไทย</a></div>
     </div>
     <!-- End Page Header -->
 
@@ -196,13 +199,7 @@
     <!-- Information Capture Javascript -->
     <script src="https://apis.google.com/js/api.js"></script>
 
-    <script src="./../lib/lang/en/enum/page/index-enum.js"
-      type="text/javascript"></script>
-    <script src="./../lib/lang/en/enum/door/door-enum.js"
-      type="text/javascript"></script>
-    <script src="./../lib/lang/en/enum/lock/lock-enum.js"
-      type="text/javascript"></script>
-
+    <script src="./../js/controller/global.js" type="text/javascript"></script>
     <script src="./../js/controller/lock-compatibility.js"
       type="text/javascript"></script>
     <script src="./../js/controller/index.js" type="text/javascript"></script>

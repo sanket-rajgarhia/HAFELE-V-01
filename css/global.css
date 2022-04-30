@@ -36,6 +36,32 @@ body {
     min-height: 10vh;
 }
 
+#language {
+    color: white;
+}
+
+#lang-en {
+    text-decoration: none;
+    color: white;
+}
+
+#lang-en:hover {
+    color: #007bff !important;
+}
+
+#lang-th {
+    text-decoration: none;
+    color: white;
+}
+
+#lang-th:hover {
+    color: #007bff !important;
+}
+
+.selected-language {
+    color: red !important;
+}
+
 #home-icon>a {
     text-decoration: none;
 }
