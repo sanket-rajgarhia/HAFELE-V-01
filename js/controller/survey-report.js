@@ -37,7 +37,11 @@ window.onload = function(event) {
         pageHeading.innerHTML = SURVEY_REPORT.PAGE_HEADING;
         let reportTitle = document.getElementById("report-title");
         reportTitle.innerHTML = SURVEY_REPORT.REPORT_TITLE;
-
+        let reportPrint = document.getElementById("report-print");
+        reportPrint.innerHTML = SURVEY_REPORT.PRINT_BUTTON;
+        let reportDownload = document.getElementById("report-download");
+        reportDownload.innerHTML = SURVEY_REPORT.DOWNLOAD_BUTTON;
+        
         let customerData = sessionStorage.getItem("customerData");
         if (customerData !== null) {
 
@@ -60,7 +64,7 @@ window.onload = function(event) {
             for (let line of customerInformationLines) {
                 customerInformation += line + "\n ";
             }
-            console.log(customerInformation);
+
             formatReportFields("customerInformation",
                 REPORT_FIELD.CUSTOMER_INFORMATION.toUpperCase(), customerInformation);
 

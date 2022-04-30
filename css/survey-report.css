@@ -5,35 +5,6 @@
  * */
 
 /*****************************************************************************/
-/* PRINT RELATED CSS                                                         */
-/*****************************************************************************/
-
-/* CSS Formatting for printing the page */
-@media print {
-
-    html,
-    body {
-        background-color: #fff !important;
-        -webkit-print-color-adjust: exact;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-
-    /* Hide the following <div> tags when printing */
-    #page-header,
-    #survey-report-heading,
-    #page-footer {
-        display: none;
-    }
-
-}
-
-/* Leave one inch at the top for letter head */
-@page {
-    margin-top: 1in;
-}
-
-/*****************************************************************************/
 /* HEADER TAGS - <h1> <h2> and <h3>                                          */
 /*****************************************************************************/
 
@@ -83,12 +54,33 @@ p {
 /*****************************************************************************/
 
 a:hover {
-    color: rgb(24, 143, 223) !important;
+    color: darkblue !important;
+    background-color: lightskyblue;
 }
 
 .report-link {
+    background-color: #F1F1F1;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+    padding: 5px !important;
+    margin-right: 5px;
     font-family: 'Noto Sans JP', sans-serif !important;
-    color: rgb(136, 196, 236) !important;
+    font-size: 1rem;
+    color: black !important;
+    min-width: 100px;
+    text-align: center;
+}
+
+@media screen and (max-width: 992px) {
+    .report-link {
+        border: none;
+        font-size: 1.4rem;
+        padding: 10px !important;
+        margin-bottom: 5px;
+        max-width: 150px;
+        text-align: start;
+    }
 }
 
 /*****************************************************************************/
@@ -204,6 +196,37 @@ a:hover {
 .caution {
     color: rgb(100, 96, 96);
     font-weight: 400 ! important;
+}
+
+/*****************************************************************************/
+/* PRINT RELATED CSS                                                         */
+/*****************************************************************************/
+
+/* CSS Formatting for printing the page */
+@media print {
+
+    html,
+    body {
+        background-color: #fff !important;
+        -webkit-print-color-adjust: exact;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Hide the following <div> tags when printing */
+    #page-header,
+    #home-icon,
+    #hafele-header-logo,
+    #survey-report-heading,
+    #page-footer {
+        display: none !important;
+    }
+
+}
+
+/* Leave one inch at the top for letter head */
+@page {
+    margin-top: 1in;
 }
 
 /*****************************************************************************/

@@ -36,6 +36,30 @@ body {
     min-height: 10vh;
 }
 
+#home-icon>a {
+    text-decoration: none;
+}
+
+#home-icon>a>i {
+    color: rgba(223, 216, 216, 0.922);
+    font-size: 1.5rem;
+}
+
+#home-icon>a:hover>i {
+    color: red;
+}
+
+#hafele-header-logo {
+    text-align: center;
+    width: 100%;
+}
+
+#header-image {
+    max-height: 50px;
+    padding-bottom: 0;
+    margin-bottom: 0 !important;
+}
+
 /* The spacer div has the same minimum height as that of the absolutely
 positioned page footer to prevent contents of the body div from going
 under the absolutely positioned footer div - when screen resizes */
