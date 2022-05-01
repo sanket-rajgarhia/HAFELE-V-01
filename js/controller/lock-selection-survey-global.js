@@ -444,7 +444,7 @@ const initializeLockCardControls = () => {
         let compatibleDoor = lockCompatibility(
             key.toUpperCase());
 
-        // Add only if the lock is meant for swing doors
+        // Add only if the lock is meant for sliding doors
         if (compatibleDoor.doorType.toUpperCase() ===
             DOOR_TYPE.SLIDING_DOOR.toUpperCase()) {
 

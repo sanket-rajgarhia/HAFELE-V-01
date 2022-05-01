@@ -141,8 +141,8 @@ const lockModelSelectionChange = (event) => {
             return item.value
         });
         let index = values.indexOf(DOOR_INSTALLATION_LOCATION.GARAGE_DOOR_EXAMPLE);
-        if (typeof index !== -1) {
-            optionElements[index].setAttribute("class", "hide");
+        if (index !== -1) {
+            optionElements[index].remove();
         }
 
         // Fetch the object specifying the door type and door thickness range
@@ -447,6 +447,7 @@ const doorTypeSelectionChange = (event) => {
         doorLeafPrependDiv);
 
     // Locate all the 'optgroup' tags
+    let originalOptionGroupElements = doorLeafSelectionGroup.getElementsByTagName('optgroup');
     let optionGroupElements = doorLeafSelectionGroup.getElementsByTagName('optgroup');
     optionGroupElements = Array.prototype.slice.call(optionGroupElements, 0);
     let labels = optionGroupElements.map(function(item) {
@@ -454,20 +455,70 @@ const doorTypeSelectionChange = (event) => {
     });
 
     // Reset the visibility of all optgroup elements - make them visible
-    for (let optGroupElement of optionGroupElements) {
-        optGroupElement.removeAttribute("class", "hide");
-    }
+    if (optionGroupElements.length === 2) {
 
-    // Locate all the 'option' tags
-    let optionElements = doorLeafSelectionGroup.getElementsByTagName('option');
-    optionElements = Array.prototype.slice.call(optionElements, 0);
-    let values = optionElements.map(function(item) {
-        return item.value
-    });
+        // Remove the "SWING DOOR LEAF or SLIDING DOOR LEAF section - which ever is present"
+        originalOptionGroupElements[1].remove();
 
-    // Reset the visibility of all option elements - make them visible
-    for (let optionElement of optionElements) {
-        optionElement.removeAttribute("class", "hide");
+        // ADD THE SWING DOOR LEAF AND SLIDING DOOR LEAF OPTION GROUPS TO 
+        // door-leaf-group
+
+        // Add all the swing door leaf options to the door leaf
+        // group selection combo box
+        let optionGroup = document.createElement("optgroup");
+        optionGroup.setAttribute("label",
+            LOCK_SELECTION_SURVEY.LOCK_DOOR_LEAF_GROUP_LABEL_SWING_DOOR);
+        let optionGroupAdded = false;
+        Object.keys(SWING_DOOR_LEAF).forEach(key => {
+
+            let doorLeafSelectionGroup = document.getElementById(
+                "door-leaf-group");
+
+            if (optionGroupAdded === false) {
+                doorLeafSelectionGroup.appendChild(optionGroup);
+                optionGroupAdded = true;
+            }
+            let optionTag = document.createElement("option");
+            optionTag.setAttribute("value", SWING_DOOR_LEAF[key]);
+            optionTag.setAttribute("data-door-type", DOOR_TYPE.SWING_DOOR);
+            let textNode = document.createTextNode(SWING_DOOR_LEAF[key]);
+            optionTag.appendChild(textNode);
+
+            optionGroup.appendChild(optionTag);
+
+        });
+
+        // Add all the sliding door leaf options to the door leaf
+        // group selection combo box
+        optionGroup = document.createElement("optgroup");
+        optionGroup.setAttribute("label",
+            LOCK_SELECTION_SURVEY.LOCK_DOOR_LEAF_GROUP_LABEL_SLIDING_DOOR);
+        optionGroupAdded = false;
+        Object.keys(SLIDING_DOOR_LEAF).forEach(key => {
+
+            let doorLeafSelectionGroup = document.getElementById(
+                "door-leaf-group");
+            if (optionGroupAdded === false) {
+                doorLeafSelectionGroup.appendChild(optionGroup);
+                optionGroupAdded = true;
+            }
+            let optionTag = document.createElement("option");
+            optionTag.setAttribute("value", SLIDING_DOOR_LEAF[key]);
+            optionTag.setAttribute("data-door-type", DOOR_TYPE.SLIDING_DOOR);
+            let textNode = document.createTextNode(SLIDING_DOOR_LEAF[key]);
+            optionTag.appendChild(textNode);
+
+            optionGroup.appendChild(optionTag);
+
+        });
+
+        // Reinitialize the variables with the updated state - HAVING ALL 3 OPTION GROUPS
+        originalOptionGroupElements = doorLeafSelectionGroup.getElementsByTagName('optgroup');
+        optionGroupElements = doorLeafSelectionGroup.getElementsByTagName('optgroup');
+        optionGroupElements = Array.prototype.slice.call(optionGroupElements, 0);
+        labels = optionGroupElements.map(function(item) {
+            return item.label
+        });
     }
 
     messageLabelShow(doorTypeMessageLabel, false, "");
@@ -495,7 +546,7 @@ const doorTypeSelectionChange = (event) => {
             let index = labels.indexOf(LOCK_SELECTION_SURVEY
                 .LOCK_DOOR_LEAF_GROUP_LABEL_SLIDING_DOOR);
             if (index !== -1) {
-                optionGroupElements[index].setAttribute("class", "hide");
+                optionGroupElements[index].remove();
             }
 
             // Hide selected items in the swing door selection as well
@@ -566,7 +617,7 @@ const doorTypeSelectionChange = (event) => {
             let index = labels.indexOf(LOCK_SELECTION_SURVEY
                 .LOCK_DOOR_LEAF_GROUP_LABEL_SWING_DOOR);
             if (index !== -1) {
-                optionGroupElements[index].setAttribute("class", "hide");
+                optionGroupElements[index].remove();
             }
         }
 
@@ -1357,7 +1408,10 @@ const displayDoorLeafOptions = (showOptions) => {
         if (showOptions.includes(optionValue) == false) {
             let index = values.indexOf(optionValue);
             if (index !== -1) {
-                optionElements[index].setAttribute("class", "hide");
+                // Do not remove the default option element 
+                if (optionElements[index].value.trim() !== "") {
+                    optionElements[index].remove();
+                }
             }
         } else {
             if (optionValue === SLIDING_DOOR_LEAF.PLAIN_LEAF) {
@@ -1366,7 +1420,7 @@ const displayDoorLeafOptions = (showOptions) => {
                 if (index !== -1) {
 
                     if (optionElements[index].dataset.doorType === DOOR_TYPE.SLIDING_DOOR) {
-                        optionElements[index].setAttribute("class", "hide");
+                        optionElements[index].remove;
                     }
 
                 }
