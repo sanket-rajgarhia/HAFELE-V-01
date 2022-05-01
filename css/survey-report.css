@@ -53,7 +53,8 @@ p {
 /* MENU LINKS                                                                */
 /*****************************************************************************/
 
-a:hover {
+#report-print:hover,
+#report-download:hover{
     color: darkblue !important;
     background-color: lightskyblue;
 }

@@ -37,6 +37,7 @@ body {
 }
 
 #language {
+    min-width: 60px;
     color: white;
 }
 

@@ -16,6 +16,39 @@ const WARNING = "WARNING";
 const CAUTION = "CAUTION";
 
 /*****************************************************************************/
+/* DOCUMENT - ON READY STATE CHANGE                                          */
+/*****************************************************************************/
+
+document.onreadystatechange = function(event) {
+
+    // Attach the language specific scripts before the DOM is in ready state
+    if (document.readyState !== 'complete') {
+
+        let newLanguage = sessionStorage.getItem("LANGUAGE");
+        if (newLanguage !== null) {
+            language = newLanguage;
+        }
+
+        // Load language specific scripts
+        switch (language) {
+            case LANGUAGE.ENGLISH:
+                loadScript("./../lib/lang/en/enum/door/door-enum.js");
+                loadScript("./../lib/lang/en/enum/page/survey-report-enum.js");
+                break;
+            case LANGUAGE.THAI:
+                loadScript("./../lib/lang/th/enum/door/door-enum.js");
+                loadScript("./../lib/lang/th/enum/page/survey-report-enum.js");
+                break;
+            default:
+                loadScript("./../lib/lang/en/enum/door/door-enum.js");
+                loadScript("./../lib/lang/en/enum/page/survey-report-enum.js");
+                break;
+        }
+    }
+
+};
+
+/*****************************************************************************/
 /* WINDOWS ONLOAD                                                            */
 /*****************************************************************************/
 
@@ -30,6 +63,33 @@ window.onload = function(event) {
     let page = sessionStorage.getItem("page");
     if (page === "2") {
 
+        // Language links styling based on the selected language
+        let englishLanguageAnchor = "";
+        let thaiLanguageAnchor = "";
+
+        switch (language) {
+            case LANGUAGE.ENGLISH:
+
+                englishLanguageAnchor = document.getElementById("lang-en");
+                if (englishLanguageAnchor.classList.contains("selected-language") === false) {
+                    englishLanguageAnchor.classList.add("selected-language")
+                }
+                thaiLanguageAnchor = document.getElementById("lang-th");
+                thaiLanguageAnchor.classList.remove("selected-language");
+                break;
+
+            case LANGUAGE.THAI:
+
+                thaiLanguageAnchor = document.getElementById("lang-th");
+                if (thaiLanguageAnchor.classList.contains("selected-language") === false) {
+                    thaiLanguageAnchor.classList.add("selected-language")
+                }
+                englishLanguageAnchor = document.getElementById("lang-en");
+                englishLanguageAnchor.classList.remove("selected-language");
+                break;
+
+        }
+
         // Setup the survey report page
         let titleElement = document.getElementsByTagName("title")[0];
         titleElement.innerHTML = SURVEY_REPORT.TITLE;
@@ -41,7 +101,7 @@ window.onload = function(event) {
         reportPrint.innerHTML = SURVEY_REPORT.PRINT_BUTTON;
         let reportDownload = document.getElementById("report-download");
         reportDownload.innerHTML = SURVEY_REPORT.DOWNLOAD_BUTTON;
-        
+
         let customerData = sessionStorage.getItem("customerData");
         if (customerData !== null) {
 
