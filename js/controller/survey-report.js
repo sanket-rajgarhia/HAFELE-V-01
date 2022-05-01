@@ -121,9 +121,12 @@ window.onload = function(event) {
             let customerInformation = customerData.customerInformation.toUpperCase();
             let customerInformationLines = customerInformation.match(/(.|[\r\n]){1,50}/g);
             customerInformation = "";
-            for (let line of customerInformationLines) {
-                customerInformation += line + "\n ";
+            if (customerInformationLines !== null) {
+                for (let line of customerInformationLines) {
+                    customerInformation += line + "\n ";
+                }
             }
+
 
             formatReportFields("customerInformation",
                 REPORT_FIELD.CUSTOMER_INFORMATION.toUpperCase(), customerInformation);
@@ -145,8 +148,10 @@ window.onload = function(event) {
             let salesPersonLocation = salesPersonData.salesPersonLocation.toUpperCase();
             let salesPersonLocationLines = salesPersonLocation.match(/(.|[\r\n]){1,50}/g);
             salesPersonLocation = "";
-            for (let line of salesPersonLocationLines) {
-                salesPersonLocation += line + "\n ";
+            if (salesPersonLocationLines !== null) {
+                for (let line of salesPersonLocationLines) {
+                    salesPersonLocation += line + "\n ";
+                }
             }
             formatReportFields("salesPersonLocation",
                 REPORT_FIELD.SALES_PERSON_LOCATION.toUpperCase(),
