@@ -1106,6 +1106,15 @@ const doorLeafSelectionChange = (event) => {
                             messageLabelShow(doorLeafMessageLabel, true,
                                 MESSAGE.MESSAGE_DOOR_LEAF_FRAME_THICKNESS_INADEQUATE);
                         }
+                        if (selectedValue ===
+                            SLIDING_DOOR_LEAF.WOODEN_LEAF_LESS_THAN_50_MM ||
+                            selectedValue ===
+                            SLIDING_DOOR_LEAF.ALUMINIUM_LEAF_LESS_THAN_50_MM ||
+                            selectedValue ===
+                            SLIDING_DOOR_LEAF.STEEL_LEAF_LESS_THAN_50_MM) {
+                            messageLabelShow(doorLeafMessageLabel, true,
+                                MESSAGE.MESSAGE_DOOR_LEAF_THICKNESS_INADEQUATE);
+                        }
                         break;
                     case LOCK_MODEL.DL6600:
                         if (selectedValue ===
@@ -1114,6 +1123,15 @@ const doorLeafSelectionChange = (event) => {
                             SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_60_MM) {
                             messageLabelShow(doorLeafMessageLabel, true,
                                 MESSAGE.MESSAGE_DOOR_LEAF_FRAME_THICKNESS_INADEQUATE);
+                        }
+                        if (selectedValue ===
+                            SLIDING_DOOR_LEAF.WOODEN_LEAF_LESS_THAN_50_MM ||
+                            selectedValue ===
+                            SLIDING_DOOR_LEAF.ALUMINIUM_LEAF_LESS_THAN_50_MM ||
+                            selectedValue ===
+                            SLIDING_DOOR_LEAF.STEEL_LEAF_LESS_THAN_50_MM) {
+                            messageLabelShow(doorLeafMessageLabel, true,
+                                MESSAGE.MESSAGE_DOOR_LEAF_THICKNESS_INADEQUATE);
                         }
                         break;
                     case LOCK_MODEL.EL6000:

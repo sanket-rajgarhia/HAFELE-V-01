@@ -30,7 +30,7 @@ const lockCompatibility = (lockModel) => {
             };
         case LOCK_MODEL.ER5200:
             return {
-                doorType: DOOR_TYPE.SLIDING_DOOR,
+                doorType: DOOR_TYPE.SWING_DOOR + "/" + DOOR_TYPE.SLIDING_DOOR,
                     doorThickness: DOOR_THICKNESS_IN_MM.MM_30_TO_50
             };
 
