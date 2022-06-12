@@ -26,7 +26,7 @@ const SWAP_VALUE = "swapValue";
 /* DOCUMENT - ON READY STATE CHANGE                                          */
 /*****************************************************************************/
 
-document.onreadystatechange = function(event) {
+document.onreadystatechange = function (event) {
 
     // Attach the language specific scripts before the DOM is in ready state
     if (document.readyState !== 'complete') {
@@ -69,7 +69,7 @@ document.onreadystatechange = function(event) {
  * @param    
  * @return   
  * */
-window.onload = function(event) {
+window.onload = function (event) {
 
     let page = sessionStorage.getItem("page");
     if (page !== null) {
@@ -707,6 +707,10 @@ const initializeLockCardControls = () => {
 
             // Dispatch the "change" Event on model lock selection
             lockModelSelectionGroup.dispatchEvent(new Event("change"));
+
+            // For displayig the icons
+            installationLocationSelectionGroup.dispatchEvent(new Event("change"));
+            existingDoorRetrofitSelectionGroup.dispatchEvent(new Event("change"));
 
             // Select the door type - automatically
             let doorTypeSelectionGroup = document.getElementById("door-type-group");

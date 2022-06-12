@@ -137,7 +137,7 @@ const lockModelSelectionChange = (event) => {
         // Hide the GARAGE (EXAMPLE) - Door Installation location 
         let optionElements = installationLocationSelectionGroup.getElementsByTagName('option');
         optionElements = Array.prototype.slice.call(optionElements, 0);
-        let values = optionElements.map(function(item) {
+        let values = optionElements.map(function (item) {
             return item.value
         });
         let index = values.indexOf(DOOR_INSTALLATION_LOCATION.GARAGE_DOOR_EXAMPLE);
@@ -189,6 +189,10 @@ const installationLocationSelectionChange = (event) => {
 
     let selectedValue = installationLocationSelectionGroup.value;
 
+    // Icon display
+    let iconDiv = installationLocationSelectionDiv.getElementsByClassName('icon')[0];
+    let source = "./../assets/app-images/02-location/";
+
     messageLabelShow(installationLocationMessageLabel, false, "");
 
     // In case of de-selection hide any warning message displayed
@@ -198,7 +202,13 @@ const installationLocationSelectionChange = (event) => {
         resetSelectControl(installationLocationSelectionGroup,
             installationLocationPrependDiv);
 
+        // Icon display
+        displayIcon(iconDiv, DOOR_INSTALLATION_LOCATION, source);
+
     } else {
+
+        // Icon display
+        displayIcon(iconDiv, DOOR_INSTALLATION_LOCATION, source, selectedValue);
 
         // If the installation location is outdoor exposed - then display
         // the warning message
@@ -225,6 +235,10 @@ const doorConditionSelectionChange = (event) => {
 
     let selectedValue = doorConditionSelectionGroup.value;
 
+    // Icon display
+    let iconDiv = doorConditionSelectionDiv.getElementsByClassName('icon')[0];
+    let source = "./../assets/app-images/03-condition/";
+
     messageLabelShow(doorConditionMessageLabel, false, "");
 
     // Reset the existing door retrofit select control and 
@@ -246,7 +260,13 @@ const doorConditionSelectionChange = (event) => {
         resetSelectControl(doorConditionSelectionGroup,
             doorConditionPrependDiv);
 
+        // Icon display
+        displayIcon(iconDiv, DOOR_CONDITION, source);
+
     } else {
+
+        // Icon display
+        displayIcon(iconDiv, DOOR_CONDITION, source, selectedValue);
 
         // If the door condition is - an existing door - then display the 
         // existing door retrofit section <div>
@@ -282,6 +302,10 @@ const existingDoorRetrofitSelectionChange = (event) => {
 
     let selectedValue = existingDoorRetrofitSelectionGroup.value;
 
+    // Icon display
+    let iconDiv = existingDoorRetrofitSelectionDiv.getElementsByClassName('icon')[0];
+    let source = "./../assets/app-images/04-retrofit/";
+
     messageLabelShow(existingDoorRetrofitMessageLabel, false, "");
     messageLabelShow(existingDoorRetrofitCautionLabel, false, "");
 
@@ -292,7 +316,13 @@ const existingDoorRetrofitSelectionChange = (event) => {
         resetSelectControl(existingDoorRetrofitSelectionGroup,
             existingDoorRetrofitPrependDiv);
 
+        // Icon display
+        displayIcon(iconDiv, DOOR_RETROFIT, source);
+
     } else {
+
+        // Icon display
+        displayIcon(iconDiv, DOOR_RETROFIT, source, selectedValue);
 
         // Error messages and caution messages for various locks and 
         // existing door retrofit selection
@@ -301,13 +331,13 @@ const existingDoorRetrofitSelectionChange = (event) => {
             LOCK_MODEL.DL7000, LOCK_MODEL.DL7900
         ];
         let lockModelUnsuitableForDoorWithKnobLockSet = [LOCK_MODEL.DC1000,
-            LOCK_MODEL.DL6600
+        LOCK_MODEL.DL6600
         ];
         let lockModelUnsuitableForDoorWithGripHandle = [LOCK_MODEL.DC1000,
-            LOCK_MODEL.DH2000, LOCK_MODEL.DL6500, LOCK_MODEL.DL6600,
-            LOCK_MODEL.DL7000, LOCK_MODEL.DL7100, LOCK_MODEL.DL7600,
-            LOCK_MODEL.DL7900, LOCK_MODEL.EL6000, LOCK_MODEL.EL7200,
-            LOCK_MODEL.EL7500, LOCK_MODEL.PP8100, LOCK_MODEL.PP9000
+        LOCK_MODEL.DH2000, LOCK_MODEL.DL6500, LOCK_MODEL.DL6600,
+        LOCK_MODEL.DL7000, LOCK_MODEL.DL7100, LOCK_MODEL.DL7600,
+        LOCK_MODEL.DL7900, LOCK_MODEL.EL6000, LOCK_MODEL.EL7200,
+        LOCK_MODEL.EL7500, LOCK_MODEL.PP8100, LOCK_MODEL.PP9000
         ];
 
         let lockModelSelectedValue = lockModelSelectionGroup.value;
@@ -423,6 +453,10 @@ const doorTypeSelectionChange = (event) => {
 
     let selectedValue = doorTypeSelectionGroup.value;
 
+    // Icon display
+    let iconDiv = doorTypeSelectionDiv.getElementsByClassName('icon')[0];
+    let source = "./../assets/app-images/05-type/";
+
     // Reset the selection of the swing door type and swing door jamb select
     // control
     swingDoorTypeSelectionGroup.selectedIndex = 0;
@@ -450,7 +484,7 @@ const doorTypeSelectionChange = (event) => {
     let originalOptionGroupElements = doorLeafSelectionGroup.getElementsByTagName('optgroup');
     let optionGroupElements = doorLeafSelectionGroup.getElementsByTagName('optgroup');
     optionGroupElements = Array.prototype.slice.call(optionGroupElements, 0);
-    let labels = optionGroupElements.map(function(item) {
+    let labels = optionGroupElements.map(function (item) {
         return item.label
     });
 
@@ -516,7 +550,7 @@ const doorTypeSelectionChange = (event) => {
         originalOptionGroupElements = doorLeafSelectionGroup.getElementsByTagName('optgroup');
         optionGroupElements = doorLeafSelectionGroup.getElementsByTagName('optgroup');
         optionGroupElements = Array.prototype.slice.call(optionGroupElements, 0);
-        labels = optionGroupElements.map(function(item) {
+        labels = optionGroupElements.map(function (item) {
             return item.label
         });
     }
@@ -533,7 +567,13 @@ const doorTypeSelectionChange = (event) => {
         resetSelectControl(doorTypeSelectionGroup,
             doorTypePrependDiv);
 
+        // Icon display
+        displayIcon(iconDiv, DOOR_TYPE, source);
+
     } else {
+
+        // Icon display
+        displayIcon(iconDiv, DOOR_TYPE, source, selectedValue);
 
         // If the door type selected is swing door then - display the 
         // swing door type and swing door jamb select controls
@@ -562,10 +602,10 @@ const doorTypeSelectionChange = (event) => {
                 case LOCK_MODEL.DL7000:
                 case LOCK_MODEL.DL7100:
                     showOptions = [SWING_DOOR_LEAF.PLAIN_LEAF,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_100_MM,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_100_MM,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_100_MM,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_100_MM
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_100_MM,
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_100_MM,
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_100_MM,
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_100_MM
                     ]
                     displayDoorLeafOptions(showOptions);
                     break;
@@ -573,19 +613,19 @@ const doorTypeSelectionChange = (event) => {
                 case LOCK_MODEL.ER5100:
                 case LOCK_MODEL.ER5200:
                     showOptions = [SWING_DOOR_LEAF.PLAIN_LEAF,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_50_MM,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_50_MM,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_50_MM,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_50_MM
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_50_MM,
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_50_MM,
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_50_MM,
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_50_MM
                     ]
                     displayDoorLeafOptions(showOptions);
                     break;
                 case LOCK_MODEL.DL6600:
                     showOptions = [SWING_DOOR_LEAF.PLAIN_LEAF,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_60_MM,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_60_MM,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_60_MM,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_60_MM
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_60_MM,
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_60_MM,
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_60_MM,
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_60_MM
                     ]
                     displayDoorLeafOptions(showOptions);
                     break;
@@ -597,10 +637,10 @@ const doorTypeSelectionChange = (event) => {
                 case LOCK_MODEL.PP8100:
                 case LOCK_MODEL.PP9000:
                     showOptions = [SWING_DOOR_LEAF.PLAIN_LEAF,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_130_MM,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_130_MM,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_130_MM,
-                        SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_130_MM
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_130_MM,
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_130_MM,
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_130_MM,
+                    SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_130_MM
                     ]
                     displayDoorLeafOptions(showOptions);
                     break;
@@ -671,6 +711,10 @@ const swingDoorTypeSelectionChange = (event) => {
 
     let selectedValue = swingDoorTypeSelectionGroup.value;
 
+    // Icon display
+    let iconDiv = swingDoorTypeSelectionDiv.getElementsByClassName('icon')[0];
+    let source = "./../assets/app-images/06-swing-door-type/";
+
     swingDoorJambSelectionGroup.selectedIndex = 0;
     swingDoorJambSelectionGroup.dispatchEvent(new Event("change"));
 
@@ -682,7 +726,13 @@ const swingDoorTypeSelectionChange = (event) => {
         resetSelectControl(swingDoorTypeSelectionGroup,
             swingDoorTypePrependDiv);
 
+        // Icon display
+        displayIcon(iconDiv, SWING_DOOR_TYPE, source);
+
     } else {
+
+        // Icon display
+        displayIcon(iconDiv, SWING_DOOR_TYPE, source, selectedValue);
 
         // If Swing door type is DOUBLE DOOR then Swing door jamb must be
         // double leaf door
@@ -719,6 +769,10 @@ const swingDoorJambSelectionChange = (event) => {
 
     let selectedValue = swingDoorJambSelectionGroup.value;
 
+    // Icon display
+    let iconDiv = swingDoorJambSelectionDiv.getElementsByClassName('icon')[0];
+    let source = "./../assets/app-images/07-swing-door-jamb/";
+
     messageLabelShow(swingDoorJambMessageLabel, false, "");
 
     // Hide the caution warning
@@ -731,7 +785,13 @@ const swingDoorJambSelectionChange = (event) => {
         resetSelectControl(swingDoorJambSelectionGroup,
             swingDoorJambPrependDiv);
 
+        // Icon display
+        displayIcon(iconDiv, SWING_DOOR_JAMB, source);
+
     } else {
+
+        // Icon display
+        displayIcon(iconDiv, SWING_DOOR_JAMB, source, selectedValue);
 
         // If the selected door jamb is for double leaf door - and the selected
         // lock is PP8100 - then display the warning message
@@ -954,8 +1014,8 @@ const doorMaterialSelectionChange = (event) => {
             let selectedLockModel = lockModelSelectionGroup.value;
 
             let suitableLockModels = [LOCK_MODEL.ER4900,
-                LOCK_MODEL.ER5100, LOCK_MODEL.ER5200,
-                LOCK_MODEL.DH2000, LOCK_MODEL.DL6500
+            LOCK_MODEL.ER5100, LOCK_MODEL.ER5200,
+            LOCK_MODEL.DH2000, LOCK_MODEL.DL6500
             ]
 
             if (suitableLockModels.includes(selectedLockModel) === true) {
@@ -987,6 +1047,23 @@ const doorLeafSelectionChange = (event) => {
 
     let selectedValue = doorLeafSelectionGroup.value;
 
+    // Icon display
+    let iconDiv = doorLeafSelectionDiv.getElementsByClassName('icon')[0];
+    let source = "./../assets/app-images/11-door-leaf/";
+
+    let enumValue = null;
+    switch (doorTypeSelectionGroup.value) {
+        case DOOR_TYPE.SWING_DOOR:
+            enumValue = { ...SWING_DOOR_LEAF };
+            break;
+        case DOOR_TYPE.SLIDING_DOOR:
+            enumValue = { ...SLIDING_DOOR_LEAF };
+            break;
+        default:
+            enumValue = { ...SWING_DOOR_LEAF, ...SLIDING_DOOR_LEAF };
+            break;
+    }
+
     messageLabelShow(doorLeafMessageLabel, false, "");
 
     if (doorLeafSelectionGroup.selectedIndex === 0) {
@@ -995,7 +1072,14 @@ const doorLeafSelectionChange = (event) => {
         resetSelectControl(doorLeafSelectionGroup,
             doorLeafPrependDiv);
 
+        // Icon display
+        displayIconDoorLeaf(iconDiv, enumValue, source);
+
+
     } else {
+
+        // Icon display
+        displayIconDoorLeaf(iconDiv, enumValue, source, selectedValue);
 
         // Locate the selected option tag
         let selectedOptionTag;
@@ -1348,7 +1432,7 @@ const lockCardNextButtonClick = (event) => {
         window.scrollTo(0, 0);
         lockInformationCaptureCard.classList.toggle('fade-out');
 
-        setTimeout(function() {
+        setTimeout(function () {
 
             lockInformationCaptureCard.classList.remove('card-fade-in');
             lockInformationCaptureCard.classList.add("card-fade-out");
@@ -1417,7 +1501,7 @@ const displayDoorLeafOptions = (showOptions) => {
     // Hide the selected options in Door Leaf swing door selection
     let optionElements = doorLeafSelectionGroup.getElementsByTagName('option');
     optionElements = Array.prototype.slice.call(optionElements, 0);
-    let values = optionElements.map(function(item) {
+    let values = optionElements.map(function (item) {
         return item.value
     });
 
@@ -1445,6 +1529,290 @@ const displayDoorLeafOptions = (showOptions) => {
             }
         }
     }
+}
+
+/* Function that displays the image icons
+ * @param    {HTMLElement} iconDiv  The icon <div>
+ * @param     {string} enumValues The value related enumeration
+ * @param    {string} source The source path
+ * @param    {string} selection The currently selected enumeration value
+ **/
+const displayIcon = (iconDiv, enumValues, source, selection = null) => {
+
+    iconDiv.innerHTML = "";
+
+    if (selection === null) {
+        for (let value in enumValues) {
+
+            if (enumValues === DOOR_INSTALLATION_LOCATION) {
+
+                if (enumValues[value].trim().toUpperCase() ===
+                    DOOR_INSTALLATION_LOCATION.GARAGE_DOOR_EXAMPLE
+                        .trim().toUpperCase()) {
+                    return;
+                }
+
+            }
+
+            let imagesSource = source + value + ".jpg"
+            let image = document.createElement("img");
+            image.src = imagesSource;
+            image.alt = enumValues[value];
+            iconDiv.appendChild(image);
+        }
+    } else {
+        let selectedEnum = null;
+        for (let value in enumValues) {
+            if (enumValues[value].trim().toUpperCase() === selection.trim().toUpperCase()) {
+                selectedEnum = value;
+                break
+            }
+        }
+        let imagesSource = source + selectedEnum + ".jpg"
+        let image = document.createElement("img");
+        image.src = imagesSource;
+        image.alt = enumValues[selectedEnum];
+        iconDiv.appendChild(image);
+    }
+
+}
+
+/* Function that displays the image icons for door leaf
+ * @param    {HTMLElement} iconDiv  The icon <div>
+ * @param     {string} enumValues The value related enumeration
+ * @param    {string} source The source path
+ * @param    {string} selection The currently selected enumeration value
+ **/
+const displayIconDoorLeaf = (iconDiv, enumValues, source, selection = null) => {
+
+    let mullionValueAdded = false;
+    let frameValueAdded = false;
+    let aluminiumValueAdded = false;
+    let woodenValueAdded = false;
+    let steelValueAdded = false;
+
+    let imagesSource = "";
+    let image = null;
+
+    iconDiv.innerHTML = "";
+
+    if (selection === null) {
+        for (let value in enumValues) {
+
+            switch (enumValues[value]) {
+
+                case SWING_DOOR_LEAF.PLAIN_LEAF:
+                    value = "PLAIN_LEAF";
+                    imagesSource = source + value + ".jpg"
+                    image = document.createElement("img");
+                    image.src = imagesSource;
+                    image.alt = enumValues[value];
+                    iconDiv.appendChild(image);
+                    break;
+
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_50_MM:
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_50_MM:
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_60_MM:
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_60_MM:
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_100_MM:
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_100_MM:
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_130_MM:
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_130_MM:
+                    value = "DOOR_LEAF_WITH_MULLION";
+                    if (mullionValueAdded === false) {
+                        imagesSource = source + value + ".jpg"
+                        image = document.createElement("img");
+                        image.src = imagesSource;
+                        image.alt = enumValues[value];
+                        iconDiv.appendChild(image);
+                        mullionValueAdded = true;
+                    }
+                    break;
+
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_50_MM:
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_50_MM:
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_60_MM:
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_60_MM:
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_100_MM:
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_100_MM:
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_130_MM:
+                case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_130_MM:
+                    value = "DOOR_LEAF_WITH_FRAME";
+                    if (frameValueAdded === false) {
+                        imagesSource = source + value + ".jpg"
+                        image = document.createElement("img");
+                        image.src = imagesSource;
+                        image.alt = enumValues[value];
+                        iconDiv.appendChild(image);
+                        frameValueAdded = true;
+                    }
+                    break;
+
+                case SLIDING_DOOR_LEAF.PLAIN_LEAF:
+                    value = "SLIDING_PLAIN_LEAF";
+                    imagesSource = source + value + ".jpg"
+                    image = document.createElement("img");
+                    image.src = imagesSource;
+                    image.alt = enumValues[value];
+                    iconDiv.appendChild(image);
+                    break;
+
+                case SLIDING_DOOR_LEAF.WOODEN_LEAF_LESS_THAN_50_MM:
+                case SLIDING_DOOR_LEAF.WOODEN_LEAF_EQUAL_OR_MORE_THAN_50_MM:
+                    value = "WOODEN_LEAF";
+                    if (woodenValueAdded === false) {
+                        imagesSource = source + value + ".jpg"
+                        image = document.createElement("img");
+                        image.src = imagesSource;
+                        image.alt = enumValues[value];
+                        iconDiv.appendChild(image);
+                        woodenValueAdded = true;
+                    }
+                    break;
+
+                case SLIDING_DOOR_LEAF.ALUMINIUM_LEAF_LESS_THAN_50_MM:
+                case SLIDING_DOOR_LEAF.ALUMINIUM_LEAF_EQUAL_OR_MORE_THAN_50_MM:
+                    value = "ALUMINIUM_LEAF";
+                    if (aluminiumValueAdded === false) {
+                        imagesSource = source + value + ".jpg"
+                        image = document.createElement("img");
+                        image.src = imagesSource;
+                        image.alt = enumValues[value];
+                        iconDiv.appendChild(image);
+                        aluminiumValueAdded = true;
+                    }
+                    break;
+
+                case SLIDING_DOOR_LEAF.STEEL_LEAF_LESS_THAN_50_MM:
+                case SLIDING_DOOR_LEAF.STEEL_LEAF_EQUAL_OR_MORE_THAN_50_MM:
+                    value = "STEEL_LEAF";
+                    if (steelValueAdded === false) {
+                        imagesSource = source + value + ".jpg"
+                        image = document.createElement("img");
+                        image.src = imagesSource;
+                        image.alt = enumValues[value];
+                        iconDiv.appendChild(image);
+                        steelValueAdded = true;
+                    }
+                    break;
+
+            }
+
+        }
+    } else {
+
+        let selectedEnum = null;
+        let value = "";
+
+        for (value in enumValues) {
+            if (enumValues[value].trim().toUpperCase() === selection.trim().toUpperCase()) {
+                selectedEnum = value;
+                break
+            }
+        }
+
+
+        switch (enumValues[selectedEnum]) {
+
+            case SWING_DOOR_LEAF.PLAIN_LEAF:
+                value = "PLAIN_LEAF";
+                imagesSource = source + value + ".jpg"
+                image = document.createElement("img");
+                image.src = imagesSource;
+                image.alt = enumValues[value];
+                iconDiv.appendChild(image);
+                break;
+
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_50_MM:
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_50_MM:
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_60_MM:
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_60_MM:
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_100_MM:
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_100_MM:
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_LESS_THAN_130_MM:
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_MULLION_EQUAL_OR_MORE_THAN_130_MM:
+                value = "DOOR_LEAF_WITH_MULLION";
+                if (mullionValueAdded === false) {
+                    imagesSource = source + value + ".jpg"
+                    image = document.createElement("img");
+                    image.src = imagesSource;
+                    image.alt = enumValues[value];
+                    iconDiv.appendChild(image);
+                    mullionValueAdded = true;
+                }
+                break;
+
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_50_MM:
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_50_MM:
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_60_MM:
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_60_MM:
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_100_MM:
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_100_MM:
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_LESS_THAN_130_MM:
+            case SWING_DOOR_LEAF.DOOR_LEAF_WITH_FRAME_EQUAL_OR_MORE_THAN_130_MM:
+                value = "DOOR_LEAF_WITH_FRAME";
+                if (frameValueAdded === false) {
+                    imagesSource = source + value + ".jpg"
+                    image = document.createElement("img");
+                    image.src = imagesSource;
+                    image.alt = enumValues[value];
+                    iconDiv.appendChild(image);
+                    frameValueAdded = true;
+                }
+                break;
+
+            case SLIDING_DOOR_LEAF.PLAIN_LEAF:
+                value = "SLIDING_PLAIN_LEAF";
+                imagesSource = source + value + ".jpg"
+                image = document.createElement("img");
+                image.src = imagesSource;
+                image.alt = enumValues[value];
+                iconDiv.appendChild(image);
+                break;
+
+            case SLIDING_DOOR_LEAF.WOODEN_LEAF_LESS_THAN_50_MM:
+            case SLIDING_DOOR_LEAF.WOODEN_LEAF_EQUAL_OR_MORE_THAN_50_MM:
+                value = "WOODEN_LEAF";
+                if (woodenValueAdded === false) {
+                    imagesSource = source + value + ".jpg"
+                    image = document.createElement("img");
+                    image.src = imagesSource;
+                    image.alt = enumValues[value];
+                    iconDiv.appendChild(image);
+                    woodenValueAdded = true;
+                }
+                break;
+
+            case SLIDING_DOOR_LEAF.ALUMINIUM_LEAF_LESS_THAN_50_MM:
+            case SLIDING_DOOR_LEAF.ALUMINIUM_LEAF_EQUAL_OR_MORE_THAN_50_MM:
+                value = "ALUMINIUM_LEAF";
+                if (aluminiumValueAdded === false) {
+                    imagesSource = source + value + ".jpg"
+                    image = document.createElement("img");
+                    image.src = imagesSource;
+                    image.alt = enumValues[value];
+                    iconDiv.appendChild(image);
+                    aluminiumValueAdded = true;
+                }
+                break;
+
+            case SLIDING_DOOR_LEAF.STEEL_LEAF_LESS_THAN_50_MM:
+            case SLIDING_DOOR_LEAF.STEEL_LEAF_EQUAL_OR_MORE_THAN_50_MM:
+                value = "STEEL_LEAF";
+                if (steelValueAdded === false) {
+                    imagesSource = source + value + ".jpg"
+                    image = document.createElement("img");
+                    image.src = imagesSource;
+                    image.alt = enumValues[value];
+                    iconDiv.appendChild(image);
+                    steelValueAdded = true;
+                }
+                break;
+
+        }
+
+    }
+
 }
 
 /*****************************************************************************/

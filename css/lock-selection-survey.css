@@ -9,30 +9,30 @@
 /*****************************************************************************/
 
 h1 {
-    background-color: #F1F1F1;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 20px;
-    padding: 15px;
-    text-align: center;
+  background-color: #f1f1f1;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 20px;
+  padding: 15px;
+  text-align: center;
 }
 
 h2 {
-    color: #080E64;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 18px;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    text-align: center;
+  color: #080e64;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 18px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  text-align: center;
 }
 
 h3 {
-    color: rgb(182, 21, 21);
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 16px;
-    font-weight: 900;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    text-align: center;
+  color: rgb(182, 21, 21);
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 16px;
+  font-weight: 900;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  text-align: center;
 }
 
 /*****************************************************************************/
@@ -42,7 +42,9 @@ h3 {
 input,
 textarea,
 label {
-    font-size: calc(10px + (14 - 10) * ((100vw - 500px) / (1200 - 300))) !important;
+  font-size: calc(
+    10px + (14 - 10) * ((100vw - 500px) / (1200 - 300))
+  ) !important;
 }
 
 /*****************************************************************************/
@@ -50,8 +52,9 @@ label {
 /*****************************************************************************/
 
 /* survey-heading page heading <div> */
+
 #survey-heading {
-    padding: 0 ! important;
+  padding: 0 !important;
 }
 
 /*****************************************************************************/
@@ -59,39 +62,42 @@ label {
 /*****************************************************************************/
 
 /* Status div */
+
 #status {
-    position: relative;
+  position: relative;
 }
 
 .status-message {
-    text-align: center;
+  text-align: center;
 }
 
 /* Severity of status (error) message */
+
 .high-severity {
-    color: rgb(236, 11, 22);
+  color: rgb(236, 11, 22);
 }
 
 .normal-severity {
-    color: black;
+  color: black;
 }
 
 .low-severity {
-    color: grey;
+  color: grey;
 }
 
 /* Hide and Display the status (error) message display <div> */
+
 .status-hidden {
-    max-height: 0;
-    opacity: 0;
-    transition: opacity 3000ms, max-height 4000ms ease-out;
+  max-height: 0;
+  opacity: 0;
+  transition: opacity 3000ms, max-height 4000ms ease-out;
 }
 
 .status-displayed {
-    margin-top: 2rem;
-    max-height: 1000px;
-    opacity: 1;
-    transition: max-height 3000ms ease-in, opacity 4000ms;
+  margin-top: 2rem;
+  max-height: 1000px;
+  opacity: 1;
+  transition: max-height 3000ms ease-in, opacity 4000ms;
 }
 
 /*****************************************************************************/
@@ -99,18 +105,32 @@ label {
 /*****************************************************************************/
 
 /* survey-body page body <div> */
+
 #survey-body {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-grow: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-grow: 1;
 }
 
 /* Flex component to layout the cards inside the survey-body <div> */
+
 .flex-component {
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
-    margin-top: 25px;
-    margin-bottom: 25px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+/*****************************************************************************/
+/* ICONS STYLING                                                             */
+/*****************************************************************************/
+
+.icon > img {
+  border: 1px dotted pink;
+  display: inline;
+  max-height: 100px !important;
+  padding: 10px;
+  margin: 10px;
 }
 
 /*****************************************************************************/
@@ -118,33 +138,35 @@ label {
 /*****************************************************************************/
 
 .prepend-invalid {
-    background-color: red;
+  background-color: red;
 }
 
 .prepend-valid {
-    background-color: green;
+  background-color: green;
 }
 
 .prepend-invalid-combo {
-    background-color: #F57B83;
-    border: 1px solid red ! important;
+  background-color: #f57b83;
+  border: 1px solid red !important;
 }
 
 .prepend-valid-combo {
-    background-color: #7AB67E;
-    border: 1px solid green ! important;
+  background-color: #7ab67e;
+  border: 1px solid green !important;
 }
 
 /*****************************************************************************/
+
 /* INPUT PREPEND GROUP TRANSPARENCY CONTROL - AND ASSOCIATED CLASSES         */
+
 /*****************************************************************************/
 
 .input-group-text-transparent {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 .input-group-text-opaque {
-    opacity: 1;
+  opacity: 1;
 }
 
 /*****************************************************************************/
@@ -152,14 +174,16 @@ label {
 /*****************************************************************************/
 
 .custom-select-extended {
-    font-size: calc(10px + (14 - 10) * ((100vw - 500px) / (1200 - 300))) !important;
+  font-size: calc(
+    10px + (14 - 10) * ((100vw - 500px) / (1200 - 300))
+  ) !important;
 }
 
 .message,
 .caution {
-    margin-top: 10px;
-    box-shadow: none !important;
-    font-size: 0.8rem;
+  margin-top: 10px;
+  box-shadow: none !important;
+  font-size: 0.8rem;
 }
 
 /*****************************************************************************/
