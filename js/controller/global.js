@@ -58,6 +58,11 @@ const changeLanguage = (language) => {
             break;
     }
 
+    sessionStorage.removeItem("page");
+    sessionStorage.removeItem("lockModelSelected");
+    sessionStorage.removeItem("lockAndDoorData");
+    sessionStorage.removeItem("compatibleDoor");
+
     sessionStorage.setItem("LANGUAGE", language);
     location.reload();
 
